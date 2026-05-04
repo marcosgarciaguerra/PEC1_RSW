@@ -1,0 +1,27 @@
+{{define "content"}}
+    <nav class="migas-pan" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span class="separador"><i class="fas fa-chevron-right"></i></span>
+        <span class="actual">Servicios</span>
+    </nav>
+
+    <section class="seccion">
+        <div class="cabecera-seccion">
+            <h2>SERVICIOS <span class="texto-destacado">PLATINUM</span></h2>
+            <p>Más que un gimnasio, un centro de alto rendimiento integral.</p>
+        </div>
+
+        <ul class="contenido-seccion">
+            {{range .Data}}
+            <li class="tarjeta">
+                <div class="cuerpo-tarjeta">
+                    <div class="regla-icon"><i class="{{.Icono}}"></i></div>
+                    <h3 class="nombre-tarjeta">{{.Nombre}}</h3>
+                    <p class="descripcion-tarjeta">{{.DescripcionBreve}}</p>
+                    <a href="/servicio-detalle?id={{.ID}}" class="boton-principal boton-bloque">Saber Más</a>
+                </div>
+            </li>
+            {{end}}
+        </ul>
+    </section>
+{{end}}

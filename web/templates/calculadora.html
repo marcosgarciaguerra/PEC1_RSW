@@ -1,0 +1,55 @@
+{{define "content"}}
+    <nav class="migas-pan" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span class="separador"><i class="fas fa-chevron-right"></i></span>
+        <span class="actual">Calculadora FFMI</span>
+    </nav>
+
+    <section class="seccion">
+        <div class="cabecera-seccion">
+            <h2>Calculadora <span class="texto-destacado">FFMI</span></h2>
+            <p>Mide tu índice de masa libre de grasa para determinar tu potencial genético.</p>
+        </div>
+
+        <div class="calculadora-card">
+            {{if .Data}}
+                {{if .Data.ErrorMsg}}
+                <div class="calculadora-alerta">
+                    {{.Data.ErrorMsg}}
+                </div>
+                {{end}}
+            {{end}}
+
+            <form action="/calculadora" method="POST" class="formulario">
+                <div class="grupo-formulario">
+                    <label for="altura" class="etiqueta-formulario">Altura (cm):</label>
+                    <input type="number" id="altura" name="altura" step="0.1" class="campo-formulario" placeholder="Ej: 180" value="{{if .Data}}{{if .Data.Datos.Altura}}{{.Data.Datos.Altura}}{{end}}{{end}}" required>
+                </div>
+                <div class="grupo-formulario">
+                    <label for="peso" class="etiqueta-formulario">Peso (kg):</label>
+                    <input type="number" id="peso" name="peso" step="0.1" class="campo-formulario" placeholder="Ej: 85" value="{{if .Data}}{{if .Data.Datos.Peso}}{{.Data.Datos.Peso}}{{end}}{{end}}" required>
+                </div>
+                <div class="grupo-formulario">
+                    <label for="grasa" class="etiqueta-formulario">Grasa Corporal (%):</label>
+                    <input type="number" id="grasa" name="grasa" step="0.1" class="campo-formulario" placeholder="Ej: 12" value="{{if .Data}}{{if .Data.Datos.IndiceGrasaCorporal}}{{.Data.Datos.IndiceGrasaCorporal}}{{end}}{{end}}" required>
+                </div>
+                <button type="submit" class="boton-principal boton-bloque">Calcular Potencial</button>
+            </form>
+
+            {{if .Data}}
+                {{if .Data.Resultado}}
+                <div class="calculadora-resultado">
+                    <h3>Tu FFMI es: <span class="texto-destacado">{{printf "%.2f" .Data.Resultado}}</span></h3>
+                    <p>Nivel estimado: 
+                        {{if lt .Data.Resultado 18.0}}Principiante
+                        {{else if lt .Data.Resultado 20.0}}Intermedio
+                        {{else if lt .Data.Resultado 22.0}}Avanzado
+                        {{else}}Culturista de Élite
+                        {{end}}
+                    </p>
+                </div>
+                {{end}}
+            {{end}}
+        </div>
+    </section>
+{{end}}

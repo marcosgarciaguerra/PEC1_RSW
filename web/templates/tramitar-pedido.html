@@ -1,0 +1,105 @@
+{{define "content"}}
+    <nav class="migas-pan" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span class="separador"><i class="fas fa-chevron-right"></i></span>
+        <a href="/tienda">Tienda</a>
+        <span class="separador"><i class="fas fa-chevron-right"></i></span>
+        <span class="actual">Tramitar Pedido</span>
+    </nav>
+
+    <section class="seccion auth-flex-container">
+        <div class="checkout-card auth-card" style="max-width: 800px; width: 100%;">
+            <div class="cabecera-seccion">
+                <h2>Resumen del <span class="texto-destacado">Pedido</span></h2>
+                <p>Verifica tus datos de envío y confirma tu compra.</p>
+            </div>
+
+            <div class="checkout-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                <!-- Datos de Envío -->
+                <div class="checkout-section">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--color-principal);"><i class="fas fa-truck"></i> Datos de Envío</h3>
+                    <div class="info-bloque" style="background: var(--color-secundario); padding: 1.5rem; border-radius: 8px;">
+                        <p><strong>Destinatario:</strong> {{.Data.Usuario.Nombre}} {{.Data.Usuario.Apellidos}}</p>
+                        <p><strong>Dirección:</strong> {{.Data.Usuario.Direccion}}</p>
+                        <p><strong>Teléfono:</strong> {{.Data.Usuario.Telefono}}</p>
+                        <p><strong>Email:</strong> {{.Data.Usuario.Correo}}</p>
+                        <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">Si los datos no son correctos, por favor contacta con soporte.</p>
+                    </div>
+
+                    <h3 style="margin-top: 2rem; margin-bottom: 1.5rem; color: var(--color-principal);"><i class="fas fa-credit-card"></i> Método de Pago</h3>
+                    <div class="info-bloque" style="background: var(--color-secundario); padding: 1.5rem; border-radius: 8px;">
+                        <p><strong>Método:</strong> {{.Data.Usuario.MetodoPago}}</p>
+                        <p style="font-size: 0.8rem; opacity: 0.7;">Se cargará el importe total a la cuenta vinculada a tu perfil de socio.</p>
+                    </div>
+                </div>
+
+                <!-- Resumen Carrito -->
+                <div class="checkout-section">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--color-principal);"><i class="fas fa-shopping-basket"></i> Tus Artículos</h3>
+                    <div id="checkout-items" style="background: var(--color-secundario); padding: 1.5rem; border-radius: 8px; max-height: 300px; overflow-y: auto;">
+                        <!-- Se rellena por JS -->
+                    </div>
+                    <div class="checkout-total" style="margin-top: 1.5rem; padding: 1.5rem; background: var(--color-principal); color: white; border-radius: 8px; text-align: right;">
+                        <div style="font-size: 0.9rem; opacity: 0.9;">Total a Pagar</div>
+                        <div style="font-size: 2rem; font-weight: bold;"><span id="checkout-total-val">0.00</span>€</div>
+                    </div>
+                    
+                    <button id="btn-confirmar-pedido" class="boton-principal boton-bloque" style="margin-top: 1.5rem; height: 60px; font-size: 1.2rem;">
+                        CONFIRMAR COMPRA <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Éxito -->
+    <div id="modal-exito" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="auth-card" style="text-align: center; max-width: 400px; padding: 3rem;">
+            <i class="fas fa-check-circle" style="font-size: 5rem; color: #44ff44; margin-bottom: 1rem;"></i>
+            <h2>¡Pedido Confirmado!</h2>
+            <p style="margin-top: 1rem;">Tu pedido llegará a <strong>{{.Data.Usuario.Direccion}}</strong> en 48-72h laborales.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.7;">Hemos enviado un correo de confirmación a {{.Data.Usuario.Correo}}.</p>
+            <button onclick="window.location.href='/'" class="boton-principal" style="margin-top: 2rem; width: 100%;">Volver al Inicio</button>
+        </div>
+    </div>
+{{end}}
+
+{{define "scripts"}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cart = JSON.parse(localStorage.getItem('platinum_cart') || '[]');
+            const container = document.getElementById('checkout-items');
+            const totalSpan = document.getElementById('checkout-total-val');
+            
+            if (cart.length === 0) {
+                window.location.href = '/tienda';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price;
+                const row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.justifyContent = 'space-between';
+                row.style.marginBottom = '10px';
+                row.style.paddingBottom = '10px';
+                row.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                row.innerHTML = `<span>${item.name}</span><span style="font-weight: bold;">${item.price.toFixed(2)}€</span>`;
+                container.appendChild(row);
+            });
+            totalSpan.innerText = total.toFixed(2);
+
+            document.getElementById('btn-confirmar-pedido').addEventListener('click', function() {
+                // Simulación de envío
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    localStorage.removeItem('platinum_cart');
+                    document.getElementById('modal-exito').style.display = 'flex';
+                }, 1500);
+            });
+        });
+    </script>
+{{end}}

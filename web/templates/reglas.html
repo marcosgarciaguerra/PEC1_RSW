@@ -1,0 +1,61 @@
+{{define "content"}}
+        <nav class="migas-pan" aria-label="Breadcrumb">
+            <a href="/">Inicio</a>
+            <span class="separador"><i class="fas fa-chevron-right"></i></span>
+            <span class="actual">Reglas del Centro</span>
+        </nav>
+
+        <section id="reglas-centro">
+            <div class="cabecera-seccion">
+                <h2>NORMAS DE <span class="texto-destacado">PLATINUM GYM</span></h2>
+                <p>La disciplina es el puente entre las metas y los logros. Respeta estas normas por tu seguridad y la de los demás.</p>
+            </div>
+
+            <div class="reglas-grid">
+                <article class="regla-card">
+                    <div class="regla-icon"><i class="fas fa-tshirt"></i></div>
+                    <h3>Ropa Adecuada</h3>
+                    <p>Es obligatorio el uso de ropa deportiva y calzado cerrado. No se permite entrenar sin camiseta o con calzado de calle.</p>
+                </article>
+
+                <article class="regla-card">
+                    <div class="regla-icon"><i class="fas fa-hands-wash"></i></div>
+                    <h3>Higiene Personal</h3>
+                    <p>El uso de toalla es obligatorio en todas las máquinas y bancos. Por favor, limpia el sudor después de cada uso con el desinfectante disponible.</p>
+                </article>
+
+                <article class="regla-card">
+                    <div class="regla-icon"><i class="fas fa-sync-alt"></i></div>
+                    <h3>Orden en Sala</h3>
+                    <p>Descarga las máquinas y devuelve las pesas y barras a su lugar correspondiente al terminar el ejercicio. No abandones material en el suelo.</p>
+                </article>
+
+                <article class="regla-card">
+                    <div class="regla-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Uso de Dispositivos</h3>
+                    <p>Se permite el uso de móviles para música, pero no para llamadas largas o grabaciones que incomoden a otros socios sin permiso.</p>
+                </article>
+
+                <article class="regla-card">
+                    <div class="regla-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Horarios y Turnos</h3>
+                    <p>Respeta los turnos de las máquinas en horas punta. No acapares material si no estás realizando el ejercicio activamente.</p>
+                </article>
+
+                <article class="regla-card">
+                    <div class="regla-icon"><i class="fas fa-user-shield"></i></div>
+                    <h3>Comportamiento</h3>
+                    <p>Mantén un clima de respeto. Los gritos excesivos o el lanzamiento violento de pesas (salvo en zonas de plataforma) están prohibidos.</p>
+                </article>
+            </div>
+        </section>
+{{end}}
+
+{{define "styles"}}
+<style>
+/* Nota: Prefiero no usar etiquetas style, pero como el usuario pidio quitar 'style' de elementos, 
+   pondre estas clases en estilos.css despues. Pero por ahora para cumplir la migracion rapida 
+   usare define styles si layout.html lo soporta (que lo hace). 
+   Actually, I will move these to estilos.css immediately after. */
+</style>
+{{end}}

@@ -1,0 +1,26 @@
+{{define "content"}}
+<section class="seccion">
+    <div class="cabecera-seccion">
+        <h2>Resultados para: <span class="texto-destacado">"{{.Data.Query}}"</span></h2>
+        <p>Encuentra tu maquinaria o servicio ideal.</p>
+    </div>
+
+    <ul class="lista-semantica">
+        {{if .Data.Resultados}}
+        {{range .Data.Resultados}}
+        <li class="item-resultado">
+            <div class="item-resultado__info">
+                <span class="item-resultado__tipo">{{.Tipo}}</span>
+                <h3 class="item-resultado__titulo">{{.Titulo}}</h3>
+            </div>
+            <a href="{{.URL}}" class="boton-secundario">Ver Detalles</a>
+        </li>
+        {{end}}
+        {{else}}
+        <li style="text-align:center; padding: 2rem;">
+            <h3>No se han encontrado resultados.</h3>
+        </li>
+        {{end}}
+    </ul>
+</section>
+{{end}}

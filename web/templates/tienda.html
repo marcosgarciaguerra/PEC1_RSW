@@ -1,0 +1,189 @@
+{{define "content"}}
+        <nav class="migas-pan" aria-label="Breadcrumb">
+            <a href="/">Inicio</a>
+            <span class="separador"><i class="fas fa-chevron-right"></i></span>
+            <span class="actual">Tienda</span>
+        </nav>
+
+        <section id="tienda">
+            <div class="cabecera-seccion">
+                <h2>TIENDA <span class="texto-destacado">OFICIAL</span></h2>
+                <p>Nutrición de grado farmacéutico, ropa técnica y accesorios profesionales.</p>
+            </div>
+
+            <div class="store-filters">
+                <input type="radio" id="f-all" name="f-tienda" checked>
+                <label for="f-all" class="f-label">Todos</label>
+
+                <input type="radio" id="f-sups" name="f-tienda">
+                <label for="f-sups" class="f-label">Suplementos</label>
+
+                <input type="radio" id="f-ropa" name="f-tienda">
+                <label for="f-ropa" class="f-label">Ropa y Accesorios</label>
+            </div>
+
+            <ul id="articulos-list" class="contenido-seccion">
+                <!-- Los artículos se cargarán dinámicamente desde la API -->
+            </ul>
+        </section>
+
+        <!-- Carrito Flotante -->
+        <button id="open-cart" class="floating-cart-btn"><i class="fas fa-shopping-cart" aria-hidden="true"></i><span class="sr-only">Abrir carrito</span></button>
+
+        <div id="shopping-cart-sidebar" class="shopping-cart-sidebar">
+            <div class="cart-header">
+                <h3>Tu Carrito</h3>
+                <button id="close-cart"><i class="fas fa-times" aria-hidden="true"></i><span class="sr-only">Cerrar carrito</span></button>
+            </div>
+            <div id="cart-items-container" class="cart-items">
+                <p>Aún no has añadido nada a tu carrito.</p>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">Total: <span id="cart-total-value">0.00</span>€</div>
+                <button id="btn-checkout" class="boton-principal boton-bloque">Tramitar Pedido <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+        </div>
+{{end}}
+
+{{define "scripts"}}
+    <script>
+        // Carga de artículos desde la API y funcionalidad de filtros
+
+        // --- Filtrado ---
+        const radiosFiltro = document.querySelectorAll('input[name="f-tienda"]');
+
+        function aplicarFiltro() {
+            const fAll = document.getElementById('f-all').checked;
+            const fSups = document.getElementById('f-sups').checked;
+            const fRopa = document.getElementById('f-ropa').checked;
+
+            const itemsSup = document.querySelectorAll('.contenido-seccion .sup');
+            const itemsRop = document.querySelectorAll('.contenido-seccion .rop');
+
+            itemsSup.forEach(item => {
+                item.style.display = (fAll || fSups) ? 'flex' : 'none';
+            });
+            itemsRop.forEach(item => {
+                item.style.display = (fAll || fRopa) ? 'flex' : 'none';
+            });
+        }
+
+        radiosFiltro.forEach(radio => {
+            radio.addEventListener('change', aplicarFiltro);
+        });
+
+        // --- Carrito ---
+        let cart = [];
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const totalSpan = document.getElementById('cart-total-value');
+            container.innerHTML = '';
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p>Aún no has añadido nada a tu carrito.</p>';
+                totalSpan.innerText = '0.00';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                const row = document.createElement('div');
+                row.className = 'cart-item-row';
+                row.style.display = 'flex';
+                row.style.justifyContent = 'space-between';
+                row.style.alignItems = 'center';
+                row.style.padding = '10px 0';
+                row.style.borderBottom = '1px solid #333';
+                
+                row.innerHTML = `
+                    <div style="flex: 1;">
+                        <div style="font-weight: bold; font-size: 0.9rem;">${item.name}</div>
+                        <div style="color: var(--color-principal);">${item.price.toFixed(2)}€</div>
+                    </div>
+                    <button onclick="removeItem(${index})" style="background: none; border: none; color: #ff4444; cursor: pointer; padding: 5px;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                container.appendChild(row);
+            });
+            totalSpan.innerText = total.toFixed(2);
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('platinum_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        document.getElementById('open-cart').addEventListener('click', function() {
+            document.getElementById('shopping-cart-sidebar').classList.add('open');
+        });
+        document.getElementById('close-cart').addEventListener('click', function() {
+            document.getElementById('shopping-cart-sidebar').classList.remove('open');
+        });
+
+        document.getElementById('btn-checkout').addEventListener('click', function() {
+            if (cart.length === 0) {
+                alert('El carrito está vacío');
+                return;
+            }
+            window.location.href = '/tienda/tramitar';
+        });
+
+        // Load cart from localStorage
+        const storedCart = localStorage.getItem('platinum_cart');
+        if (storedCart) {
+            cart = JSON.parse(storedCart);
+            updateCartUI();
+        }
+
+        // --- Artículos ---
+        async function cargarArticulos() {
+            try {
+                const res = await fetch('/api/articulos');
+                if (!res.ok) throw new Error('Error al cargar artículos');
+                const articulos = await res.json();
+                const lista = document.getElementById('articulos-list');
+                lista.innerHTML = '';
+                articulos.forEach(a => {
+                    const li = document.createElement('li');
+                    const categoriaClase = a.categoria && a.categoria.toLowerCase() === 'suplemento' ? 'sup' : 'rop';
+                    li.className = `tarjeta ${categoriaClase}`;
+                    li.innerHTML = `
+                        <div class="caja-imagen">
+                            ${a.etiqueta ? `<span class="etiqueta">${a.etiqueta}</span>` : ''}
+                            <img src="${a.imagen}" alt="${a.nombre}" class="imagen-tarjeta">
+                        </div>
+                        <div class="cuerpo-tarjeta">
+                            <h3 class="nombre-tarjeta">${a.nombre}</h3>
+                            <div class="precio">${a.precio.toFixed(2)}€</div>
+                            <button class="boton-principal boton-bloque btn-add-cart" data-name="${a.nombre}" data-price="${a.precio.toFixed(2)}"><i class="fas fa-cart-plus"></i> Añadir</button>
+                        </div>`;
+                    lista.appendChild(li);
+                });
+                attachCartListeners();
+                aplicarFiltro();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function attachCartListeners() {
+            document.querySelectorAll('.btn-add-cart').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const price = parseFloat(this.getAttribute('data-price'));
+                    cart.push({ name, price });
+                    localStorage.setItem('platinum_cart', JSON.stringify(cart));
+                    updateCartUI();
+                    document.getElementById('shopping-cart-sidebar').classList.add('open');
+                });
+            });
+        }
+
+        // Ejecutar carga inicial
+        cargarArticulos();
+    </script>
+{{end}}

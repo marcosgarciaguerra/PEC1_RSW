@@ -1,0 +1,62 @@
+{{define "content"}}
+    <nav class="migas-pan" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span class="separador"><i class="fas fa-chevron-right"></i></span>
+        <span class="actual">Panel de Reservas</span>
+    </nav>
+
+    <div class="contenedor-reservas">
+        <section class="seccion">
+            <div class="reservas-header">
+                <h2>Hola, <span class="texto-destacado">{{.Data.Socio.Nombre}}</span></h2>
+                <a href="/logout" class="boton-secundario">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <p>Gestiona tus clases dirigidas y entrenamientos personalizados.</p>
+        </section>
+
+        <section class="seccion">
+            <h2 class="titulo-seccion">Clases Disponibles</h2>
+            <div class="grid-reservas"> 
+                {{range .Data.Clases}}
+                <article class="tarjeta">
+                    <div class="cuerpo-tarjeta">
+                        <h3 class="nombre-tarjeta">{{.NombreClase}}</h3>
+                        <div style="margin-bottom: 1rem; color: var(--color-texto-secundario); font-size: 0.9rem;">
+                            <p><i class="fas fa-calendar-alt" style="margin-right: 5px; color: var(--color-principal);"></i> <strong>{{.Horario}}</strong></p>
+                            <p><i class="fas fa-map-marker-alt" style="margin-right: 5px; color: var(--color-principal);"></i> {{.Lugar}}</p>
+                            <p><i class="fas fa-user-circle" style="margin-right: 5px; color: var(--color-principal);"></i> {{.Entrenador}}</p>
+                        </div>
+                        <p style="margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.5;">{{.Descripcion}}</p>
+                        
+                        <form action="/reservas/reservar" method="POST" style="margin-top: auto;">
+                            <input type="hidden" name="clase_id" value="{{.ID}}">
+                            <button type="submit" class="boton-principal boton-bloque">Reservar Plaza <i class="fas fa-plus-circle" style="margin-left: 5px;"></i></button>
+                        </form>
+                    </div>
+                </article>
+                {{end}}
+            </div>
+        </section>
+
+        <section class="seccion">
+            <h2 class="titulo-seccion">Mis Reservas Activas</h2>
+            <div class="grid-reservas">
+                {{range .Data.MisReservas}}
+                <article class="tarjeta">
+                    <div class="cuerpo-tarjeta">
+                        <div class="item-resultado__tipo">{{.FechaAsist}}</div>
+                        <h3 class="nombre-tarjeta">{{.NombreClase}}</h3>
+                        <p>ID Reserva: <span class="texto-destacado">#{{.ID}}</span></p>
+                        <form action="/reservas/cancelar" method="POST">
+                            <input type="hidden" name="reserva_id" value="{{.ID}}">
+                            <button type="submit" class="boton-secundario boton-bloque" style="border-color: #cc0000; color: #cc0000; margin-top: 1rem;">Cancelar Reserva</button>
+                        </form>
+                    </div>
+                </article>
+                {{else}}
+                <p style="text-align: center; grid-column: 1/-1; padding: 3rem; background: var(--color-secundario); border-radius: 8px;">Aún no tienes reservas activas.</p>
+                {{end}}
+            </div>
+        </section>
+    </div>
+{{end}}

@@ -1,0 +1,88 @@
+{{define "navbar"}}
+        <header class="barra-navegacion unified-header">
+            <div class="header-logo">
+                <a href="/" class="logo-enlace" aria-label="Volver al inicio">
+                    <div class="logo-brand"></div>
+                </a>
+            </div>
+
+            <nav class="header-nav">
+                <ul class="lista-enlaces">
+                    <!-- Categoría 1: Inicio -->
+                    <li class="elemento-lista"><a href="/" class="enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
+                    
+                    <!-- Categoría 2: El Gimnasio -->
+                    <li class="elemento-lista dropdown">
+                        <a href="#" class="enlace">
+                            <i class="fas fa-dumbbell" aria-hidden="true"></i>
+                            <span>El Gimnasio</span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/maquinaria"><i class="fas fa-cogs"></i> Maquinaria</a></li>
+                            <li><a href="/servicios"><i class="fas fa-crown"></i> Servicios</a></li>
+                            <li><a href="/equipo"><i class="fas fa-users"></i> Nuestro Equipo</a></li>
+                            <li><a href="/reglas"><i class="fas fa-scroll"></i> Reglas del Centro</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Categoría 3: Tienda -->
+                    <li class="elemento-lista"><a href="/tienda" class="enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
+                    
+                    <!-- Categoría 4: Socios -->
+                    <li class="elemento-lista dropdown">
+                        <a href="#" class="enlace">
+                            <i class="fas fa-user-circle" aria-hidden="true"></i>
+                            <span>Socios</span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/reservas"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
+                            <li><a href="/calculadora"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
+                            <li><a href="/apuntate"><i class="fas fa-user-plus"></i> ¡Apúntate!</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div class="barra-navegacion__buscador">
+                    <form action="/buscar" method="GET" class="search-form">
+                        <button type="submit" class="search-icon-btn" aria-label="Buscar"><i class="fas fa-search"></i></button>
+                        <input type="text" name="q" class="search-input-with-icon" placeholder="¿Qué buscas?" required>
+                    </form>
+                </div>
+                <div class="barra-navegacion__iconos">
+                    <div class="user-dropdown-container">
+                        <button class="user-dropdown-trigger">
+                            <span id="user-icon-btn">Sesión</span> 
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <label for="menu-toggle" class="mobile-menu-btn" aria-label="Alternar menú móvil"><i class="fas fa-bars"></i></label>
+            </div>
+        </header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var nombreCookie = document.cookie.split('; ').find(row => row.startsWith('session_nombre='));
+        var trigger = document.querySelector('.user-dropdown-trigger');
+        
+        if (nombreCookie) {
+            var val = nombreCookie.split('=')[1];
+            if (val) {
+                document.getElementById('user-icon-btn').innerText = decodeURIComponent(val);
+                trigger.onclick = function() {
+                    window.location.href = '/reservas';
+                };
+            }
+        } else {
+            trigger.onclick = function() {
+                window.location.href = '/login';
+            };
+        }
+    });
+</script>
+{{end}}

@@ -1,0 +1,35 @@
+{{define "content"}}
+    <section class="seccion auth-flex-container">
+        <div class="auth-card">
+            <div class="cabecera-seccion">
+                <h2>Iniciar <span class="texto-destacado">Sesión</span></h2>
+                <p>Bienvenido de nuevo, Guerrero.</p>
+            </div>
+
+            {{if .Data}}
+                {{if .Data.ErrorMsg}}
+                <div class="alerta alerta--error">
+                    {{.Data.ErrorMsg}}
+                </div>
+                {{end}}
+            {{end}}
+
+            <form action="/login" method="POST" class="formulario">
+                {{if .Data.ReturnPath}}
+                    <input type="hidden" name="return" value="{{.Data.ReturnPath}}">
+                {{end}}
+                <div class="grupo-formulario">
+                    <label for="correo" class="etiqueta-formulario">Correo Electrónico:</label>
+                    <input type="email" id="correo" name="correo" class="campo-formulario" placeholder="tu@email.com" required>
+                </div>
+                <div class="grupo-formulario">
+                    <label for="contrasena" class="etiqueta-formulario">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" class="campo-formulario" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="boton-principal boton-bloque">Entrar</button>
+            </form>
+            
+            <p class="auth-footer">¿Aún no tienes cuenta? <a href="/apuntate" class="texto-destacado">Regístrate aquí</a></p>
+        </div>
+    </section>
+{{end}}

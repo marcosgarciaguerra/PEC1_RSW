@@ -1,0 +1,32 @@
+{{define "content"}}
+    <nav class="migas-pan" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span class="separador"><i class="fas fa-chevron-right"></i></span>
+        <a href="/servicios">Servicios</a>
+        <span class="separador"><i class="fas fa-chevron-right"></i></span>
+        <span class="actual">{{.Data.Nombre}}</span>
+    </nav>
+
+    <div class="detalle-entidad">
+        <div class="detalle-grid">
+            <div class="detalle-icono-wrapper">
+                <div class="grande-icon"><i class="{{.Data.Icono}}"></i></div>
+            </div>
+            <div class="detalle-info">
+                <h2 class="detalle-titulo">{{.Data.Nombre}}</h2>
+                <div class="detalle-seccion">
+                    <h3>Descripción Detallada</h3>
+                    <p>{{.Data.DescripcionLarga}}</p>
+                </div>
+                <div class="detalle-seccion">
+                    <h3>Ventajas para Ti</h3>
+                    <p>{{.Data.Beneficios}}</p>
+                </div>
+                <div class="detalle-acciones">
+                    <a href="/servicios" class="boton-secundario"><i class="fas fa-arrow-left"></i> Volver a servicios</a>
+                    <a href="/apuntate" class="boton-principal">Solicitar Información</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}

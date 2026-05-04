@@ -1,0 +1,33 @@
+{{define "content"}}
+    <nav class="migas-pan" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span class="separador"><i class="fas fa-chevron-right"></i></span>
+        <span class="actual">Nuestro Equipo</span>
+    </nav>
+
+    <section class="seccion">
+        <div class="cabecera-seccion">
+            <h2>EQUIPO DE <span class="texto-destacado">ÉLITE</span></h2>
+            <p>Conoce al corazón de Platinum Gym: profesionales altamente cualificados dedicados a tu éxito.</p>
+        </div>
+
+        <ul class="contenido-seccion" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            {{range .Data}}
+            <li class="tarjeta" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <div class="caja-imagen" style="width: 100%; display: flex; justify-content: center; background: #000; overflow: hidden; border-radius: 8px 8px 0 0;">
+                    <img src="{{.Imagen}}" alt="{{.Nombre}}" class="imagen-tarjeta" style="height: 350px; width: auto; max-width: 100%; object-fit: contain;">
+                </div>
+                <div class="cuerpo-tarjeta" style="padding: 1.5rem; width: 100%;">
+                    <h3 class="nombre-tarjeta" style="margin-bottom: 0.5rem;">{{.Nombre}}</h3>
+                    <div class="item-resultado__tipo" style="background: var(--color-principal); color: white; display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 0.5rem;">
+                        {{.Cargo}}
+                    </div>
+                    <p class="descripcion-tarjeta" style="line-height: 1.5;">{{.Descripcion}}</p>
+                </div>
+            </li>
+            {{else}}
+            <p>Estamos reuniendo al mejor equipo para ti.</p>
+            {{end}}
+        </ul>
+    </section>
+{{end}}

@@ -1,0 +1,149 @@
+{{define "content"}}
+<nav class="migas-pan" aria-label="Breadcrumb">
+    <span class="actual">Inicio</span>
+</nav>
+
+<section class="portada">
+    <div class="texto-portada">
+        <h1>Bienvenido a <span class="texto-destacado">Platinum Gym</span></h1>
+        <a href="/apuntate" class="boton-principal">¡Hazte Socio Ahora!</a>
+    </div>
+</section>
+
+<section class="seccion">
+    <h2 class="titulo-seccion">Nuestros Locales</h2>
+    <ul class="contenido-seccion">
+        <li class="tarjeta">
+            <img src="/img/ubicaciones/meco.png" alt="Local Meco" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Meco</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Gimnasio completo con zona de peso libre, máquinas de cardio y sala de clases
+                            dirigidas. Abierto de 6:00 a 23:00.</p>
+                        <p><strong>Dirección:</strong> C/ Calle Mayor 12, Meco, Madrid</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="/img/ubicaciones/vallecas.avif" alt="Local Vallecas" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Vallecas</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Ubicación emblemática con equipamiento Hammer Strength y zona de powerlifting.
+                            Abierto 24h para socios VIP.</p>
+                        <p><strong>Dirección:</strong> Av. de la Albufera 45, Vallecas, Madrid</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="/img/ubicaciones/Chicago.jpg" alt="Local Seattle" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Seattle (Central)</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Nuestra sede central. 5 plantas de puro acero, piscina olímpica y zona de crioterapia.
+                        </p>
+                        <p><strong>Dirección:</strong> 1201 3rd Ave, Seattle, WA 98101, USA</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="/img/ubicaciones/tel-aviv.webp" alt="Local Tel-Aviv" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Tel-Aviv</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Un gimnasio costero de última generación. Especialidad en calistenia deportiva y
+                            CrossTraining al aire libre.</p>
+                        <p><strong>Dirección:</strong> 12 Namal Tel Aviv St, Tel Aviv-Yafo, Israel</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="/img/ubicaciones/epsteinisla.jfif" alt="Local Isla de Epstein" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Isla de Epstein</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Complejo exclusivo para entrenamientos de extrema privacidad y alto rendimiento. Acceso
+                            restringido.</p>
+                        <p><strong>Dirección:</strong> Little St. James, US Virgin Islands</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="/img/ubicaciones/berlin.jfif" alt="Local Berlín" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Berlín</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Espacio industrial reciclado, ideal para rutinas de Powerlifting underground y Strongman.</p>
+                        <p><strong>Dirección:</strong> Friedrichstraße 43, 10117 Berlin, Alemania</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+    </ul>
+</section>
+
+<section class="seccion">
+    <h2 class="titulo-seccion">Opiniones de nuestros Guerreros</h2>
+    <div class="resenas-container">
+        <!-- Columna Formulario -->
+        <div class="resenas-form-wrapper">
+            {{if .Data.Usuario}}
+            <form action="/resenas" method="POST" class="formulario resena-form-card">
+                <div class="grupo-formulario">
+                    <label for="puntuacion" class="etiqueta-formulario">Puntuación (1-5):</label>
+                    <input type="number" id="puntuacion" name="puntuacion" min="1" max="5" class="campo-formulario"
+                        placeholder="Ej: 5" required>
+                </div>
+                <div class="grupo-formulario">
+                    <label for="texto" class="etiqueta-formulario">Tu opinión:</label>
+                    <textarea id="texto" name="texto" rows="4" class="campo-formulario campo-formulario--textarea"
+                        placeholder="Escribe tu experiencia aquí..." required></textarea>
+                </div>
+                <button type="submit" class="boton-resena">Publicar Reseña <i
+                        class="fas fa-paper-plane" aria-hidden="true"></i></button>
+            </form>
+            {{else}}
+            <div class="resena-form-card" style="text-align: center; padding: 2rem;">
+                <i class="fas fa-lock" style="font-size: 3rem; color: var(--color-texto-secundario); margin-bottom: 1rem;"></i>
+                <h3>¿Quieres dejar una reseña?</h3>
+                <p>Debes estar iniciado sesión para compartir tu experiencia con nosotros.</p>
+                <a href="/login?return=/index" class="boton-formulario" style="display: inline-block; margin-top: 1rem; text-decoration: none;">Iniciar Sesión</a>
+            </div>
+            {{end}}
+        </div>
+
+        <!-- Columna Listado -->
+        <div class="resenas-list-wrapper">
+            <ul class="resenas-grid">
+                {{range .Data.Resenas}}
+                <li class="resena-card">
+                    <h3 class="resena-autor">{{.Autor}}</h3>
+                    <div class="resena-stars" aria-label="Puntuación: {{.Puntuacion}}">
+                        {{if eq .Puntuacion 5}}★★★★★{{else if eq .Puntuacion 4}}★★★★☆{{else if eq .Puntuacion
+                        3}}★★★☆☆{{else if eq .Puntuacion 2}}★★☆☆☆{{else}}★☆☆☆☆{{end}}
+                    </div>
+                    <p class="resena-text">"{{.Texto}}"</p>
+                </li>
+                {{end}}
+            </ul>
+        </div>
+    </div>
+</section>
+{{end}}
