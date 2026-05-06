@@ -59,6 +59,49 @@ func createTables() {
 		log.Fatal("Error creando tabla resenas: ", err)
 	}
 
+	sessionTableInfo := `
+	CREATE TABLE IF NOT EXISTS sesiones (
+		token TEXT PRIMARY KEY,
+		email TEXT NOT NULL,
+		creado_en DATETIME DEFAULT CURRENT_TIMESTAMP
+	);`
+
+	_, err = DB.Exec(sessionTableInfo)
+	if err != nil {
+		log.Fatal("Error creando tabla sesiones: ", err)
+	}
+
+	clasesTableInfo := `
+	CREATE TABLE IF NOT EXISTS clases (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		nombre TEXT NOT NULL,
+		entrenador TEXT NOT NULL,
+		aforo INTEGER NOT NULL,
+		horario TEXT NOT NULL,
+		descripcion TEXT NOT NULL,
+		lugar TEXT NOT NULL
+	);`
+
+	_, err = DB.Exec(clasesTableInfo)
+	if err != nil {
+		log.Fatal("Error creando tabla clases: ", err)
+	}
+
+	reservasTableInfo := `
+	CREATE TABLE IF NOT EXISTS reservas (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		socio_id INTEGER NOT NULL,
+		actividad_id INTEGER NOT NULL,
+		fecha_asist TEXT NOT NULL,
+		FOREIGN KEY(socio_id) REFERENCES usuarios(id),
+		FOREIGN KEY(actividad_id) REFERENCES clases(id)
+	);`
+
+	_, err = DB.Exec(reservasTableInfo)
+	if err != nil {
+		log.Fatal("Error creando tabla reservas: ", err)
+	}
+
 	var count int
 	DB.QueryRow("SELECT COUNT(*) FROM resenas").Scan(&count)
 	if count == 0 {
@@ -66,6 +109,20 @@ func createTables() {
 		('Carlos G.', 5, 'El mejor gimnasio de la ciudad. Las máquinas son increíbles.'),
 		('María P.', 4, 'Muy buen ambiente, aunque a veces hay mucha gente en hora punta.'),
 		('Luis R.', 5, 'Los fisioterapeutas me curaron una lesión de hombro que llevaba meses arrastrando.')`)
+	}
+
+	var countClases int
+	DB.QueryRow("SELECT COUNT(*) FROM clases").Scan(&countClases)
+	if countClases == 0 {
+		_, _ = DB.Exec(`INSERT INTO clases (nombre, entrenador, aforo, horario, descripcion, lugar) VALUES 
+		('Ciclo Indoor (Spinning)', 'Carlos Méndez', 20, 'Lunes, 13 de abril de 2026 a las 18:00h', 'Entrenamiento cardiovascular en bicicleta estática.', 'Sala de Spinning (Planta Baja)'),
+		('Yoga Vinyasa', 'Elena Rostova', 15, 'Martes, 14 de abril de 2026 a las 09:00h', 'Práctica fluida y dinámica para mejorar flexibilidad.', 'Sala Zen (Planta Alta)'),
+		('HIIT', 'Marcos Silva', 12, 'Miércoles, 15 de abril de 2026 a las 19:30h', 'Entrenamiento de intervalos de alta intensidad.', 'Zona Funcional'),
+		('BodyPump', 'Laura Gómez', 20, 'Jueves, 16 de abril de 2026 a las 14:00h', 'Tonificación muscular con barras y discos.', 'Sala de Actividades Dirigidas 1'),
+		('Zumba', 'Sofía Valdés', 25, 'Viernes, 17 de abril de 2026 a las 18:30h', 'Baile aeróbico con ritmos latinos.', 'Sala de Actividades Dirigidas 2'),
+		('Pilates Mat', 'Javier Ruiz', 15, 'Sábado, 18 de abril de 2026 a las 10:00h', 'Ejercicios para fortalecer core y postura.', 'Sala Zen (Planta Alta)'),
+		('Fitboxing', 'David Castro', 12, 'Domingo, 19 de abril de 2026 a las 11:00h', 'Mix de boxeo al saco sin contacto con cardio.', 'Zona de Combate'),
+		('AquaGym', 'Ana Morales', 20, 'Lunes, 20 de abril de 2026 a las 08:30h', 'Gimnasia aeróbica de bajo impacto en el agua.', 'Piscina Climatizada')`)
 	}
 }
 

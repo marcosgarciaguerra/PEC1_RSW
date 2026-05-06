@@ -12,6 +12,12 @@
                 <a href="/logout" class="boton-secundario">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
             </div>
             <p>Gestiona tus clases dirigidas y entrenamientos personalizados.</p>
+
+            {{if .Data.ErrorMsg}}
+            <div style="background-color: #ff4d4d; color: white; padding: 1rem; border-radius: 8px; margin-top: 1rem; text-align: center; font-weight: bold;">
+                <i class="fas fa-exclamation-circle"></i> {{.Data.ErrorMsg}}
+            </div>
+            {{end}}
         </section>
 
         <section class="seccion">

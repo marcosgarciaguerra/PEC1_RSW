@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 	"pec2/internal/models"
-	"pec2/internal/services"
 	"strconv"
 )
 
@@ -42,8 +41,11 @@ func ProcesarCalculadora(w http.ResponseWriter, r *http.Request) {
 	var errorMsg string
 
 	if datos.ValidarDatos() {
-		calcService := services.CalculadoraService{}
-		resultado = calcService.CalcularFFMI(&datos)
+		masaMagra := datos.Peso * (1.0 - (datos.IndiceGrasaCorporal / 100.0))
+		ffmi := masaMagra / (datos.Altura * datos.Altura)
+		// FFMI normalizado
+		resultado = ffmi + 6.1*(1.8-datos.Altura)
+		datos.Resultado = resultado
 	} else {
 		errorMsg = "Por favor, introduce datos válidos."
 	}

@@ -3,8 +3,10 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"pec2/internal/db"
 	"pec2/internal/models"
-	"pec2/internal/services"
+	"golang.org/x/crypto/bcrypt"
+	"github.com/go-playground/validator/v10"
 )
 
 func RegistroHandler(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +34,33 @@ func RegistroHandler(w http.ResponseWriter, r *http.Request) {
 		Password:        r.FormValue("password"),
 	}
 
-	err = services.RegistrarUsuario(usuario)
+	// Validate fields using go-playground/validator
+	validate := validator.New()
+	if err := validate.Struct(usuario); err != nil {
+		log.Println("Validation error:", err)
+		http.Error(w, "Datos de registro no válidos", http.StatusBadRequest)
+		return
+	}
+
+	hashed, err := bcrypt.GenerateFromPassword([]byte(usuario.Password), bcrypt.DefaultCost)
+	if err != nil {
+		log.Println("Error hashing password:", err)
+		http.Error(w, "Error interno del servidor", http.StatusInternalServerError)
+		return
+	}
+	usuario.Password = string(hashed)
+
+	hashedDNI, err := bcrypt.GenerateFromPassword([]byte(usuario.Documento), bcrypt.DefaultCost)
+	if err == nil {
+		usuario.Documento = string(hashedDNI)
+	}
+
+	hashedPago, err := bcrypt.GenerateFromPassword([]byte(usuario.NumeroPago), bcrypt.DefaultCost)
+	if err == nil {
+		usuario.NumeroPago = string(hashedPago)
+	}
+
+	err = db.GuardarUsuario(usuario)
 	if err != nil {
 		log.Println("Error guardando usuario:", err)
 		http.Error(w, "Error interno del servidor", http.StatusInternalServerError)

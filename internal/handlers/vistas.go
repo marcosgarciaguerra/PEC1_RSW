@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"pec2/internal/auth"
 	"pec2/internal/db"
 	"pec2/internal/models"
 	"strconv"
@@ -42,10 +43,12 @@ func PageHandler(w http.ResponseWriter, r *http.Request) {
 	case "index":
 		resenas := db.ObtenerResenas()
 		var usuario *models.Socio
-		cookie, err := r.Cookie("session_user")
-		if err == nil {
-			usuario = db.ObtenerSocioPorCorreo(cookie.Value)
+	cookie, err := r.Cookie("session_id")
+	if err == nil {
+		if email, ok := auth.Get(cookie.Value); ok {
+			usuario = db.ObtenerSocioPorCorreo(email)
 		}
+	}
 		data = map[string]interface{}{
 			"Resenas": resenas,
 			"Usuario": usuario,
@@ -75,14 +78,19 @@ func PageHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	case "tienda/tramitar":
-		cookie, err := r.Cookie("session_user")
+		cookie, err := r.Cookie("session_id")
 		if err == nil {
-			usuario := db.ObtenerSocioPorCorreo(cookie.Value)
-			if usuario != nil {
-				data = map[string]interface{}{"Usuario": usuario}
-				page = "tramitar-pedido"
+			if email, ok := auth.Get(cookie.Value); ok {
+				usuario := db.ObtenerSocioPorCorreo(email)
+				if usuario != nil {
+					data = map[string]interface{}{"Usuario": usuario}
+					page = "tramitar-pedido"
+				} else {
+					http.Redirect(w, r, "/login", http.StatusSeeOther)
+					return
+				}
 			} else {
-				http.Redirect(w, r, "/login", http.StatusSeeOther)
+				http.Redirect(w, r, "/login?return=/tienda/tramitar", http.StatusSeeOther)
 				return
 			}
 		} else {

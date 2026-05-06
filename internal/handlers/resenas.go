@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"pec2/internal/auth"
 	"pec2/internal/db"
 	"pec2/internal/models"
 	"strconv"
@@ -14,13 +15,17 @@ func GuardarResenaHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Verificar sesión
-	cookie, err := r.Cookie("session_user")
+	cookie, err := r.Cookie("session_id")
 	if err != nil {
 		http.Redirect(w, r, "/login?return=/index", http.StatusSeeOther)
 		return
 	}
-
-	usuario := db.ObtenerSocioPorCorreo(cookie.Value)
+	email, ok := auth.Get(cookie.Value)
+	if !ok {
+		http.Redirect(w, r, "/login?return=/index", http.StatusSeeOther)
+		return
+	}
+	usuario := db.ObtenerSocioPorCorreo(email)
 	if usuario == nil {
 		http.Redirect(w, r, "/login?return=/index", http.StatusSeeOther)
 		return
