@@ -13,11 +13,12 @@ import (
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	returnPath := r.URL.Query().Get("return")
 
-	if r.Method == http.MethodGet {
+	switch r.Method {
+	case http.MethodGet:
 		RenderTemplate(w, "login", map[string]interface{}{
 			"ReturnPath": returnPath,
 		})
-	} else if r.Method == http.MethodPost {
+	case http.MethodPost:
 		r.ParseForm()
 		correo := r.FormValue("correo")
 		contrasena := r.FormValue("contrasena")

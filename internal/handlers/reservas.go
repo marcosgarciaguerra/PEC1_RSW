@@ -54,11 +54,12 @@ func ReservasHandler(w http.ResponseWriter, r *http.Request) {
 
 	errorParam := r.URL.Query().Get("error")
 	var errorMsg string
-	if errorParam == "clase_invalida" {
+	switch errorParam {
+	case "clase_invalida":
 		errorMsg = "ID de clase inválido."
-	} else if errorParam == "reserva_fallida" {
+	case "reserva_fallida":
 		errorMsg = "No se pudo realizar la reserva. Es posible que el aforo esté completo o ya tengas esta clase reservada."
-	} else if errorParam == "reserva_invalida" {
+	case "reserva_invalida":
 		errorMsg = "No se pudo cancelar la reserva."
 	}
 

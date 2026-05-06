@@ -7,11 +7,12 @@ import (
 )
 
 func CalculadoraHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
+	switch r.Method {
+	case http.MethodGet:
 		MostrarFormulario(w, r)
-	} else if r.Method == http.MethodPost {
+	case http.MethodPost:
 		ProcesarCalculadora(w, r)
-	} else {
+	default:
 		http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
 	}
 }
@@ -56,4 +57,3 @@ func ProcesarCalculadora(w http.ResponseWriter, r *http.Request) {
 		"ErrorMsg":  errorMsg,
 	})
 }
-
