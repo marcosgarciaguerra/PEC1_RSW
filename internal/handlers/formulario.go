@@ -34,11 +34,17 @@ func RegistroHandler(w http.ResponseWriter, r *http.Request) {
 		Password:        r.FormValue("password"),
 	}
 
+	repeatPassword := r.FormValue("repeat-password")
+	if usuario.Password != repeatPassword {
+		http.Error(w, "Las contraseñas ingresadas no coinciden", http.StatusBadRequest)
+		return
+	}
+
 	// Validate fields using go-playground/validator
 	validate := validator.New()
 	if err := validate.Struct(usuario); err != nil {
 		log.Println("Validation error:", err)
-		http.Error(w, "Datos de registro no válidos", http.StatusBadRequest)
+		http.Error(w, "Datos de registro no válidos o faltan campos obligatorios", http.StatusBadRequest)
 		return
 	}
 
@@ -62,8 +68,8 @@ func RegistroHandler(w http.ResponseWriter, r *http.Request) {
 
 	err = db.GuardarUsuario(usuario)
 	if err != nil {
-		log.Println("Error guardando usuario:", err)
-		http.Error(w, "Error interno del servidor", http.StatusInternalServerError)
+		log.Println("Error guardando usuario (posible DNI o Correo duplicado):", err)
+		http.Error(w, "El correo electrónico o el DNI/Pasaporte ya se encuentra registrado en el sistema.", http.StatusConflict)
 		return
 	}
 

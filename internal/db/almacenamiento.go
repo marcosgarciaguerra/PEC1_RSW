@@ -34,7 +34,7 @@ func createTables() {
 		direccion TEXT,
 		telefono TEXT,
 		correo TEXT UNIQUE,
-		documento TEXT,
+		documento TEXT UNIQUE,
 		metodo_pago TEXT,
 		numero_pago TEXT,
 		password TEXT NOT NULL,
@@ -45,6 +45,9 @@ func createTables() {
 	if err != nil {
 		log.Fatal("Error creando tabla usuarios: ", err)
 	}
+
+	// Asegurar compatibilidad si la tabla ya existía sin la restricción UNIQUE
+	_, _ = DB.Exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_documento ON usuarios (documento);")
 
 	resenaTableInfo := `
 	CREATE TABLE IF NOT EXISTS resenas (

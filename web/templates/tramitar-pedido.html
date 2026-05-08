@@ -7,11 +7,267 @@
         <span class="actual">Tramitar Pedido</span>
     </nav>
 
-    <section class="seccion auth-flex-container">
-        <div class="checkout-card auth-card">
+    <style>
+        /* Estilos premium para la tramitación del pedido */
+        .checkout-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .checkout-card {
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            margin-bottom: 50px;
+        }
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        @media (max-width: 850px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        .checkout-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+        .checkout-section:hover {
+            border-color: rgba(255, 188, 13, 0.25);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .checkout-section h3 {
+            color: #ffbc0d;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .info-bloque {
+            margin-bottom: 25px;
+        }
+        .info-bloque p {
+            margin: 14px 0;
+            font-size: 1rem;
+            color: #ddd;
+            line-height: 1.6;
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .info-bloque strong {
+            color: #fff;
+            width: 120px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .info-bloque__muted {
+            font-size: 0.85rem !important;
+            color: #888 !important;
+            font-style: italic;
+            margin-top: 15px !important;
+            display: block !important;
+        }
+        
+        /* Dirección dinámicamente editable */
+        .editable-address-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed rgba(255, 188, 13, 0.3);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+        }
+        .btn-editar-link {
+            background: none;
+            border: none;
+            color: #ffbc0d;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            padding: 4px 8px;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .btn-editar-link:hover {
+            color: #fff;
+            transform: scale(1.05);
+        }
+        
+        /* Formulario de cambio de dirección */
+        .form-cambio-dir {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 10px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .input-cambio-direccion {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            width: 100%;
+        }
+        .input-cambio-direccion:focus {
+            border-color: #ffbc0d;
+            box-shadow: 0 0 8px rgba(255, 188, 13, 0.3);
+        }
+        .grupo-botones-dir {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .btn-dir-accion {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        .btn-dir-save {
+            background: #ffbc0d;
+            color: #111;
+        }
+        .btn-dir-save:hover {
+            background: #e0a300;
+        }
+        .btn-dir-cancel {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        .btn-dir-cancel:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Elementos del resumen */
+        .cart-item-js {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            color: #eee;
+            font-size: 1rem;
+        }
+        .cart-item-js__name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cart-item-js__price {
+            font-weight: bold;
+            color: #ffbc0d;
+            font-size: 1.05rem;
+        }
+        
+        .checkout-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px dashed rgba(255,255,255,0.12);
+        }
+        .checkout-total__label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        .checkout-total__amount {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffbc0d;
+            text-shadow: 0 0 10px rgba(255, 188, 13, 0.2);
+        }
+        
+        /* Modal de confirmación premium */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #141414;
+            border: 2px solid #ffbc0d;
+            border-radius: 20px;
+            padding: 45px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 15px 40px rgba(255, 188, 13, 0.2);
+            animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes scaleUp {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-icon {
+            font-size: 4.5rem;
+            color: #ffbc0d;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(255, 188, 13, 0.4));
+        }
+        .mt-1 { margin-top: 1rem; }
+        .mt-05 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 2rem; }
+        .w-100 { width: 100%; }
+        
+        .checkout-btn-margin {
+            margin-top: 30px;
+            padding: 16px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 188, 13, 0.3);
+        }
+    </style>
+
+    <section class="seccion checkout-container">
+        <div class="checkout-card">
             <div class="cabecera-seccion">
                 <h2>Resumen del <span class="texto-destacado">Pedido</span></h2>
-                <p>Verifica tus datos de envío y confirma tu compra.</p>
+                <p>Verifica tus datos de envío, personaliza tu dirección si lo requieres y confirma tu compra.</p>
             </div>
 
             <div class="checkout-grid">
@@ -19,17 +275,37 @@
                 <div class="checkout-section">
                     <h3><i class="fas fa-truck"></i> Datos de Envío</h3>
                     <div class="info-bloque">
-                        <p><strong>Destinatario:</strong> {{.Data.Usuario.Nombre}} {{.Data.Usuario.Apellidos}}</p>
-                        <p><strong>Dirección:</strong> {{.Data.Usuario.Direccion}}</p>
-                        <p><strong>Teléfono:</strong> {{.Data.Usuario.Telefono}}</p>
-                        <p><strong>Email:</strong> {{.Data.Usuario.Correo}}</p>
-                        <p class="info-bloque__muted">Si los datos no son correctos, por favor contacta con soporte.</p>
+                        <p><strong>Destinatario:</strong> <span>{{.Data.Usuario.Nombre}} {{.Data.Usuario.Apellidos}}</span></p>
+                        
+                        <div class="editable-address-container">
+                            <p style="margin: 0;">
+                                <strong>Dirección:</strong> 
+                                <span id="direccion-texto" style="color: #fff; font-weight: 500;">{{.Data.Usuario.Direccion}}</span>
+                            </p>
+                            <button type="button" id="btn-editar-direccion" class="btn-editar-link">
+                                <i class="fas fa-edit"></i> Cambiar
+                            </button>
+                        </div>
+
+                        <!-- Formulario oculto para cambiar dirección -->
+                        <div id="wrapper-editar-direccion" class="form-cambio-dir">
+                            <label for="nueva-direccion" style="color: #ffbc0d; font-size: 0.85rem; font-weight: bold; text-transform: uppercase;">Nueva Dirección de Envío:</label>
+                            <input type="text" id="nueva-direccion" class="input-cambio-direccion" value="{{.Data.Usuario.Direccion}}">
+                            <div class="grupo-botones-dir">
+                                <button type="button" id="btn-cancelar-direccion" class="btn-dir-accion btn-dir-cancel">Cancelar</button>
+                                <button type="button" id="btn-guardar-direccion" class="btn-dir-accion btn-dir-save">Confirmar Cambio</button>
+                            </div>
+                        </div>
+
+                        <p><strong>Teléfono:</strong> <span>{{.Data.Usuario.Telefono}}</span></p>
+                        <p><strong>Email:</strong> <span>{{.Data.Usuario.Correo}}</span></p>
+                        <p class="info-bloque__muted">💡 Puedes cambiar la dirección de entrega temporalmente para este pedido haciendo clic en "Cambiar".</p>
                     </div>
 
                     <h3><i class="fas fa-credit-card"></i> Método de Pago</h3>
                     <div class="info-bloque">
-                        <p><strong>Método:</strong> {{.Data.Usuario.MetodoPago}}</p>
-                        <p class="info-bloque__muted">Se cargará el importe total a la cuenta vinculada a tu perfil de socio.</p>
+                        <p><strong>Método:</strong> <span style="text-transform: capitalize;">{{.Data.Usuario.MetodoPago}}</span></p>
+                        <p class="info-bloque__muted">Se cargará el importe total de manera segura a la tarjeta/cuenta vinculada a tu perfil de socio.</p>
                     </div>
                 </div>
 
@@ -39,6 +315,7 @@
                     <div id="checkout-items">
                         <!-- Se rellena por JS -->
                     </div>
+                    
                     <div class="checkout-total">
                         <div class="checkout-total__label">Total a Pagar</div>
                         <div class="checkout-total__amount"><span id="checkout-total-val">0.00</span>€</div>
@@ -54,12 +331,12 @@
 
     <!-- Modal de Éxito -->
     <div id="modal-exito" class="modal-overlay">
-        <div class="auth-card modal-content">
+        <div class="modal-content">
             <i class="fas fa-check-circle modal-icon"></i>
             <h2>¡Pedido Confirmado!</h2>
-            <p class="mt-1">Tu pedido llegará a <strong>{{.Data.Usuario.Direccion}}</strong> en 48-72h laborales.</p>
-            <p class="mt-05 info-bloque__muted">Hemos enviado un correo de confirmación a {{.Data.Usuario.Correo}}.</p>
-            <button onclick="window.location.href='/'" class="boton-principal mt-2 w-100">Volver al Inicio</button>
+            <p class="mt-1" style="font-size: 1.1rem; line-height: 1.5; color: #eee;">Tu pedido llegará a la dirección:<br><strong id="modal-direccion-confirmada" style="color: #ffbc0d; font-size: 1.2rem; display: block; margin-top: 8px;">{{.Data.Usuario.Direccion}}</strong><br>en 48-72h laborales.</p>
+            <p class="mt-05 info-bloque__muted">Hemos enviado un correo detallado de confirmación a {{.Data.Usuario.Correo}}.</p>
+            <button onclick="window.location.href='/'" class="boton-principal mt-2 w-100" style="padding: 14px; font-weight: bold;">Volver al Inicio</button>
         </div>
     </div>
 {{end}}
@@ -81,14 +358,53 @@
                 total += item.price;
                 const row = document.createElement('div');
                 row.className = 'cart-item-js';
-                row.innerHTML = `<span>${item.name}</span><span class="cart-item-js__price">${item.price.toFixed(2)}€</span>`;
+                row.innerHTML = `
+                    <div class="cart-item-js__name">
+                        <i class="fas fa-box" style="color: rgba(255,255,255,0.3); font-size: 0.9rem;"></i>
+                        <span>${item.name}</span>
+                    </div>
+                    <span class="cart-item-js__price">${item.price.toFixed(2)}€</span>
+                `;
                 container.appendChild(row);
             });
             totalSpan.innerText = total.toFixed(2);
 
+            // Funcionalidad de Edición Interactiva de Dirección de Entrega
+            const btnEditar = document.getElementById('btn-editar-direccion');
+            const wrapperEditar = document.getElementById('wrapper-editar-direccion');
+            const btnCancelar = document.getElementById('btn-cancelar-direccion');
+            const btnGuardar = document.getElementById('btn-guardar-direccion');
+            const txtDireccion = document.getElementById('direccion-texto');
+            const inputDireccion = document.getElementById('nueva-direccion');
+            const modalDireccion = document.getElementById('modal-direccion-confirmada');
+
+            btnEditar.addEventListener('click', function() {
+                wrapperEditar.style.display = 'flex';
+                inputDireccion.focus();
+                btnEditar.style.display = 'none';
+            });
+
+            btnCancelar.addEventListener('click', function() {
+                wrapperEditar.style.display = 'none';
+                btnEditar.style.display = 'inline-block';
+                inputDireccion.value = txtDireccion.textContent;
+            });
+
+            btnGuardar.addEventListener('click', function() {
+                const nuevaDir = inputDireccion.value.trim();
+                if (nuevaDir === "") {
+                    alert("Por favor, introduce una dirección válida.");
+                    return;
+                }
+                txtDireccion.textContent = nuevaDir;
+                modalDireccion.textContent = nuevaDir;
+                wrapperEditar.style.display = 'none';
+                btnEditar.style.display = 'inline-block';
+            });
+
+            // Confirmación final de la compra
             document.getElementById('btn-confirmar-pedido').addEventListener('click', function() {
-                // Simulación de envío
-                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESANDO COMPRA...';
                 this.disabled = true;
                 
                 setTimeout(() => {

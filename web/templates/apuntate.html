@@ -1,78 +1,136 @@
 {{define "content"}}
-    <section class="seccion auth-flex-container">
-        <div class="auth-card">
-            <div class="cabecera-seccion">
-                <h2>Únete al <span class="texto-destacado">Olimpo</span></h2>
-                <p>Tu transformación comienza aquí. Rellena el formulario para convertirte en socio Platinum.</p>
+<section class="seccion auth-flex-container">
+    <div class="auth-card">
+        <div class="cabecera-seccion">
+            <h2>Únete al <span class="texto-destacado">Olimpo</span></h2>
+            <p>Tu transformación comienza aquí. Rellena el formulario para convertirte en socio Platinum.</p>
+        </div>
+
+        <form action="/registro" method="POST" class="formulario">
+            <div class="grupo-formulario">
+                <label for="nombre" class="etiqueta-formulario">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" class="campo-formulario" placeholder="Ej: Arnold" required>
             </div>
 
-            <form action="/registro" method="POST" class="formulario">
-                <div class="grupo-formulario">
-                    <label for="nombre" class="etiqueta-formulario">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" class="campo-formulario" placeholder="Ej: Arnold" required>
-                </div>
-                
-                <div class="grupo-formulario">
-                    <label for="apellidos" class="etiqueta-formulario">Apellidos:</label>
-                    <input type="text" id="apellidos" name="apellidos" class="campo-formulario" placeholder="Ej: Schwarzenegger" required>
-                </div>
-                
-                <div class="grupo-formulario">
-                    <label for="fecha-nacimiento" class="etiqueta-formulario">Fecha de Nacimiento:</label>
-                    <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" class="campo-formulario" required>
-                </div>
+            <div class="grupo-formulario">
+                <label for="apellidos" class="etiqueta-formulario">Apellidos:</label>
+                <input type="text" id="apellidos" name="apellidos" class="campo-formulario"
+                    placeholder="Ej: Schwarzenegger" required>
+            </div>
 
-                <div class="grupo-formulario">
-                    <label for="direccion" class="etiqueta-formulario">Dirección:</label>
-                    <input type="text" id="direccion" name="direccion" class="campo-formulario" placeholder="Calle Falsa 123" required>
-                </div>
+            <div class="grupo-formulario">
+                <label for="fecha-nacimiento" class="etiqueta-formulario">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" class="campo-formulario" required>
+            </div>
 
-                <div class="grupo-formulario">
-                    <label for="telefono" class="etiqueta-formulario">Teléfono:</label>
-                    <input type="tel" id="telefono" name="telefono" class="campo-formulario" placeholder="Ej: 600123456" required>
-                </div>
+            <div class="grupo-formulario">
+                <label for="direccion" class="etiqueta-formulario">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" class="campo-formulario"
+                    placeholder="Calle Mayor, 12" required>
+            </div>
 
-                <div class="grupo-formulario">
-                    <label for="correo" class="etiqueta-formulario">Email:</label>
-                    <input type="email" id="correo" name="correo" class="campo-formulario" placeholder="tu@email.com" required>
-                </div>
-                
-                <div class="grupo-formulario">
-                    <label for="documento" class="etiqueta-formulario">DNI/Pasaporte:</label>
-                    <input type="text" id="documento" name="documento" class="campo-formulario" placeholder="12345678X" required>
-                </div>
+            <div class="grupo-formulario">
+                <label for="telefono" class="etiqueta-formulario">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" class="campo-formulario" placeholder="Ej: 600123456"
+                    required>
+            </div>
 
-                <div class="grupo-formulario">
-                    <label for="plan" class="etiqueta-formulario">Plan deseado:</label>
-                    <select id="plan" name="plan" class="campo-formulario">
-                        <option value="basico">Básico (Solo Sala)</option>
-                        <option value="premium">Premium (Sala + Piscina + Sauna)</option>
-                        <option value="vip">VIP Platinum (Todo Incluido + Fisio)</option>
-                    </select>
-                </div>
-                
-                <div class="grupo-formulario">
-                    <label for="metodo-pago" class="etiqueta-formulario">Método de pago:</label>
-                    <select id="metodo-pago" name="metodo-pago" class="campo-formulario">
-                        <option value="tarjeta">Tarjeta de Crédito</option>
-                        <option value="domiciliacion">Domiciliación Bancaria</option>
-                    </select>
-                </div>
-                
-                <div class="grupo-formulario">
-                    <label for="numero-pago" class="etiqueta-formulario">Número de Tarjeta / IBAN:</label>
-                    <input type="text" id="numero-pago" name="numero-pago" class="campo-formulario" placeholder="ESXX..." required>
-                </div>
+            <div class="grupo-formulario">
+                <label for="correo" class="etiqueta-formulario">Email:</label>
+                <input type="email" id="correo" name="correo" class="campo-formulario" placeholder="tu@email.com"
+                    required>
+            </div>
 
-                <div class="grupo-formulario">
-                    <label for="password" class="etiqueta-formulario">Crea una contraseña:</label>
-                    <input type="password" id="password" name="password" class="campo-formulario" placeholder="••••••••" required>
-                </div>
+            <div class="grupo-formulario">
+                <label for="documento" class="etiqueta-formulario">DNI/Pasaporte:</label>
+                <input type="text" id="documento" name="documento" class="campo-formulario" placeholder="12345678X"
+                    required>
+            </div>
 
-                <button type="submit" class="boton-principal boton-bloque">Confirmar Registro</button>
-            </form>
+            <div class="grupo-formulario">
+                <label for="plan" class="etiqueta-formulario">Plan deseado:</label>
+                <select id="plan" name="plan" class="campo-formulario">
+                    <option value="basico">Básico (Solo Sala)</option>
+                    <option value="premium">Premium (Sala + Piscina + Sauna)</option>
+                    <option value="vip">VIP Platinum (Todo Incluido + Fisio)</option>
+                </select>
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="metodo-pago" class="etiqueta-formulario">Método de pago:</label>
+                <select id="metodo-pago" name="metodo-pago" class="campo-formulario">
+                    <option value="tarjeta">Tarjeta de Crédito</option>
+                    <option value="domiciliacion">Domiciliación Bancaria</option>
+                </select>
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="numero-pago" class="etiqueta-formulario">Número de Tarjeta / IBAN:</label>
+                <input type="text" id="numero-pago" name="numero-pago" class="campo-formulario" placeholder="ESXX..."
+                    required>
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="password" class="etiqueta-formulario">Crea una contraseña:</label>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <input type="password" id="password" name="password" class="campo-formulario" placeholder="••••••••" style="padding-right: 45px; width: 100%;" required>
+                    <button type="button" id="toggle-password" style="position: absolute; right: 10px; background: none; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 5px; outline: none; z-index: 10;">👁️</button>
+                </div>
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="repeat-password" class="etiqueta-formulario">Repite la contraseña:</label>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <input type="password" id="repeat-password" name="repeat-password" class="campo-formulario" placeholder="••••••••" style="padding-right: 45px; width: 100%;" required>
+                    <button type="button" id="toggle-repeat-password" style="position: absolute; right: 10px; background: none; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 5px; outline: none; z-index: 10;">👁️</button>
+                </div>
+            </div>
+
+            <button type="submit" class="boton-principal boton-bloque">Confirmar Registro</button>
+        </form>
+
+        <p class="auth-footer">¿Ya eres socio? <a href="/login" class="texto-destacado">Inicia sesión</a></p>
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const pwdInput = document.getElementById("password");
+    const repeatPwdInput = document.getElementById("repeat-password");
+    const togglePwd = document.getElementById("toggle-password");
+    const toggleRepeatPwd = document.getElementById("toggle-repeat-password");
+    const form = document.querySelector(".formulario");
+
+    // Función para conmutar la visibilidad de la contraseña
+    togglePwd.addEventListener("click", function() {
+        if (pwdInput.type === "password") {
+            pwdInput.type = "text";
+            togglePwd.textContent = "🔒";
+        } else {
+            pwdInput.type = "password";
+            togglePwd.textContent = "👁️";
+        }
+    });
+
+    toggleRepeatPwd.addEventListener("click", function() {
+        if (repeatPwdInput.type === "password") {
+            repeatPwdInput.type = "text";
+            toggleRepeatPwd.textContent = "🔒";
+        } else {
+            repeatPwdInput.type = "password";
+            toggleRepeatPwd.textContent = "👁️";
+        }
+    });
+
+    // Validar coincidencia antes de enviar el formulario
+    form.addEventListener("submit", function(event) {
+        if (pwdInput.value !== repeatPwdInput.value) {
+            event.preventDefault();
             
-            <p class="auth-footer">¿Ya eres socio? <a href="/login" class="texto-destacado">Inicia sesión</a></p>
-        </div>
-    </section>
+            // Crear alerta premium o usar alert
+            alert("❌ Las contraseñas no coinciden. Por favor, verifícalas antes de continuar.");
+        }
+    });
+});
+</script>
 {{end}}
