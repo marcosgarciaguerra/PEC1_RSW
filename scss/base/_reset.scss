@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $fuente-principal;
+    background-color: $color-fondo-oscuro;
+    color: $color-texto-blanco;
+    overflow-x: hidden;
+    line-height: 1.6;
+}

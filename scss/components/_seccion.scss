@@ -1,0 +1,20 @@
+.seccion {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+
+    &__titulo {
+        text-align: center;
+        color: $color-texto-blanco;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: 40px;
+    }
+
+    &__contenido {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 30px;
+    }
+}

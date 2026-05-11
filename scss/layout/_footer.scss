@@ -1,0 +1,74 @@
+.pie-pagina {
+    background-color: $color-fondo-caja;
+    color: $color-texto-gris;
+    padding: 4rem 3rem;
+    border-top: 1px solid $color-gris-oscuro;
+
+    @media (max-width: 768px) {
+        padding: 3rem 1.5rem;
+    }
+
+    &__contenedor {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 3rem;
+        width: 100%;
+    }
+
+    &__columna {
+        h4 {
+            color: $color-texto-blanco;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+    }
+
+    &__logo {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    &__logo-brand {
+        width: 150px;
+        height: 50px;
+        background-image: url('../img/logo_platinium.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+    }
+
+    &__lista {
+        list-style: none;
+
+        li {
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+
+            a {
+                text-decoration: none;
+                color: inherit;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: $color-plata;
+                }
+            }
+        }
+    }
+
+    &__copyright {
+        text-align: center;
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 0.8rem;
+    }
+}

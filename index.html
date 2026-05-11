@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platinum Gym | Inicio</title>
+    <link rel="icon" type="image/png" href="img/logo_platinium.png">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,800;0,900;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <div class="aplicacion">
+                <header class="barra-navegacion unified-header">
+            <div class="header-logo">
+                <a href="index.html" class="logo-enlace" aria-label="Volver al inicio">
+                    <div class="logo-brand"></div>
+                </a>
+            </div>
+
+            <nav class="header-nav">
+                <ul class="lista-enlaces">
+                    <li class="elemento-lista"><a href="index.html" class="enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
+                    <li class="elemento-lista dropdown">
+                        <a href="#" class="enlace">
+                            <i class="fas fa-dumbbell" aria-hidden="true"></i>
+                            <span>El Gimnasio</span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="maquinaria.html"><i class="fas fa-cogs"></i> Maquinaria</a></li>
+                            <li><a href="servicios.html"><i class="fas fa-crown"></i> Servicios</a></li>
+                            <li><a href="equipo.html"><i class="fas fa-users"></i> Nuestro Equipo</a></li>
+                            <li><a href="reglas.html"><i class="fas fa-scroll"></i> Reglas del Centro</a></li>
+                        </ul>
+                    </li>
+                    <li class="elemento-lista"><a href="tienda.html" class="enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
+                    <li class="elemento-lista dropdown">
+                        <a href="#" class="enlace">
+                            <i class="fas fa-user-circle" aria-hidden="true"></i>
+                            <span>Socios</span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="reservas.html"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
+                            <li><a href="calculadora.html"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
+                            <li><a href="apuntate.html"><i class="fas fa-user-plus"></i> ¡Apúntate!</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div class="barra-navegacion__buscador">
+                    <form action="buscar.html" method="GET" class="search-form">
+                        <button type="submit" class="search-icon-btn" aria-label="Buscar"><i class="fas fa-search"></i></button>
+                        <input type="text" name="q" class="search-input-with-icon" placeholder="¿Qué buscas?">
+                    </form>
+                </div>
+                <div class="barra-navegacion__iconos">
+                    <div class="user-dropdown-container">
+                        <a href="login.html" class="user-dropdown-trigger" style="text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:0.35rem;">
+                            <span>Login</span>
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                    </div>
+                </div>
+                <label for="menu-toggle" class="mobile-menu-btn" aria-label="Alternar menú móvil"><i class="fas fa-bars"></i></label>
+            </div>
+        </header>
+
+        <main class="contenido-principal" id="contenido">
+<nav class="migas-pan" aria-label="Breadcrumb">
+    <span class="actual">Inicio</span>
+</nav>
+
+<section class="portada">
+    <div class="texto-portada">
+        <h1>Bienvenido a <span class="texto-destacado">Platinum Gym</span></h1>
+        <a href="apuntate.html" class="boton-principal">¡Hazte Socio Ahora!</a>
+    </div>
+</section>
+
+<section class="seccion">
+    <h2 class="titulo-seccion">Nuestros Locales</h2>
+    <ul class="contenido-seccion">
+        <li class="tarjeta">
+            <img src="img/ubicaciones/meco.png" alt="Local Meco" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Meco</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Gimnasio completo con zona de peso libre, máquinas de cardio y sala de clases dirigidas. Abierto de 6:00 a 23:00.</p>
+                        <p><strong>Dirección:</strong> C/ Calle Mayor 12, Meco, Madrid</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="img/ubicaciones/vallecas.avif" alt="Local Vallecas" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Vallecas</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Ubicación emblemática con equipamiento Hammer Strength y zona de powerlifting. Abierto 24h para socios VIP.</p>
+                        <p><strong>Dirección:</strong> Av. de la Albufera 45, Vallecas, Madrid</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="img/ubicaciones/Chicago.jpg" alt="Local Seattle" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Seattle (Central)</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Nuestra sede central. 5 plantas de puro acero, piscina olímpica y zona de crioterapia.</p>
+                        <p><strong>Dirección:</strong> 1201 3rd Ave, Seattle, WA 98101, USA</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="img/ubicaciones/tel-aviv.webp" alt="Local Tel-Aviv" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Tel-Aviv</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Un gimnasio costero de última generación. Especialidad en calistenia deportiva y CrossTraining al aire libre.</p>
+                        <p><strong>Dirección:</strong> 12 Namal Tel Aviv St, Tel Aviv-Yafo, Israel</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="img/ubicaciones/epsteinisla.jfif" alt="Local Isla de Epstein" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Isla de Epstein</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Complejo exclusivo para entrenamientos de extrema privacidad y alto rendimiento. Acceso restringido.</p>
+                        <p><strong>Dirección:</strong> Little St. James, US Virgin Islands</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+        <li class="tarjeta">
+            <img src="img/ubicaciones/berlin.jfif" alt="Local Berlín" class="imagen-tarjeta">
+            <div class="cuerpo-tarjeta">
+                <h3 class="nombre-tarjeta">Berlín</h3>
+                <details class="detalles-tarjeta">
+                    <summary class="ver-mas">Ver información</summary>
+                    <div class="descripcion-tarjeta">
+                        <p>Espacio industrial reciclado, ideal para rutinas de Powerlifting underground y Strongman.</p>
+                        <p><strong>Dirección:</strong> Friedrichstraße 43, 10117 Berlin, Alemania</p>
+                    </div>
+                </details>
+            </div>
+        </li>
+    </ul>
+</section>
+
+<section class="seccion">
+    <h2 class="titulo-seccion">Opiniones de nuestros Guerreros</h2>
+    <div class="resenas-container">
+        <div class="resenas-form-wrapper">
+            <div class="resena-form-card resena-form-card--bloqueado">
+                <i class="fas fa-lock lock-icon"></i>
+                <h3>Acceso Restringido</h3>
+                <p>Versión estática: reseñas de ejemplo abajo. En la app completa solo socios autenticados publican.</p>
+                <a href="login.html" class="boton-formulario mt-1 inline-block no-underline">Iniciar Sesión</a>
+            </div>
+        </div>
+        <div class="resenas-list-wrapper">
+            <ul class="resenas-grid">
+                <li class="resena-card">
+                    <h3 class="resena-autor">Carlos M.</h3>
+                    <div class="resena-stars" role="img" aria-label="Puntuación: 5">★★★★★</div>
+                    <p class="resena-text">"Mejor gimnasio de la zona. Máquinas de lujo y ambiente brutal."</p>
+                </li>
+                <li class="resena-card">
+                    <h3 class="resena-autor">Laura G.</h3>
+                    <div class="resena-stars" role="img" aria-label="Puntuación: 4">★★★★☆</div>
+                    <p class="resena-text">"La piscina olímpica es una maravilla. Un poco lleno a las 18h."</p>
+                </li>
+                <li class="resena-card">
+                    <h3 class="resena-autor">David R.</h3>
+                    <div class="resena-stars" role="img" aria-label="Puntuación: 5">★★★★★</div>
+                    <p class="resena-text">"El equipo de entrenadores es de otro nivel. He ganado 5kg de músculo en 3 meses."</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+        </main>
+        <footer class="pie-pagina">
+    <div class="pie-pagina__contenedor">
+        <section class="pie-pagina__columna">
+            <div class="pie-pagina__logo">
+                <div class="pie-pagina__logo-brand"></div>
+            </div>
+            <h4>Platinum Gym</h4>
+            <p>Expertos en ponerte mamadismo</p>
+        </section>
+        <section class="pie-pagina__columna">
+            <h4>Enlaces Rápidos</h4>
+            <nav>
+                <ul class="pie-pagina__lista">
+                    <li><a href="maquinaria.html">Maquinaria</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="tienda.html">Tienda</a></li>
+                    <li><a href="reglas.html">Reglas</a></li>
+                    <li><a href="equipo.html">Equipo</a></li>
+                    <li><a href="apuntate.html">¡Apúntate!</a></li>
+                </ul>
+            </nav>
+        </section>
+        <section class="pie-pagina__columna">
+            <h4>Contacto</h4>
+            <ul class="pie-pagina__lista">
+                <li><i class="fas fa-phone" aria-hidden="true"></i> +34 912 345 678</li>
+                <li><i class="fas fa-envelope" aria-hidden="true"></i> info@platinumgym.com</li>
+            </ul>
+        </section>
+        <section class="pie-pagina__columna">
+            <h4>Gimnasios</h4>
+            <ul class="pie-pagina__lista">
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Seattle</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Tel-Aviv</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Isla de Epstein</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Vallecas</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Meco</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Berlín</li>
+            </ul>
+        </section>
+    </div>
+    <div class="pie-pagina__copyright">
+        <p>&copy; 2026 Platinum Gym. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

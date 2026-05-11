@@ -1,0 +1,97 @@
+.barra-carrito {
+    background-color: #1a1a1a;
+    text-align: right;
+    padding: 0 20px;
+    position: relative;
+
+    &__checkbox {
+        display: none;
+    }
+
+    &__boton {
+        display: inline-block;
+        padding: 10px 20px;
+        color: $color-gris;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &:hover {
+            color: $color-blanco;
+        }
+    }
+
+    &__contenido {
+        display: none;
+        background-color: #1a1a1a;
+        padding: 20px;
+        border-top: 1px solid #333;
+    }
+
+    &__checkbox:checked~&__contenido {
+        display: block;
+    }
+}
+
+.carrito {
+    max-width: 800px;
+    margin: 0 auto;
+
+    &__tabla {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    &__cabecera {
+        background-color: $color-negro;
+        color: $color-gris;
+        padding: 12px 15px;
+        text-align: left;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+    }
+
+    &__fila {
+        border-bottom: 1px solid #333;
+    }
+
+    &__celda {
+        padding: 12px 15px;
+        background-color: #222;
+        color: $color-gris;
+    }
+
+    &__resumen {
+        text-align: right;
+    }
+
+    &__total {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $color-gris;
+        margin-bottom: 15px;
+    }
+
+    &__boton {
+        display: inline-block;
+        padding: 15px 30px;
+        background-color: $color-gris;
+        color: $color-negro;
+        border: 2px solid $color-gris;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        font-family: $fuente;
+
+        &:hover {
+            background-color: $color-negro;
+            color: $color-gris;
+        }
+    }
+}

@@ -1,0 +1,59 @@
+.cabecera {
+    background-color: $color-negro;
+    padding: 0 20px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+
+    &__contenedor {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__logo-enlace {
+        display: block;
+    }
+
+    &__logo-img {
+        height: 70px;
+        width: auto;
+        border: 2px solid $color-gris;
+        background-color: $color-negro;
+    }
+
+    &__nav {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+    &__enlace {
+        color: $color-gris;
+        font-weight: 700;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+
+        &:hover {
+            color: $color-blanco;
+            text-decoration: underline;
+        }
+
+        &--destacado {
+            background-color: $color-gris;
+            color: $color-negro;
+            padding: 10px 20px;
+            border: 2px solid $color-gris;
+
+            &:hover {
+                background-color: $color-negro;
+                color: $color-gris;
+                text-decoration: none;
+            }
+        }
+    }
+}

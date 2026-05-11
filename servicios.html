@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platinum Gym | Servicios</title>
+    <link rel="icon" type="image/png" href="img/logo_platinium.png">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,800;0,900;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <div class="aplicacion">
+                <header class="barra-navegacion unified-header">
+            <div class="header-logo">
+                <a href="index.html" class="logo-enlace" aria-label="Volver al inicio">
+                    <div class="logo-brand"></div>
+                </a>
+            </div>
+
+            <nav class="header-nav">
+                <ul class="lista-enlaces">
+                    <li class="elemento-lista"><a href="index.html" class="enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
+                    <li class="elemento-lista dropdown">
+                        <a href="#" class="enlace">
+                            <i class="fas fa-dumbbell" aria-hidden="true"></i>
+                            <span>El Gimnasio</span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="maquinaria.html"><i class="fas fa-cogs"></i> Maquinaria</a></li>
+                            <li><a href="servicios.html"><i class="fas fa-crown"></i> Servicios</a></li>
+                            <li><a href="equipo.html"><i class="fas fa-users"></i> Nuestro Equipo</a></li>
+                            <li><a href="reglas.html"><i class="fas fa-scroll"></i> Reglas del Centro</a></li>
+                        </ul>
+                    </li>
+                    <li class="elemento-lista"><a href="tienda.html" class="enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
+                    <li class="elemento-lista dropdown">
+                        <a href="#" class="enlace">
+                            <i class="fas fa-user-circle" aria-hidden="true"></i>
+                            <span>Socios</span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="reservas.html"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
+                            <li><a href="calculadora.html"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
+                            <li><a href="apuntate.html"><i class="fas fa-user-plus"></i> ¡Apúntate!</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div class="barra-navegacion__buscador">
+                    <form action="buscar.html" method="GET" class="search-form">
+                        <button type="submit" class="search-icon-btn" aria-label="Buscar"><i class="fas fa-search"></i></button>
+                        <input type="text" name="q" class="search-input-with-icon" placeholder="¿Qué buscas?">
+                    </form>
+                </div>
+                <div class="barra-navegacion__iconos">
+                    <div class="user-dropdown-container">
+                        <a href="login.html" class="user-dropdown-trigger" style="text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:0.35rem;">
+                            <span>Login</span>
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                    </div>
+                </div>
+                <label for="menu-toggle" class="mobile-menu-btn" aria-label="Alternar menú móvil"><i class="fas fa-bars"></i></label>
+            </div>
+        </header>
+
+        <main class="contenido-principal" id="contenido">
+    <nav class="migas-pan" aria-label="Breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span class="separador"><i class="fas fa-chevron-right"></i></span>
+        <span class="actual">Servicios</span>
+    </nav>
+
+    <section id="servicios-list" class="seccion">
+        <div class="cabecera-seccion">
+            <h2>SERVICIOS <span class="texto-destacado">PLATINUM</span></h2>
+            <p>Más que un gimnasio, un centro de alto rendimiento integral.</p>
+        </div>
+
+        <ul class="contenido-seccion">
+            <li class="tarjeta">
+                <div class="cuerpo-tarjeta">
+                    <div class="regla-icon"><i class="fas fa-dumbbell"></i></div>
+                    <h3 class="nombre-tarjeta">Sala de Máquinas</h3>
+                    <p class="descripcion-tarjeta">Bio-mechanics focus. Equipamiento seleccionado científicamente para aislar cada grupo muscular de forma estricta.</p>
+                    <a href="servicio-detalle-1.html" class="boton-principal boton-bloque">Saber Más</a>
+                </div>
+            </li>
+            <li class="tarjeta">
+                <div class="cuerpo-tarjeta">
+                    <div class="regla-icon"><i class="fas fa-user-md"></i></div>
+                    <h3 class="nombre-tarjeta">Fisioterapia Premium</h3>
+                    <p class="descripcion-tarjeta">Recuperación profunda, punción seca, liberación miofascial y osteopatía al servicio de tu rendimiento.</p>
+                    <a href="servicio-detalle-2.html" class="boton-principal boton-bloque">Saber Más</a>
+                </div>
+            </li>
+            <li class="tarjeta">
+                <div class="cuerpo-tarjeta">
+                    <div class="regla-icon"><i class="fas fa-apple-alt"></i></div>
+                    <h3 class="nombre-tarjeta">Nutricionista</h3>
+                    <p class="descripcion-tarjeta">Planes dietéticos personalizados, periodización nutricional y análisis corporal por pliegues y DEXA.</p>
+                    <a href="servicio-detalle-3.html" class="boton-principal boton-bloque">Saber Más</a>
+                </div>
+            </li>
+            <li class="tarjeta">
+                <div class="cuerpo-tarjeta">
+                    <div class="regla-icon"><i class="fas fa-hot-tub"></i></div>
+                    <h3 class="nombre-tarjeta">Sauna Finlandesa</h3>
+                    <p class="descripcion-tarjeta">Relajación térmica para eliminación de toxinas, mejora cardiovascular y recuperación del sistema nervioso.</p>
+                    <a href="servicio-detalle-4.html" class="boton-principal boton-bloque">Saber Más</a>
+                </div>
+            </li>
+            <li class="tarjeta">
+                <div class="cuerpo-tarjeta">
+                    <div class="regla-icon"><i class="fas fa-swimmer"></i></div>
+                    <h3 class="nombre-tarjeta">Piscina Olímpica</h3>
+                    <p class="descripcion-tarjeta">50 metros de longitud, temperatura controlada y uso reservado por carriles para entreno de impacto cero.</p>
+                    <a href="servicio-detalle-5.html" class="boton-principal boton-bloque">Saber Más</a>
+                </div>
+            </li>
+            <li class="tarjeta">
+                <div class="cuerpo-tarjeta">
+                    <div class="regla-icon"><i class="fas fa-snowflake"></i></div>
+                    <h3 class="nombre-tarjeta">Crioterapia</h3>
+                    <p class="descripcion-tarjeta">Terapias bajo cero (-110°C) para acelerar recuperación muscular y reducir niveles de inflamación.</p>
+                    <a href="servicio-detalle-6.html" class="boton-principal boton-bloque">Saber Más</a>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+        </main>
+        <footer class="pie-pagina">
+    <div class="pie-pagina__contenedor">
+        <section class="pie-pagina__columna">
+            <div class="pie-pagina__logo">
+                <div class="pie-pagina__logo-brand"></div>
+            </div>
+            <h4>Platinum Gym</h4>
+            <p>Expertos en ponerte mamadismo</p>
+        </section>
+        <section class="pie-pagina__columna">
+            <h4>Enlaces Rápidos</h4>
+            <nav>
+                <ul class="pie-pagina__lista">
+                    <li><a href="maquinaria.html">Maquinaria</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="tienda.html">Tienda</a></li>
+                    <li><a href="reglas.html">Reglas</a></li>
+                    <li><a href="equipo.html">Equipo</a></li>
+                    <li><a href="apuntate.html">¡Apúntate!</a></li>
+                </ul>
+            </nav>
+        </section>
+        <section class="pie-pagina__columna">
+            <h4>Contacto</h4>
+            <ul class="pie-pagina__lista">
+                <li><i class="fas fa-phone" aria-hidden="true"></i> +34 912 345 678</li>
+                <li><i class="fas fa-envelope" aria-hidden="true"></i> info@platinumgym.com</li>
+            </ul>
+        </section>
+        <section class="pie-pagina__columna">
+            <h4>Gimnasios</h4>
+            <ul class="pie-pagina__lista">
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Seattle</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Tel-Aviv</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Isla de Epstein</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Vallecas</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Meco</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Berlín</li>
+            </ul>
+        </section>
+    </div>
+    <div class="pie-pagina__copyright">
+        <p>&copy; 2026 Platinum Gym. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
