@@ -64,6 +64,7 @@ func main() {
 	http.HandleFunc("/reservas/reservar", handlers.ProcesarReservaHandler)
 	http.HandleFunc("/reservas/cancelar", handlers.ProcesarCancelacionHandler)
 	http.HandleFunc("/tienda/tramitar", handlers.TramitarPedidoHandler)
+	http.HandleFunc("/tienda/confirmar", handlers.ConfirmarPedidoHandler)
 
 	log.Println("Servidor iniciado en http://localhost:8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {

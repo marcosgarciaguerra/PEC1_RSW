@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"errors"
 	"log"
 	"net/http"
-	"pec2/internal/db"
+
 	"pec2/internal/models"
+	"pec2/internal/services"
 )
 
 func RegistroHandler(w http.ResponseWriter, r *http.Request) {
@@ -27,18 +29,22 @@ func RegistroHandler(w http.ResponseWriter, r *http.Request) {
 		Telefono:        r.FormValue("telefono"),
 		Correo:          r.FormValue("correo"),
 		Documento:       r.FormValue("documento"),
+		Plan:            r.FormValue("plan"),
 		MetodoPago:      r.FormValue("metodo-pago"),
 		NumeroPago:      r.FormValue("numero-pago"),
 		Password:        r.FormValue("password"),
 	}
 
 	repeatPassword := r.FormValue("repeat-password")
-	if usuario.Password != repeatPassword {
+	err = services.RegistrarUsuario(usuario, repeatPassword)
+	if errors.Is(err, services.ErrPasswordsNoCoinciden) {
 		http.Error(w, "Las contraseñas ingresadas no coinciden", http.StatusBadRequest)
 		return
 	}
-
-	err = db.GuardarUsuario(usuario)
+	if errors.Is(err, services.ErrDatosRegistroInvalidos) {
+		http.Error(w, "Faltan datos obligatorios del formulario", http.StatusBadRequest)
+		return
+	}
 	if err != nil {
 		log.Println("Error guardando usuario (posible DNI o Correo duplicado):", err)
 		http.Error(w, "El correo electrónico o el DNI/Pasaporte ya se encuentra registrado en el sistema.", http.StatusConflict)

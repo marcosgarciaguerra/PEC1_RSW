@@ -35,6 +35,7 @@ func createTables() {
 		telefono TEXT,
 		correo TEXT UNIQUE,
 		documento TEXT UNIQUE,
+		plan TEXT DEFAULT 'basico',
 		metodo_pago TEXT,
 		numero_pago TEXT,
 		password TEXT NOT NULL,
@@ -48,6 +49,8 @@ func createTables() {
 
 	// Asegurar compatibilidad si la tabla ya existía sin la restricción UNIQUE
 	_, _ = DB.Exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_documento ON usuarios (documento);")
+	// Migración ligera para bases de datos creadas antes de añadir el plan.
+	_, _ = DB.Exec("ALTER TABLE usuarios ADD COLUMN plan TEXT DEFAULT 'basico';")
 
 	resenaTableInfo := `
 	CREATE TABLE IF NOT EXISTS resenas (
@@ -93,6 +96,40 @@ func createTables() {
 		log.Fatal("Error creando tabla reservas: ", err)
 	}
 
+	pedidosTableInfo := `
+	CREATE TABLE IF NOT EXISTS pedidos (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		usuario_id INTEGER NOT NULL,
+		fecha TEXT NOT NULL,
+		direccion_envio TEXT NOT NULL,
+		metodo_pago TEXT,
+		total REAL NOT NULL,
+		estado TEXT NOT NULL,
+		FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
+	);`
+
+	_, err = DB.Exec(pedidosTableInfo)
+	if err != nil {
+		log.Fatal("Error creando tabla pedidos: ", err)
+	}
+
+	pedidoItemsTableInfo := `
+	CREATE TABLE IF NOT EXISTS pedido_items (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		pedido_id INTEGER NOT NULL,
+		articulo_id INTEGER NOT NULL,
+		nombre TEXT NOT NULL,
+		precio_unitario REAL NOT NULL,
+		cantidad INTEGER NOT NULL,
+		subtotal REAL NOT NULL,
+		FOREIGN KEY(pedido_id) REFERENCES pedidos(id)
+	);`
+
+	_, err = DB.Exec(pedidoItemsTableInfo)
+	if err != nil {
+		log.Fatal("Error creando tabla pedido_items: ", err)
+	}
+
 	var count int
 	DB.QueryRow("SELECT COUNT(*) FROM resenas").Scan(&count)
 	if count == 0 {
@@ -118,13 +155,13 @@ func createTables() {
 }
 
 func GuardarUsuario(u models.Usuario) error {
-	stmt, err := DB.Prepare(`INSERT INTO usuarios (nombre, apellidos, fecha_nacimiento, direccion, telefono, correo, documento, metodo_pago, numero_pago, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+	stmt, err := DB.Prepare(`INSERT INTO usuarios (nombre, apellidos, fecha_nacimiento, direccion, telefono, correo, documento, plan, metodo_pago, numero_pago, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
 	if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(u.Nombre, u.Apellidos, u.FechaNacimiento, u.Direccion, u.Telefono, u.Correo, u.Documento, u.MetodoPago, u.NumeroPago, u.Password)
+	_, err = stmt.Exec(u.Nombre, u.Apellidos, u.FechaNacimiento, u.Direccion, u.Telefono, u.Correo, u.Documento, u.Plan, u.MetodoPago, u.NumeroPago, u.Password)
 	return err
 }
 
@@ -179,10 +216,47 @@ func ObtenerSocioPorNombre(nombre string) *models.Socio {
 
 func ObtenerUsuarioPorCorreo(correo string) *models.Usuario {
 	var u models.Usuario
-	err := DB.QueryRow("SELECT id, nombre, apellidos, correo, direccion, telefono, metodo_pago FROM usuarios WHERE correo = ?", correo).
-		Scan(&u.ID, &u.Nombre, &u.Apellidos, &u.Correo, &u.Direccion, &u.Telefono, &u.MetodoPago)
+	err := DB.QueryRow("SELECT id, nombre, apellidos, correo, direccion, telefono, plan, metodo_pago FROM usuarios WHERE correo = ?", correo).
+		Scan(&u.ID, &u.Nombre, &u.Apellidos, &u.Correo, &u.Direccion, &u.Telefono, &u.Plan, &u.MetodoPago)
 	if err != nil {
 		return nil
 	}
 	return &u
+}
+
+func GuardarPedido(p *models.Pedido) error {
+	tx, err := DB.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	res, err := tx.Exec(
+		`INSERT INTO pedidos (usuario_id, fecha, direccion_envio, metodo_pago, total, estado) VALUES (?, ?, ?, ?, ?, ?)`,
+		p.UsuarioID, p.Fecha, p.DireccionEnvio, p.MetodoPago, p.Total, p.Estado,
+	)
+	if err != nil {
+		return err
+	}
+
+	pedidoID, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+	p.ID = int(pedidoID)
+
+	stmt, err := tx.Prepare(`INSERT INTO pedido_items (pedido_id, articulo_id, nombre, precio_unitario, cantidad, subtotal) VALUES (?, ?, ?, ?, ?, ?)`)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	for _, item := range p.Items {
+		_, err = stmt.Exec(p.ID, item.ArticuloID, item.Nombre, item.PrecioUnitario, item.Cantidad, item.Subtotal)
+		if err != nil {
+			return err
+		}
+	}
+
+	return tx.Commit()
 }

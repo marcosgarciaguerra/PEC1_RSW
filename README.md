@@ -1,109 +1,80 @@
-# 🏋️‍♂️ Platinium Gym - Servidor Web Dinámico en Go
+# Platinium Gym - Servidor Web Dinámico en Go
 
-Este proyecto es la resolución de la **PEC 2** de la asignatura **Redes y Sistemas Web (RSW)** de la Universidad Camilo José Cela. Consiste en la migración de un sitio web estático (desarrollado en la PEC 1) a una aplicación web dinámica completa, construida con un servidor backend en **Golang**.
+Proyecto de la PEC 2 de Redes y Sistemas Web. Migra la web estática de Platinium Gym a una aplicación web dinámica con servidor HTTP en Go, plantillas HTML, formularios procesados en servidor y persistencia en SQLite.
 
-## 🚀 Características Principales
+## Características
 
-* **Servidor HTTP en Go:** Implementación de un servidor web desde cero sin depender de frameworks pesados, aplicando las mejores prácticas de la comunidad.
-* **Arquitectura de Capas:** Código altamente estructurado separando las responsabilidades en Presentación (handlers/vistas), Lógica de Negocio (services) y Datos (db).
-* **Renderizado Dinámico:** Uso del paquete `html/template` para inyectar datos dinámicos en las vistas HTML.
-* **Procesamiento de Formularios:** Captura, validación y procesamiento de datos provenientes del cliente (login, registro de socios, reseñas, buscador y calculadora).
-* **Persistencia de Datos:** Almacenamiento seguro y persistente de la información utilizando una base de datos local **SQLite** (`platinum.db`).
-* **Diseño Responsivo:** Interfaz construida con **SCSS** modular, asegurando adaptabilidad a dispositivos móviles y de escritorio.
+- Servidor web en Go con `net/http`.
+- Plantillas dinámicas con `html/template`.
+- Arquitectura por capas:
+  - `cmd/app`: punto de entrada y registro de rutas.
+  - `internal/handlers`: controladores HTTP y renderizado de vistas.
+  - `internal/services`: lógica de negocio y validaciones.
+  - `internal/db`: acceso a datos, catálogo inicial y persistencia.
+  - `internal/models`: entidades del dominio.
+- Formularios procesados por Go: registro, login, reseñas, búsqueda, calculadora, reservas y confirmación de pedidos.
+- Persistencia local en `internal/db/platinum.db` mediante SQLite.
+- Interfaz responsive con HTML, CSS y SCSS.
 
-## 🛠️ Stack Tecnológico
-
-* **Backend:** Go (Golang)
-* **Frontend:** HTML5, CSS3 (mediante SCSS)
-* **Base de Datos:** SQLite 3
-* **Arquitectura:** Patrón MVC (Modelo-Vista-Controlador) adaptado a las convenciones de Go (`internal/`, `cmd/servidor/`).
-
-## 📂 Estructura del Proyecto
-
-El proyecto sigue el estándar de distribución de directorios de Go:
+## Estructura
 
 ```text
-├── go.mod                  # Archivo de definición del módulo de Go y dependencias
-├── go.sum                  # Hashes de seguridad de las dependencias
-├── servidor/               # Punto de entrada de la aplicación
-│   └── main.go             # Inicialización del servidor, rutas y conexión a BD
-├── internal/               # Código privado de la aplicación (Lógica central)
-│   ├── db/                 # Capa de acceso a datos y base de datos SQLite
-│   │   ├── platinum.db     # Archivo de base de datos SQLite
-│   │   └── ...             # Repositorios (almacenamiento, datos_equipo, etc.)
-│   ├── handlers/           # Capa de presentación (Controladores HTTP)
-│   │   ├── vistas.go       # Carga de páginas generales
-│   │   ├── formulario.go   # Procesamiento de formularios
-│   │   └── ...             # Handlers específicos (login, tienda, reservas, etc.)
-│   ├── models/             # Estructuras de datos (Entidades del dominio)
-│   │   └── usuario.go, maquina.go, servicio.go, etc.
-│   └── services/           # Capa de lógica de negocio
-│       └── calculadora.go, registro.go
-└── web/                    # Archivos del Frontend
-    ├── static/             # Archivos estáticos (públicos)
-    │   ├── css/            # Hojas de estilo compiladas
-    │   ├── scss/           # Código fuente modular de estilos
-    │   └── img/            # Imágenes y recursos multimedia (equipo, maquinaria, tienda)
-    └── templates/          # Plantillas HTML dinámicas
-        ├── layout.html     # Plantilla base (Header, Footer, Meta tags)
-        ├── index.html      # Página principal
-        └── ...             # Vistas de contenido (tienda, reservas, login, etc.)
+├── cmd/
+│   └── app/
+│       └── main.go
+├── internal/
+│   ├── db/
+│   ├── handlers/
+│   ├── models/
+│   └── services/
+├── web/
+│   ├── static/
+│   │   ├── css/
+│   │   ├── img/
+│   │   └── scss/
+│   └── templates/
+├── go.mod
+└── go.sum
 ```
 
-## ⚙️ Requisitos Previos
+## Ejecución
 
-Para ejecutar este proyecto en tu máquina local, necesitas tener instalado:
+Requisitos:
 
-* [Go (versión 1.20 o superior)](https://golang.org/doc/install)
-* Un navegador web moderno.
-* *(Opcional)* Compilador de SCSS/SASS si deseas modificar los estilos visuales.
+- Go instalado.
+- Navegador web moderno.
 
-## 🏃‍♂️ Instalación y Ejecución
+Comandos:
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/MarkQWERTY/PEC1_RSW
-   cd PEC1_RSW
-   ```
-
-2. **Descargar las dependencias:**
-   ```bash
-   go mod download
-   ```
-
-3. **Ejecutar el servidor:**
-   El punto de entrada de la aplicación se encuentra en la carpeta `servidor`.
-   ```bash
-   go run servidor/main.go
-   ```
-
-4. **Acceder a la aplicación:**
-   Abre tu navegador web y navega a:
-   ```text
-   http://localhost:8080
-   ```
-   *(Nota: Si configuraste otro puerto en main.go, utiliza ese).*
-
-## 📖 Rutas Disponibles (Vistas Principales)
-
-* `/` - Inicio (Página principal de Platinium Gym)
-* `/equipo` - Información sobre los entrenadores (Andoni, Cbum, Arnold, etc.)
-* `/maquinaria` - Catálogo de máquinas del gimnasio
-* `/tienda` - Venta de suplementos y ropa (Creatina, pre-entrenos, straps)
-* `/reservas` - Formulario para reserva de clases/pistas
-* `/calculadora` - Herramienta de cálculo de métricas fitness
-* `/login` - Acceso y registro de usuarios
-* `/reglas` - Normativa interna del gimnasio
-
-## 📝 Notas de Desarrollo (PEC 2)
-
-* **Cumplimiento de rúbrica:** Todos los requisitos obligatorios como la separación de lógica, comentarios explicativos en funciones exportadas, y almacenamiento persistente (en este caso SQLite) han sido integrados.
-* Se ha empleado el paquete nativo `html/template` en lugar de servir archivos estáticos crudos para permitir el paso de estructuras de datos a las vistas.
-
-## 👥 Autores
-
-* **Grupo XX** - RSW
-* *Marcos García Guerra*
-* *Eric Specht de la Torre*
+```bash
+go mod download
+go run ./cmd/app
 ```
 
+Después, abrir:
+
+```text
+http://localhost:8080
+```
+
+## Rutas Principales
+
+- `/`: inicio con reseñas dinámicas.
+- `/apuntate`: alta de socios y selección de plan.
+- `/login`: inicio de sesión.
+- `/reservas`: reserva y cancelación de clases para socios autenticados.
+- `/tienda`: catálogo renderizado desde Go.
+- `/tienda/tramitar`: revisión del carrito para usuarios autenticados.
+- `/tienda/confirmar`: confirmación de pedido por `POST`, validación en servidor y guardado en SQLite.
+- `/buscar`: buscador del sitio.
+- `/calculadora`: cálculo de métricas fitness.
+
+## Notas PEC 2
+
+La aplicación separa presentación, lógica y datos siguiendo una estructura habitual en proyectos Go. La tienda no confía en precios enviados desde el cliente: el servidor recibe IDs y cantidades, recupera el catálogo definido en Go, calcula el total y guarda el pedido con sus líneas en SQLite.
+
+## Autores
+
+- Grupo 23 - RSW
+- Marcos García Guerra
+- Eric Specht de la Torre

@@ -23,111 +23,19 @@
             </div>
 
             <ul class="contenido-seccion">
-                <li class="tarjeta sup">
+                {{range .Data.Articulos}}
+                <li class="tarjeta {{.Categoria}}">
                     <div class="caja-imagen">
-                        <span class="etiqueta">Top Ventas</span>
-                        <img src="/img/shop/protein.jpg" alt="100% Platinum Whey Isolate" class="imagen-tarjeta">
+                        {{if .Etiqueta}}<span class="etiqueta">{{.Etiqueta}}</span>{{end}}
+                        <img src="{{.Imagen}}" alt="{{.Nombre}}" class="imagen-tarjeta">
                     </div>
                     <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">100% Platinum Whey Isolate</h3>
-                        <div class="precio">59.99€</div>
-                        <button class="boton-principal boton-bloque btn-add-cart" data-name="100% Platinum Whey Isolate" data-price="59.99"><i class="fas fa-cart-plus"></i> Añadir</button>
+                        <h3 class="nombre-tarjeta">{{.Nombre}}</h3>
+                        <div class="precio">{{printf "%.2f" .Precio}}€</div>
+                        <button class="boton-principal boton-bloque btn-add-cart" data-id="{{.ID}}" data-name="{{.Nombre}}" data-price="{{printf "%.2f" .Precio}}"><i class="fas fa-cart-plus"></i> Añadir</button>
                     </div>
                 </li>
-
-                <li class="tarjeta sup">
-                    <div class="caja-imagen">
-                        <span class="etiqueta">Nuevo</span>
-                        <img src="/img/shop/prenetreno.avif" alt="Pre-Entreno Extremo C4" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Pre-Entreno Extremo</h3>
-                        <div class="precio">34.99€</div>
-                        <button class="boton-principal boton-bloque btn-add-cart" data-name="Pre-Entreno Extremo" data-price="34.99"><i class="fas fa-cart-plus"></i> Añadir</button>
-                    </div>
-                </li>
-
-                <li class="tarjeta sup">
-                    <div class="caja-imagen">
-                        <img src="/img/shop/creatina.avif" alt="Creatina Monohidrato Creapure" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Creatina Monohidrato Creapure</h3>
-                        <div class="precio">24.99€</div>
-                        <button class="boton-principal boton-bloque btn-add-cart" data-name="Creatina Monohidrato Creapure" data-price="24.99"><i class="fas fa-cart-plus"></i> Añadir</button>
-                    </div>
-                </li>
-
-                <li class="tarjeta rop">
-                    <div class="caja-imagen">
-                        <span class="etiqueta">Atleta</span>
-                        <img src="/img/shop/tirantes.jpg" alt="Camiseta de Tirantes Stringer" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Camiseta Stringer Platinum</h3>
-                        <div class="precio">22.00€</div>
-                        <button class="boton-principal boton-bloque btn-add-cart" data-name="Camiseta Stringer Platinum" data-price="22.00"><i class="fas fa-cart-plus"></i> Añadir</button>
-                    </div>
-                </li>
-
-                <li class="tarjeta rop">
-                    <div class="caja-imagen">
-                        <span class="etiqueta">Nuevo</span>
-                        <img src="/img/shop/chaqueta.webp" alt="Chaqueta Cortavientos Platinum" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Chaqueta Cortavientos</h3>
-                        <div class="precio">45.00€</div>
-                        <button class="boton-principal boton-bloque btn-add-cart" data-name="Chaqueta Cortavientos" data-price="45.00"><i class="fas fa-cart-plus"></i> Añadir</button>
-                    </div>
-                </li>
-
-                <li class="tarjeta acc">
-                    <div class="caja-imagen">
-                        <span class="etiqueta">Básico</span>
-                        <img src="/img/shop/botella.jpg" alt="Shaker Platinum" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Shaker Mezclador 700ml</h3>
-                        <div class="precio">12.00€</div>
-                        <button class="boton-principal boton-bloque btn-add-cart" data-name="Shaker Mezclador 700ml" data-price="12.00"><i class="fas fa-cart-plus"></i> Añadir</button>
-                    </div>
-                </li>
-
-                <li class="tarjeta acc">
-                    <div class="caja-imagen">
-                        <span class="etiqueta">Pro</span>
-                        <img src="/img/shop/cinturon.jfif" alt="Cinturón de Levantamiento" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Cinturón Levantamiento</h3>
-                        <div class="precio">45.00€</div>
-                        <button class="boton-principal boton-bloque btn-add-cart" data-name="Cinturón Levantamiento" data-price="45.00"><i class="fas fa-cart-plus"></i> Añadir</button>
-                    </div>
-                </li>
-
-                <li class="tarjeta acc">
-                    <div class="caja-imagen">
-                        <span class="etiqueta">Esencial</span>
-                        <img src="/img/shop/straps.jpg" alt="Straps de Elevación Premium" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Straps de Elevación Premium</h3>
-                        <div class="precio">15.00€</div>
-                        <button class="boton-principal boton-bloque btn-add-cart" data-name="Straps de Elevación Premium" data-price="15.00"><i class="fas fa-cart-plus"></i> Añadir</button>
-                    </div>
-                </li>
-
-                <li class="tarjeta rop">
-                    <div class="caja-imagen">
-                        <img src="/img/shop/fuckidols.jfif" alt="Cinturón de Powerlifting Cuero" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Camiseta F*ck Your Idols</h3>
-                        <div class="precio">65.00€</div>
-                        <button class="boton-principal boton-bloque btn-add-cart" data-name="Camiseta F*ck Your Idols" data-price="65.00"><i class="fas fa-cart-plus"></i> Añadir</button>
-                    </div>
-                </li>
+                {{end}}
             </ul>
         </section>
 
@@ -166,7 +74,8 @@
 
             let total = 0;
             cart.forEach((item, index) => {
-                total += item.price;
+                const quantity = item.quantity || 1;
+                total += item.price * quantity;
                 const row = document.createElement('div');
                 row.className = 'cart-item-row';
                 row.style.display = 'flex';
@@ -181,11 +90,11 @@
                 const divName = document.createElement('div');
                 divName.style.fontWeight = 'bold';
                 divName.style.fontSize = '0.9rem';
-                divName.textContent = item.name;
+                divName.textContent = `${item.name} x${quantity}`;
                 
                 const divPrice = document.createElement('div');
                 divPrice.style.color = 'var(--color-principal)';
-                divPrice.textContent = item.price.toFixed(2) + '€';
+                divPrice.textContent = (item.price * quantity).toFixed(2) + '€';
                 
                 divInfo.appendChild(divName);
                 divInfo.appendChild(divPrice);
@@ -217,10 +126,16 @@
 
         document.querySelectorAll('.btn-add-cart').forEach(btn => {
             btn.addEventListener('click', function() {
+                const id = parseInt(this.getAttribute('data-id'), 10);
                 const name = this.getAttribute('data-name');
                 const price = parseFloat(this.getAttribute('data-price'));
-                
-                cart.push({ name, price });
+                const existing = cart.find(item => item.id === id);
+
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push({ id, name, price, quantity: 1 });
+                }
                 localStorage.setItem('platinum_cart', JSON.stringify(cart));
                 updateCartUI();
                 document.getElementById('shopping-cart-sidebar').classList.add('open');
@@ -238,7 +153,12 @@
         // Load cart from localStorage
         const storedCart = localStorage.getItem('platinum_cart');
         if (storedCart) {
-            cart = JSON.parse(storedCart);
+            try {
+                cart = JSON.parse(storedCart) || [];
+            } catch (error) {
+                cart = [];
+                localStorage.removeItem('platinum_cart');
+            }
             updateCartUI();
         }
 

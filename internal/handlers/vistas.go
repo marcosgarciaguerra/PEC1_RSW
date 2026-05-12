@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"pec2/internal/db"
 	"pec2/internal/models"
+	"pec2/internal/services"
 	"strconv"
 	"strings"
 )
@@ -117,7 +118,9 @@ func TiendaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	log.Printf("Usuario accedió a la página: tienda")
-	RenderTemplate(w, "tienda", nil)
+	RenderTemplate(w, "tienda", map[string]interface{}{
+		"Articulos": services.CatalogoTienda(),
+	})
 }
 
 // PageHandler es un handler comodín que cubre páginas simples sin lógica de datos.

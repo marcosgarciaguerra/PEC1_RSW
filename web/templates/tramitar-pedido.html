@@ -270,6 +270,24 @@
                 <p>Verifica tus datos de envío, personaliza tu dirección si lo requieres y confirma tu compra.</p>
             </div>
 
+            {{if .Data.ErrorMsg}}
+            <div class="checkout-section" style="border-color: rgba(255, 68, 68, 0.45); margin-top: 25px;">
+                <p style="color: #ff7777; margin: 0;">{{.Data.ErrorMsg}}</p>
+            </div>
+            {{end}}
+
+            {{if .Data.PedidoConfirmado}}
+            <div class="checkout-section" style="margin-top: 30px;">
+                <h3><i class="fas fa-check-circle"></i> Pedido confirmado</h3>
+                <p>Tu pedido #{{.Data.Pedido.ID}} se ha guardado correctamente en el servidor.</p>
+                <p><strong>Dirección:</strong> {{.Data.Pedido.DireccionEnvio}}</p>
+                <p><strong>Total:</strong> {{printf "%.2f" .Data.Pedido.Total}}€</p>
+                <a href="/" class="boton-principal boton-bloque mt-2" style="display: inline-block; text-align: center;">Volver al Inicio</a>
+            </div>
+            {{else}}
+            <form id="checkout-form" action="/tienda/confirmar" method="POST">
+                <input type="hidden" id="carrito-json" name="carrito">
+                <input type="hidden" id="direccion-envio" name="direccion_envio" value="{{.Data.Usuario.Direccion}}">
             <div class="checkout-grid">
                 <!-- Datos de Envío -->
                 <div class="checkout-section">
@@ -321,11 +339,13 @@
                         <div class="checkout-total__amount"><span id="checkout-total-val">0.00</span>€</div>
                     </div>
                     
-                    <button id="btn-confirmar-pedido" class="boton-principal boton-bloque checkout-btn-margin">
+                    <button type="submit" id="btn-confirmar-pedido" class="boton-principal boton-bloque checkout-btn-margin">
                         CONFIRMAR COMPRA <i class="fas fa-check-circle"></i>
                     </button>
                 </div>
             </div>
+            </form>
+            {{end}}
         </div>
     </section>
 
@@ -344,9 +364,25 @@
 {{define "scripts"}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const cart = JSON.parse(localStorage.getItem('platinum_cart') || '[]');
+            const pedidoConfirmado = {{if .Data.PedidoConfirmado}}true{{else}}false{{end}};
+            if (pedidoConfirmado) {
+                localStorage.removeItem('platinum_cart');
+                return;
+            }
+
+            let cart = [];
+            try {
+                cart = JSON.parse(localStorage.getItem('platinum_cart') || '[]');
+            } catch (error) {
+                localStorage.removeItem('platinum_cart');
+            }
+            if (!Array.isArray(cart)) {
+                cart = [];
+                localStorage.removeItem('platinum_cart');
+            }
             const container = document.getElementById('checkout-items');
             const totalSpan = document.getElementById('checkout-total-val');
+            const carritoInput = document.getElementById('carrito-json');
             
             if (cart.length === 0) {
                 window.location.href = '/tienda';
@@ -355,19 +391,24 @@
 
             let total = 0;
             cart.forEach(item => {
-                total += item.price;
+                const quantity = item.quantity || 1;
+                total += item.price * quantity;
                 const row = document.createElement('div');
                 row.className = 'cart-item-js';
                 row.innerHTML = `
                     <div class="cart-item-js__name">
                         <i class="fas fa-box" style="color: rgba(255,255,255,0.3); font-size: 0.9rem;"></i>
-                        <span>${item.name}</span>
+                        <span>${item.name} x${quantity}</span>
                     </div>
-                    <span class="cart-item-js__price">${item.price.toFixed(2)}€</span>
+                    <span class="cart-item-js__price">${(item.price * quantity).toFixed(2)}€</span>
                 `;
                 container.appendChild(row);
             });
             totalSpan.innerText = total.toFixed(2);
+            carritoInput.value = JSON.stringify(cart.map(item => ({
+                id: item.id,
+                quantity: item.quantity || 1
+            })));
 
             // Funcionalidad de Edición Interactiva de Dirección de Entrega
             const btnEditar = document.getElementById('btn-editar-direccion');
@@ -376,6 +417,7 @@
             const btnGuardar = document.getElementById('btn-guardar-direccion');
             const txtDireccion = document.getElementById('direccion-texto');
             const inputDireccion = document.getElementById('nueva-direccion');
+            const direccionInput = document.getElementById('direccion-envio');
             const modalDireccion = document.getElementById('modal-direccion-confirmada');
 
             btnEditar.addEventListener('click', function() {
@@ -397,20 +439,17 @@
                     return;
                 }
                 txtDireccion.textContent = nuevaDir;
+                direccionInput.value = nuevaDir;
                 modalDireccion.textContent = nuevaDir;
                 wrapperEditar.style.display = 'none';
                 btnEditar.style.display = 'inline-block';
             });
 
             // Confirmación final de la compra
-            document.getElementById('btn-confirmar-pedido').addEventListener('click', function() {
-                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESANDO COMPRA...';
-                this.disabled = true;
-                
-                setTimeout(() => {
-                    localStorage.removeItem('platinum_cart');
-                    document.getElementById('modal-exito').style.display = 'flex';
-                }, 1500);
+            document.getElementById('checkout-form').addEventListener('submit', function() {
+                const submitBtn = document.getElementById('btn-confirmar-pedido');
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESANDO COMPRA...';
+                submitBtn.disabled = true;
             });
         });
     </script>

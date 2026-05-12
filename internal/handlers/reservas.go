@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"pec2/internal/db"
 	"pec2/internal/models"
+	"pec2/internal/services"
 	"strconv"
-	"time"
 )
 
 // Devuelve el socio logueado o nil si no hay cookie/socio
@@ -24,28 +24,7 @@ func ReservasHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	misReservas := db.ObtenerReservasDeSocio(socio.ID)
-	clasesLista := db.ObtenerClases()
-	
-	type ReservaDetalle struct {
-		models.Reserva
-		NombreClase string
-	}
-	
-	var misReservasDetalle []ReservaDetalle
-	for _, res := range misReservas {
-		var nombre string
-		for _, c := range clasesLista {
-			if c.ID == res.ActividadID {
-				nombre = c.NombreClase
-				break
-			}
-		}
-		misReservasDetalle = append(misReservasDetalle, ReservaDetalle{
-			Reserva:     res,
-			NombreClase: nombre,
-		})
-	}
+	clasesLista, misReservasDetalle := services.ObtenerReservasDetalleSocio(socio.ID)
 
 	errorParam := r.URL.Query().Get("error")
 	var errorMsg string
@@ -85,11 +64,7 @@ func ProcesarReservaHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/reservas?error=clase_invalida", http.StatusSeeOther)
 		return
 	}
-	
-	// Usamos la fecha de mañana por defecto para simplificar
-	fecha := time.Now().Add(24 * time.Hour).Format("2006-01-02")
-	
-	exito := db.CrearReserva(socio.ID, claseID, fecha)
+	exito := services.CrearReservaSocio(socio.ID, claseID)
 	if !exito {
 		http.Redirect(w, r, "/reservas?error=reserva_fallida", http.StatusSeeOther)
 		return
@@ -118,7 +93,7 @@ func ProcesarCancelacionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db.EliminarReserva(reservaID, socio.ID)
+	services.CancelarReservaSocio(reservaID, socio.ID)
 
 	http.Redirect(w, r, "/reservas", http.StatusSeeOther)
 }
