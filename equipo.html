@@ -16,36 +16,36 @@
     <input type="checkbox" id="menu-toggle" class="menu-toggle">
     <div class="aplicacion">
                 <header class="barra-navegacion unified-header">
-            <div class="header-logo">
-                <a href="index.html" class="logo-enlace" aria-label="Volver al inicio">
+            <div class="header-logo barra-navegacion__logo">
+                <a href="index.html" class="logo-enlace barra-navegacion__enlace" aria-label="Volver al inicio">
                     <div class="logo-brand"></div>
                 </a>
             </div>
 
-            <nav class="header-nav">
-                <ul class="lista-enlaces">
-                    <li class="elemento-lista"><a href="index.html" class="enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+            <nav class="header-nav barra-navegacion__nav">
+                <ul class="lista-enlaces barra-navegacion__lista">
+                    <li class="elemento-lista barra-navegacion__item"><a href="index.html" class="enlace barra-navegacion__enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-dumbbell" aria-hidden="true"></i>
                             <span>El Gimnasio</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="maquinaria.html"><i class="fas fa-cogs"></i> Maquinaria</a></li>
                             <li><a href="servicios.html"><i class="fas fa-crown"></i> Servicios</a></li>
                             <li><a href="equipo.html"><i class="fas fa-users"></i> Nuestro Equipo</a></li>
                             <li><a href="reglas.html"><i class="fas fa-scroll"></i> Reglas del Centro</a></li>
                         </ul>
                     </li>
-                    <li class="elemento-lista"><a href="tienda.html" class="enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+                    <li class="elemento-lista barra-navegacion__item"><a href="tienda.html" class="enlace barra-navegacion__enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-user-circle" aria-hidden="true"></i>
                             <span>Socios</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="reservas.html"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
                             <li><a href="calculadora.html"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
                             <li><a href="apuntate.html"><i class="fas fa-user-plus"></i> ¡Apúntate!</a></li>
@@ -54,7 +54,7 @@
                 </ul>
             </nav>
 
-            <div class="header-actions">
+            <div class="header-actions barra-navegacion__acciones">
                 <div class="barra-navegacion__buscador">
                     <form action="buscar.html" method="GET" class="search-form">
                         <button type="submit" class="search-icon-btn" aria-label="Buscar"><i class="fas fa-search"></i></button>
@@ -81,100 +81,100 @@
     </nav>
 
     <section class="seccion">
-        <div class="cabecera-seccion">
-            <h2>EQUIPO DE <span class="texto-destacado">ÉLITE</span></h2>
+        <div class="cabecera-seccion seccion__cabecera">
+            <h1>EQUIPO DE <span class="texto-destacado">ÉLITE</span></h1>
             <p>Conoce al corazón de Platinum Gym: profesionales altamente cualificados dedicados a tu éxito.</p>
         </div>
 
-        <ul class="contenido-seccion equipo-grid">
+        <ul class="contenido-seccion equipo-grid seccion__contenido">
             <li class="tarjeta tarjeta-equipo">
                 <div class="caja-imagen-equipo">
-                    <img src="img/equipo/arnold.png" alt="Arnold Schwarzenegger" class="imagen-tarjeta imagen-equipo">
+                    <img src="img/equipo/arnold.png" alt="Arnold Schwarzenegger" class="imagen-tarjeta imagen-equipo tarjeta__imagen">
                 </div>
-                <div class="cuerpo-tarjeta cuerpo-equipo">
-                    <h3 class="nombre-tarjeta mb-05">Arnold Schwarzenegger</h3>
+                <div class="cuerpo-tarjeta cuerpo-equipo tarjeta__cuerpo">
+                    <h3 class="nombre-tarjeta mb-05 tarjeta__titulo">Arnold Schwarzenegger</h3>
                     <div class="etiqueta-cargo">Director Deportivo & Leyenda</div>
-                    <p class="descripcion-tarjeta lh-15">El roble austriaco. 7 veces Mr. Olympia. Supervisa los estándares de entrenamiento de Platinum Gym.</p>
+                    <p class="descripcion-tarjeta lh-15 tarjeta__descripcion">El roble austriaco. 7 veces Mr. Olympia. Supervisa los estándares de entrenamiento de Platinum Gym.</p>
                 </div>
             </li>
             <li class="tarjeta tarjeta-equipo">
                 <div class="caja-imagen-equipo">
-                    <img src="img/equipo/cbum.png" alt="Chris Bumstead" class="imagen-tarjeta imagen-equipo">
+                    <img src="img/equipo/cbum.png" alt="Chris Bumstead" class="imagen-tarjeta imagen-equipo tarjeta__imagen">
                 </div>
-                <div class="cuerpo-tarjeta cuerpo-equipo">
-                    <h3 class="nombre-tarjeta mb-05">Chris Bumstead</h3>
+                <div class="cuerpo-tarjeta cuerpo-equipo tarjeta__cuerpo">
+                    <h3 class="nombre-tarjeta mb-05 tarjeta__titulo">Chris Bumstead</h3>
                     <div class="etiqueta-cargo">Head Coach Classic Physique</div>
-                    <p class="descripcion-tarjeta lh-15">Dominante en la categoría Classic. Especialista en estética, vacío abdominal y poses clásicas.</p>
+                    <p class="descripcion-tarjeta lh-15 tarjeta__descripcion">Dominante en la categoría Classic. Especialista en estética, vacío abdominal y poses clásicas.</p>
                 </div>
             </li>
             <li class="tarjeta tarjeta-equipo">
                 <div class="caja-imagen-equipo">
-                    <img src="img/equipo/ronnie_coleman.png" alt="Ronnie Coleman" class="imagen-tarjeta imagen-equipo">
+                    <img src="img/equipo/ronnie_coleman.png" alt="Ronnie Coleman" class="imagen-tarjeta imagen-equipo tarjeta__imagen">
                 </div>
-                <div class="cuerpo-tarjeta cuerpo-equipo">
-                    <h3 class="nombre-tarjeta mb-05">Ronnie Coleman</h3>
+                <div class="cuerpo-tarjeta cuerpo-equipo tarjeta__cuerpo">
+                    <h3 class="nombre-tarjeta mb-05 tarjeta__titulo">Ronnie Coleman</h3>
                     <div class="etiqueta-cargo">Especialista en Fuerza Extrema</div>
-                    <p class="descripcion-tarjeta lh-15">The King. 8 veces Mr. Olympia. Su lema: 'Light weight baby!'. Gestiona la zona de peso libre pesado.</p>
+                    <p class="descripcion-tarjeta lh-15 tarjeta__descripcion">The King. 8 veces Mr. Olympia. Su lema: 'Light weight baby!'. Gestiona la zona de peso libre pesado.</p>
                 </div>
             </li>
             <li class="tarjeta tarjeta-equipo">
                 <div class="caja-imagen-equipo">
-                    <img src="img/equipo/joan_pradells.png" alt="Joan Pradells" class="imagen-tarjeta imagen-equipo">
+                    <img src="img/equipo/joan_pradells.png" alt="Joan Pradells" class="imagen-tarjeta imagen-equipo tarjeta__imagen">
                 </div>
-                <div class="cuerpo-tarjeta cuerpo-equipo">
-                    <h3 class="nombre-tarjeta mb-05">Joan Pradells</h3>
+                <div class="cuerpo-tarjeta cuerpo-equipo tarjeta__cuerpo">
+                    <h3 class="nombre-tarjeta mb-05 tarjeta__titulo">Joan Pradells</h3>
                     <div class="etiqueta-cargo">Coach de Powerlifting & Masa</div>
-                    <p class="descripcion-tarjeta lh-15">Referente nacional en fuerza. Experto en sentadilla, banca y peso muerto con cargas masivas.</p>
+                    <p class="descripcion-tarjeta lh-15 tarjeta__descripcion">Referente nacional en fuerza. Experto en sentadilla, banca y peso muerto con cargas masivas.</p>
                 </div>
             </li>
             <li class="tarjeta tarjeta-equipo">
                 <div class="caja-imagen-equipo">
-                    <img src="img/equipo/andoni.png" alt="Andoni Fitness" class="imagen-tarjeta imagen-equipo">
+                    <img src="img/equipo/andoni.png" alt="Andoni Fitness" class="imagen-tarjeta imagen-equipo tarjeta__imagen">
                 </div>
-                <div class="cuerpo-tarjeta cuerpo-equipo">
-                    <h3 class="nombre-tarjeta mb-05">Andoni Fitness</h3>
+                <div class="cuerpo-tarjeta cuerpo-equipo tarjeta__cuerpo">
+                    <h3 class="nombre-tarjeta mb-05 tarjeta__titulo">Andoni Fitness</h3>
                     <div class="etiqueta-cargo">Especialista en Estética Natural</div>
-                    <p class="descripcion-tarjeta lh-15">Experto en transformación física y entrenamiento de alta intensidad enfocado a la estética.</p>
+                    <p class="descripcion-tarjeta lh-15 tarjeta__descripcion">Experto en transformación física y entrenamiento de alta intensidad enfocado a la estética.</p>
                 </div>
             </li>
             <li class="tarjeta tarjeta-equipo">
                 <div class="caja-imagen-equipo">
-                    <img src="img/equipo/coach_greg.png" alt="Coach Greg" class="imagen-tarjeta imagen-equipo">
+                    <img src="img/equipo/coach_greg.png" alt="Coach Greg" class="imagen-tarjeta imagen-equipo tarjeta__imagen">
                 </div>
-                <div class="cuerpo-tarjeta cuerpo-equipo">
-                    <h3 class="nombre-tarjeta mb-05">Coach Greg</h3>
+                <div class="cuerpo-tarjeta cuerpo-equipo tarjeta__cuerpo">
+                    <h3 class="nombre-tarjeta mb-05 tarjeta__titulo">Coach Greg</h3>
                     <div class="etiqueta-cargo">Asesor Nutricional & Cardio</div>
-                    <p class="descripcion-tarjeta lh-15">Doctor en sentido común. Especialista en nutrición eficiente, suplementación y entrenamiento inteligente.</p>
+                    <p class="descripcion-tarjeta lh-15 tarjeta__descripcion">Doctor en sentido común. Especialista en nutrición eficiente, suplementación y entrenamiento inteligente.</p>
                 </div>
             </li>
             <li class="tarjeta tarjeta-equipo">
                 <div class="caja-imagen-equipo">
-                    <img src="img/equipo/alex_eubank.png" alt="Alex Eubank" class="imagen-tarjeta imagen-equipo">
+                    <img src="img/equipo/alex_eubank.png" alt="Alex Eubank" class="imagen-tarjeta imagen-equipo tarjeta__imagen">
                 </div>
-                <div class="cuerpo-tarjeta cuerpo-equipo">
-                    <h3 class="nombre-tarjeta mb-05">Alex Eubank</h3>
+                <div class="cuerpo-tarjeta cuerpo-equipo tarjeta__cuerpo">
+                    <h3 class="nombre-tarjeta mb-05 tarjeta__titulo">Alex Eubank</h3>
                     <div class="etiqueta-cargo">Instructor de Fitness Moderno</div>
-                    <p class="descripcion-tarjeta lh-15">Enfocado en la estética 'Greek God'. Especialista en entrenamiento de hombro y brazo para físico fitness.</p>
+                    <p class="descripcion-tarjeta lh-15 tarjeta__descripcion">Enfocado en la estética 'Greek God'. Especialista en entrenamiento de hombro y brazo para físico fitness.</p>
                 </div>
             </li>
             <li class="tarjeta tarjeta-equipo">
                 <div class="caja-imagen-equipo">
-                    <img src="img/equipo/tren_twins.png" alt="The Tren Twins" class="imagen-tarjeta imagen-equipo">
+                    <img src="img/equipo/tren_twins.png" alt="The Tren Twins" class="imagen-tarjeta imagen-equipo tarjeta__imagen">
                 </div>
-                <div class="cuerpo-tarjeta cuerpo-equipo">
-                    <h3 class="nombre-tarjeta mb-05">The Tren Twins</h3>
+                <div class="cuerpo-tarjeta cuerpo-equipo tarjeta__cuerpo">
+                    <h3 class="nombre-tarjeta mb-05 tarjeta__titulo">The Tren Twins</h3>
                     <div class="etiqueta-cargo">Directores de Intensidad</div>
-                    <p class="descripcion-tarjeta lh-15">Especialistas en la cultura del 'hardcore gym'. Llevan la intensidad de tus entrenos al límite absoluto.</p>
+                    <p class="descripcion-tarjeta lh-15 tarjeta__descripcion">Especialistas en la cultura del 'hardcore gym'. Llevan la intensidad de tus entrenos al límite absoluto.</p>
                 </div>
             </li>
             <li class="tarjeta tarjeta-equipo">
                 <div class="caja-imagen-equipo">
-                    <img src="img/equipo/andreashaw.jpeg" alt="Andreas Shaw" class="imagen-tarjeta imagen-equipo">
+                    <img src="img/equipo/andreashaw.jpeg" alt="Andreas Shaw" class="imagen-tarjeta imagen-equipo tarjeta__imagen">
                 </div>
-                <div class="cuerpo-tarjeta cuerpo-equipo">
-                    <h3 class="nombre-tarjeta mb-05">Andreas Shaw</h3>
+                <div class="cuerpo-tarjeta cuerpo-equipo tarjeta__cuerpo">
+                    <h3 class="nombre-tarjeta mb-05 tarjeta__titulo">Andreas Shaw</h3>
                     <div class="etiqueta-cargo">Coach de Strongman</div>
-                    <p class="descripcion-tarjeta lh-15">Experto en movimientos de fuerza absoluta y transporte de cargas pesadas.</p>
+                    <p class="descripcion-tarjeta lh-15 tarjeta__descripcion">Experto en movimientos de fuerza absoluta y transporte de cargas pesadas.</p>
                 </div>
             </li>
         </ul>
@@ -188,7 +188,7 @@
                 <div class="pie-pagina__logo-brand"></div>
             </div>
             <h4>Platinum Gym</h4>
-            <p>Expertos en ponerte mamadismo</p>
+            <p>Entrenamiento, salud y rendimiento para todos los niveles.</p>
         </li>
         <li class="pie-pagina__columna">
             <h4>Enlaces Rápidos</h4>

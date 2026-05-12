@@ -20,38 +20,38 @@
     <input type="checkbox" id="menu-toggle" class="menu-toggle">
     <div class="aplicacion">
         <header class="barra-navegacion unified-header">
-            <div class="header-logo">
-                <a href="index.html" class="logo-enlace" aria-label="Volver al inicio">
+            <div class="header-logo barra-navegacion__logo">
+                <a href="index.html" class="logo-enlace barra-navegacion__enlace" aria-label="Volver al inicio">
                     <div class="logo-brand"></div>
                 </a>
             </div>
 
-            <nav class="header-nav">
-                <ul class="lista-enlaces">
-                    <li class="elemento-lista"><a href="index.html" class="enlace"><i class="fas fa-home"
+            <nav class="header-nav barra-navegacion__nav">
+                <ul class="lista-enlaces barra-navegacion__lista">
+                    <li class="elemento-lista barra-navegacion__item"><a href="index.html" class="enlace barra-navegacion__enlace"><i class="fas fa-home"
                                 aria-hidden="true"></i><span>Inicio</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-dumbbell" aria-hidden="true"></i>
                             <span>El Gimnasio</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="maquinaria.html"><i class="fas fa-cogs"></i> Maquinaria</a></li>
                             <li><a href="servicios.html"><i class="fas fa-crown"></i> Servicios</a></li>
                             <li><a href="equipo.html"><i class="fas fa-users"></i> Nuestro Equipo</a></li>
                             <li><a href="reglas.html"><i class="fas fa-scroll"></i> Reglas del Centro</a></li>
                         </ul>
                     </li>
-                    <li class="elemento-lista"><a href="tienda.html" class="enlace"><i class="fas fa-shopping-bag"
+                    <li class="elemento-lista barra-navegacion__item"><a href="tienda.html" class="enlace barra-navegacion__enlace"><i class="fas fa-shopping-bag"
                                 aria-hidden="true"></i><span>Tienda</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-user-circle" aria-hidden="true"></i>
                             <span>Socios</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="reservas.html"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a>
                             </li>
                             <li><a href="calculadora.html"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
@@ -61,7 +61,7 @@
                 </ul>
             </nav>
 
-            <div class="header-actions">
+            <div class="header-actions barra-navegacion__acciones">
                 <div class="barra-navegacion__buscador">
                     <form action="buscar.html" method="GET" class="search-form">
                         <button type="submit" class="search-icon-btn" aria-label="Buscar"><i
@@ -96,14 +96,14 @@
 
             <section class="seccion">
                 <h2 class="titulo-seccion">Nuestros Locales</h2>
-                <ul class="contenido-seccion">
+                <ul class="contenido-seccion seccion__contenido">
                     <li class="tarjeta">
-                        <img src="img/ubicaciones/meco.png" alt="Local Meco" class="imagen-tarjeta">
-                        <div class="cuerpo-tarjeta">
-                            <h3 class="nombre-tarjeta">Meco</h3>
-                            <details class="detalles-tarjeta">
-                                <summary class="ver-mas">Ver información</summary>
-                                <div class="descripcion-tarjeta">
+                        <img src="img/ubicaciones/meco.png" alt="Local Meco" class="imagen-tarjeta tarjeta__imagen">
+                        <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                            <h3 class="nombre-tarjeta tarjeta__titulo">Meco</h3>
+                            <details class="detalles-tarjeta tarjeta__detalles">
+                                <summary class="ver-mas tarjeta__accion">Ver información</summary>
+                                <div class="descripcion-tarjeta tarjeta__descripcion">
                                     <p>Gimnasio completo con zona de peso libre, máquinas de cardio y sala de clases
                                         dirigidas. Abierto de 6:00 a 23:00.</p>
                                     <p><strong>Dirección:</strong> C/ Calle Mayor 12, Meco, Madrid</p>
@@ -112,12 +112,12 @@
                         </div>
                     </li>
                     <li class="tarjeta">
-                        <img src="img/ubicaciones/vallecas.avif" alt="Local Vallecas" class="imagen-tarjeta">
-                        <div class="cuerpo-tarjeta">
-                            <h3 class="nombre-tarjeta">Vallecas</h3>
-                            <details class="detalles-tarjeta">
-                                <summary class="ver-mas">Ver información</summary>
-                                <div class="descripcion-tarjeta">
+                        <img src="img/ubicaciones/vallecas.avif" alt="Local Vallecas" class="imagen-tarjeta tarjeta__imagen">
+                        <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                            <h3 class="nombre-tarjeta tarjeta__titulo">Vallecas</h3>
+                            <details class="detalles-tarjeta tarjeta__detalles">
+                                <summary class="ver-mas tarjeta__accion">Ver información</summary>
+                                <div class="descripcion-tarjeta tarjeta__descripcion">
                                     <p>Ubicación emblemática con equipamiento Hammer Strength y zona de powerlifting.
                                         Abierto 24h para socios VIP.</p>
                                     <p><strong>Dirección:</strong> Av. de la Albufera 45, Vallecas, Madrid</p>
@@ -126,12 +126,12 @@
                         </div>
                     </li>
                     <li class="tarjeta">
-                        <img src="img/ubicaciones/Chicago.jpg" alt="Local Seattle" class="imagen-tarjeta">
-                        <div class="cuerpo-tarjeta">
-                            <h3 class="nombre-tarjeta">Seattle (Central)</h3>
-                            <details class="detalles-tarjeta">
-                                <summary class="ver-mas">Ver información</summary>
-                                <div class="descripcion-tarjeta">
+                        <img src="img/ubicaciones/Chicago.jpg" alt="Local Seattle" class="imagen-tarjeta tarjeta__imagen">
+                        <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                            <h3 class="nombre-tarjeta tarjeta__titulo">Seattle (Central)</h3>
+                            <details class="detalles-tarjeta tarjeta__detalles">
+                                <summary class="ver-mas tarjeta__accion">Ver información</summary>
+                                <div class="descripcion-tarjeta tarjeta__descripcion">
                                     <p>Nuestra sede central. 5 plantas de puro acero, piscina olímpica y zona de
                                         crioterapia.</p>
                                     <p><strong>Dirección:</strong> 1201 3rd Ave, Seattle, WA 98101, USA</p>
@@ -140,12 +140,12 @@
                         </div>
                     </li>
                     <li class="tarjeta">
-                        <img src="img/ubicaciones/tel-aviv.webp" alt="Local Tel-Aviv" class="imagen-tarjeta">
-                        <div class="cuerpo-tarjeta">
-                            <h3 class="nombre-tarjeta">Tel-Aviv</h3>
-                            <details class="detalles-tarjeta">
-                                <summary class="ver-mas">Ver información</summary>
-                                <div class="descripcion-tarjeta">
+                        <img src="img/ubicaciones/tel-aviv.webp" alt="Local Tel-Aviv" class="imagen-tarjeta tarjeta__imagen">
+                        <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                            <h3 class="nombre-tarjeta tarjeta__titulo">Tel-Aviv</h3>
+                            <details class="detalles-tarjeta tarjeta__detalles">
+                                <summary class="ver-mas tarjeta__accion">Ver información</summary>
+                                <div class="descripcion-tarjeta tarjeta__descripcion">
                                     <p>Un gimnasio costero de última generación. Especialidad en calistenia deportiva y
                                         CrossTraining al aire libre.</p>
                                     <p><strong>Dirección:</strong> 12 Namal Tel Aviv St, Tel Aviv-Yafo, Israel</p>
@@ -154,12 +154,12 @@
                         </div>
                     </li>
                     <li class="tarjeta">
-                        <img src="img/ubicaciones/images.jfif" alt="Local Miami" class="imagen-tarjeta">
-                        <div class="cuerpo-tarjeta">
-                            <h3 class="nombre-tarjeta">Miami</h3>
-                            <details class="detalles-tarjeta">
-                                <summary class="ver-mas">Ver información</summary>
-                                <div class="descripcion-tarjeta">
+                        <img src="img/ubicaciones/images.jfif" alt="Local Miami" class="imagen-tarjeta tarjeta__imagen">
+                        <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                            <h3 class="nombre-tarjeta tarjeta__titulo">Miami</h3>
+                            <details class="detalles-tarjeta tarjeta__detalles">
+                                <summary class="ver-mas tarjeta__accion">Ver información</summary>
+                                <div class="descripcion-tarjeta tarjeta__descripcion">
                                     <p>Gimnasio exclusivo frente al mar. Equipamiento de musculación premium y clases de entrenamiento personal de alto nivel.</p>
                                     <p><strong>Dirección:</strong> 100 South Biscayne Blvd, Miami, FL 33131, USA</p>
                                 </div>
@@ -167,12 +167,12 @@
                         </div>
                     </li>
                     <li class="tarjeta">
-                        <img src="img/ubicaciones/berlin.jfif" alt="Local Berlín" class="imagen-tarjeta">
-                        <div class="cuerpo-tarjeta">
-                            <h3 class="nombre-tarjeta">Berlín</h3>
-                            <details class="detalles-tarjeta">
-                                <summary class="ver-mas">Ver información</summary>
-                                <div class="descripcion-tarjeta">
+                        <img src="img/ubicaciones/berlin.jfif" alt="Local Berlín" class="imagen-tarjeta tarjeta__imagen">
+                        <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                            <h3 class="nombre-tarjeta tarjeta__titulo">Berlín</h3>
+                            <details class="detalles-tarjeta tarjeta__detalles">
+                                <summary class="ver-mas tarjeta__accion">Ver información</summary>
+                                <div class="descripcion-tarjeta tarjeta__descripcion">
                                     <p>Espacio industrial reciclado, ideal para rutinas de Powerlifting underground y
                                         Strongman.</p>
                                     <p><strong>Dirección:</strong> Friedrichstraße 43, 10117 Berlin, Alemania</p>
@@ -227,7 +227,7 @@
                         <div class="pie-pagina__logo-brand"></div>
                     </div>
                     <h4>Platinum Gym</h4>
-                    <p>Expertos en ponerte mamadismo</p>
+                    <p>Entrenamiento, salud y rendimiento para todos los niveles.</p>
                 </li>
                 <li class="pie-pagina__columna">
                     <h4>Enlaces Rápidos</h4>

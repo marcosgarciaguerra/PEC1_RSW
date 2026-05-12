@@ -1,0 +1,85 @@
+.detalle {
+    background-color: $color-fondo-tarjeta;
+    border: 1px solid $color-gris-oscuro;
+    border-radius: 16px;
+    margin-top: 2rem;
+    overflow: hidden;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+
+        @media (min-width: 1024px) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    &__imagen {
+        img {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            object-fit: cover;
+        }
+    }
+
+    &__icono-wrapper {
+        min-height: 400px;
+        background: linear-gradient(135deg, $color-fondo-caja, $color-fondo-tarjeta);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__icono {
+        color: $color-plata;
+        font-size: 8rem;
+        filter: drop-shadow(0 0 20px rgba(229, 228, 226, 0.25));
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 3rem;
+    }
+
+    &__etiqueta {
+        color: $color-plata-oscuro;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    &__titulo {
+        color: $color-texto-blanco;
+        font-size: 2.5rem;
+        font-weight: 900;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    &__seccion {
+        h3 {
+            color: $color-plata;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        p {
+            color: $color-texto-gris;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+    }
+
+    &__acciones {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+}

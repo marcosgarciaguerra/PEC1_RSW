@@ -16,36 +16,36 @@
     <input type="checkbox" id="menu-toggle" class="menu-toggle">
     <div class="aplicacion">
                 <header class="barra-navegacion unified-header">
-            <div class="header-logo">
-                <a href="index.html" class="logo-enlace" aria-label="Volver al inicio">
+            <div class="header-logo barra-navegacion__logo">
+                <a href="index.html" class="logo-enlace barra-navegacion__enlace" aria-label="Volver al inicio">
                     <div class="logo-brand"></div>
                 </a>
             </div>
 
-            <nav class="header-nav">
-                <ul class="lista-enlaces">
-                    <li class="elemento-lista"><a href="index.html" class="enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+            <nav class="header-nav barra-navegacion__nav">
+                <ul class="lista-enlaces barra-navegacion__lista">
+                    <li class="elemento-lista barra-navegacion__item"><a href="index.html" class="enlace barra-navegacion__enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-dumbbell" aria-hidden="true"></i>
                             <span>El Gimnasio</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="maquinaria.html"><i class="fas fa-cogs"></i> Maquinaria</a></li>
                             <li><a href="servicios.html"><i class="fas fa-crown"></i> Servicios</a></li>
                             <li><a href="equipo.html"><i class="fas fa-users"></i> Nuestro Equipo</a></li>
                             <li><a href="reglas.html"><i class="fas fa-scroll"></i> Reglas del Centro</a></li>
                         </ul>
                     </li>
-                    <li class="elemento-lista"><a href="tienda.html" class="enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+                    <li class="elemento-lista barra-navegacion__item"><a href="tienda.html" class="enlace barra-navegacion__enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-user-circle" aria-hidden="true"></i>
                             <span>Socios</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="reservas.html"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
                             <li><a href="calculadora.html"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
                             <li><a href="apuntate.html"><i class="fas fa-user-plus"></i> ¡Apúntate!</a></li>
@@ -54,7 +54,7 @@
                 </ul>
             </nav>
 
-            <div class="header-actions">
+            <div class="header-actions barra-navegacion__acciones">
                 <div class="barra-navegacion__buscador">
                     <form action="buscar.html" method="GET" class="search-form">
                         <button type="submit" class="search-icon-btn" aria-label="Buscar"><i class="fas fa-search"></i></button>
@@ -82,28 +82,28 @@
         <span class="actual">Crioterapia</span>
     </nav>
 
-    <div class="detalle-entidad">
-        <div class="detalle-grid">
-            <div class="detalle-icono-wrapper">
-                <div class="grande-icon"><i class="fas fa-snowflake"></i></div>
+    <article class="detalle-entidad detalle">
+        <div class="detalle-grid detalle__grid">
+            <div class="detalle-icono-wrapper detalle__icono-wrapper">
+                <div class="grande-icon detalle__icono"><i class="fas fa-snowflake"></i></div>
             </div>
-            <div class="detalle-info">
-                <h2 class="detalle-titulo">Crioterapia</h2>
-                <div class="detalle-seccion">
+            <div class="detalle-info detalle__info">
+                <h1 class="detalle-titulo detalle__titulo">Crioterapia</h1>
+                <div class="detalle-seccion detalle__seccion">
                     <h3>Descripción Detallada</h3>
                     <p>Las cabinas de crioterapia de cuerpo entero someten a tu cuerpo a temperaturas extremas por corto tiempo (2-3 minutos). Este shock térmico desencadena potentes respuestas antiinflamatorias y analgésicas en todo el cuerpo.</p>
                 </div>
-                <div class="detalle-seccion">
+                <div class="detalle-seccion detalle__seccion">
                     <h3>Ventajas para Ti</h3>
                     <p>Reducción del estrés oxidativo, disminución drástica del dolor post-entrenamiento e incremento de energía.</p>
                 </div>
-                <div class="detalle-acciones">
+                <div class="detalle-acciones detalle__acciones">
                     <a href="servicios.html" class="boton-secundario"><i class="fas fa-arrow-left"></i> Volver a servicios</a>
                     <a href="apuntate.html" class="boton-principal">Solicitar Información</a>
                 </div>
             </div>
         </div>
-    </div>
+    </article>
 
         </main>
         <footer class="pie-pagina">
@@ -113,7 +113,7 @@
                 <div class="pie-pagina__logo-brand"></div>
             </div>
             <h4>Platinum Gym</h4>
-            <p>Expertos en ponerte mamadismo</p>
+            <p>Entrenamiento, salud y rendimiento para todos los niveles.</p>
         </li>
         <li class="pie-pagina__columna">
             <h4>Enlaces Rápidos</h4>

@@ -16,36 +16,36 @@
     <input type="checkbox" id="menu-toggle" class="menu-toggle">
     <div class="aplicacion">
                 <header class="barra-navegacion unified-header">
-            <div class="header-logo">
-                <a href="index.html" class="logo-enlace" aria-label="Volver al inicio">
+            <div class="header-logo barra-navegacion__logo">
+                <a href="index.html" class="logo-enlace barra-navegacion__enlace" aria-label="Volver al inicio">
                     <div class="logo-brand"></div>
                 </a>
             </div>
 
-            <nav class="header-nav">
-                <ul class="lista-enlaces">
-                    <li class="elemento-lista"><a href="index.html" class="enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+            <nav class="header-nav barra-navegacion__nav">
+                <ul class="lista-enlaces barra-navegacion__lista">
+                    <li class="elemento-lista barra-navegacion__item"><a href="index.html" class="enlace barra-navegacion__enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-dumbbell" aria-hidden="true"></i>
                             <span>El Gimnasio</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="maquinaria.html"><i class="fas fa-cogs"></i> Maquinaria</a></li>
                             <li><a href="servicios.html"><i class="fas fa-crown"></i> Servicios</a></li>
                             <li><a href="equipo.html"><i class="fas fa-users"></i> Nuestro Equipo</a></li>
                             <li><a href="reglas.html"><i class="fas fa-scroll"></i> Reglas del Centro</a></li>
                         </ul>
                     </li>
-                    <li class="elemento-lista"><a href="tienda.html" class="enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+                    <li class="elemento-lista barra-navegacion__item"><a href="tienda.html" class="enlace barra-navegacion__enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-user-circle" aria-hidden="true"></i>
                             <span>Socios</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="reservas.html"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
                             <li><a href="calculadora.html"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
                             <li><a href="apuntate.html"><i class="fas fa-user-plus"></i> ¡Apúntate!</a></li>
@@ -54,7 +54,7 @@
                 </ul>
             </nav>
 
-            <div class="header-actions">
+            <div class="header-actions barra-navegacion__acciones">
                 <div class="barra-navegacion__buscador">
                     <form action="buscar.html" method="GET" class="search-form">
                         <button type="submit" class="search-icon-btn" aria-label="Buscar"><i class="fas fa-search"></i></button>
@@ -81,8 +81,8 @@
         </nav>
 
         <section id="tienda">
-            <div class="cabecera-seccion">
-                <h2>TIENDA <span class="texto-destacado">OFICIAL</span></h2>
+            <div class="cabecera-seccion seccion__cabecera">
+                <h1>TIENDA <span class="texto-destacado">OFICIAL</span></h1>
                 <p>Nutrición de grado farmacéutico, ropa técnica y accesorios profesionales.</p>
             </div>
 
@@ -100,15 +100,15 @@
                 </div>
 
                 <div id="content-1" class="tab-content">
-                    <ul class="contenido-seccion grid-4-cols">
+                    <ul class="contenido-seccion grid-4-cols seccion__contenido">
                         <!-- Whey -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Top Ventas</span>
-                                <img src="img/shop/protein.jpg" alt="100% Platinum Whey Isolate" class="imagen-tarjeta">
+                                <img src="img/shop/protein.jpg" alt="100% Platinum Whey Isolate" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">100% Platinum Whey Isolate</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">100% Platinum Whey Isolate</h3>
                                 <div class="precio">59.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -117,10 +117,10 @@
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Nuevo</span>
-                                <img src="img/shop/prenetreno.avif" alt="Pre-Entreno Extremo" class="imagen-tarjeta">
+                                <img src="img/shop/prenetreno.avif" alt="Pre-Entreno Extremo" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Pre-Entreno Extremo</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Pre-Entreno Extremo</h3>
                                 <div class="precio">34.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -128,10 +128,10 @@
                         <!-- Creatina -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/creatina.avif" alt="Creatina Monohidrato Creapure" class="imagen-tarjeta">
+                                <img src="img/shop/creatina.avif" alt="Creatina Monohidrato Creapure" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Creatina Monohidrato Creapure</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Creatina Monohidrato Creapure</h3>
                                 <div class="precio">24.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -140,10 +140,10 @@
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Nuevo</span>
-                                <img src="img/shop/chaqueta.webp" alt="Sudadera Técnica con Capucha" class="imagen-tarjeta">
+                                <img src="img/shop/chaqueta.webp" alt="Sudadera Técnica con Capucha" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Sudadera Técnica con Capucha</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Sudadera Técnica con Capucha</h3>
                                 <div class="precio">49.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -152,10 +152,10 @@
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Top Ventas</span>
-                                <img src="img/shop/fuckidols.jfif" alt="Camiseta 'Fuck Idols' Oversize" class="imagen-tarjeta">
+                                <img src="img/shop/fuckidols.jfif" alt="Camiseta 'Fuck Idols' Oversize" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Camiseta "Fuck Idols" Oversize</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Camiseta "Fuck Idols" Oversize</h3>
                                 <div class="precio">19.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -163,10 +163,10 @@
                         <!-- Heavy Duty -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/heavyduty.png" alt="Camiseta 'Heavy Duty' Vintage" class="imagen-tarjeta">
+                                <img src="img/shop/heavyduty.png" alt="Camiseta 'Heavy Duty' Vintage" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Camiseta "Heavy Duty" Vintage</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Camiseta "Heavy Duty" Vintage</h3>
                                 <div class="precio">22.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -174,10 +174,10 @@
                         <!-- Pantalones -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/pantalones.jpg" alt="Pantalón Corto Deportivo Pro" class="imagen-tarjeta">
+                                <img src="img/shop/pantalones.jpg" alt="Pantalón Corto Deportivo Pro" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Pantalón Corto Deportivo Pro</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Pantalón Corto Deportivo Pro</h3>
                                 <div class="precio">24.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -185,10 +185,10 @@
                         <!-- Tirantes -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/tirantes.jpg" alt="Camiseta de Tirantes 'Stringer'" class="imagen-tarjeta">
+                                <img src="img/shop/tirantes.jpg" alt="Camiseta de Tirantes 'Stringer'" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Camiseta de Tirantes "Stringer"</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Camiseta de Tirantes "Stringer"</h3>
                                 <div class="precio">17.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -197,10 +197,10 @@
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Top Ventas</span>
-                                <img src="img/shop/cinturon.jfif" alt="Cinturón de Powerlifting de Cuero" class="imagen-tarjeta">
+                                <img src="img/shop/cinturon.jfif" alt="Cinturón de Powerlifting de Cuero" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Cinturón Powerlifting de Cuero</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Cinturón Powerlifting de Cuero</h3>
                                 <div class="precio">44.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -208,10 +208,10 @@
                         <!-- Straps -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/straps.jpg" alt="Straps de Agarre Acolchados" class="imagen-tarjeta">
+                                <img src="img/shop/straps.jpg" alt="Straps de Agarre Acolchados" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Straps de Agarre Acolchados</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Straps de Agarre Acolchados</h3>
                                 <div class="precio">9.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -219,10 +219,10 @@
                         <!-- Botella -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/botella.jpg" alt="Botella Mezcladora Platinum" class="imagen-tarjeta">
+                                <img src="img/shop/botella.jpg" alt="Botella Mezcladora Platinum" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Botella Mezcladora Platinum</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Botella Mezcladora Platinum</h3>
                                 <div class="precio">12.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -231,15 +231,15 @@
                 </div>
 
                 <div id="content-2" class="tab-content">
-                    <ul class="contenido-seccion grid-4-cols">
+                    <ul class="contenido-seccion grid-4-cols seccion__contenido">
                         <!-- Whey -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Top Ventas</span>
-                                <img src="img/shop/protein.jpg" alt="100% Platinum Whey Isolate" class="imagen-tarjeta">
+                                <img src="img/shop/protein.jpg" alt="100% Platinum Whey Isolate" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">100% Platinum Whey Isolate</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">100% Platinum Whey Isolate</h3>
                                 <div class="precio">59.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -248,10 +248,10 @@
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Nuevo</span>
-                                <img src="img/shop/prenetreno.avif" alt="Pre-Entreno Extremo" class="imagen-tarjeta">
+                                <img src="img/shop/prenetreno.avif" alt="Pre-Entreno Extremo" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Pre-Entreno Extremo</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Pre-Entreno Extremo</h3>
                                 <div class="precio">34.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -259,10 +259,10 @@
                         <!-- Creatina -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/creatina.avif" alt="Creatina Monohidrato Creapure" class="imagen-tarjeta">
+                                <img src="img/shop/creatina.avif" alt="Creatina Monohidrato Creapure" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Creatina Monohidrato Creapure</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Creatina Monohidrato Creapure</h3>
                                 <div class="precio">24.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -271,15 +271,15 @@
                 </div>
 
                 <div id="content-3" class="tab-content">
-                    <ul class="contenido-seccion grid-4-cols">
+                    <ul class="contenido-seccion grid-4-cols seccion__contenido">
                         <!-- Chaqueta -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Nuevo</span>
-                                <img src="img/shop/chaqueta.webp" alt="Sudadera Técnica con Capucha" class="imagen-tarjeta">
+                                <img src="img/shop/chaqueta.webp" alt="Sudadera Técnica con Capucha" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Sudadera Técnica con Capucha</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Sudadera Técnica con Capucha</h3>
                                 <div class="precio">49.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -288,10 +288,10 @@
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Top Ventas</span>
-                                <img src="img/shop/fuckidols.jfif" alt="Camiseta 'Fuck Idols' Oversize" class="imagen-tarjeta">
+                                <img src="img/shop/fuckidols.jfif" alt="Camiseta 'Fuck Idols' Oversize" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Camiseta "Fuck Idols" Oversize</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Camiseta "Fuck Idols" Oversize</h3>
                                 <div class="precio">19.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -299,10 +299,10 @@
                         <!-- Heavy Duty -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/heavyduty.png" alt="Camiseta 'Heavy Duty' Vintage" class="imagen-tarjeta">
+                                <img src="img/shop/heavyduty.png" alt="Camiseta 'Heavy Duty' Vintage" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Camiseta "Heavy Duty" Vintage</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Camiseta "Heavy Duty" Vintage</h3>
                                 <div class="precio">22.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -310,10 +310,10 @@
                         <!-- Pantalones -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/pantalones.jpg" alt="Pantalón Corto Deportivo Pro" class="imagen-tarjeta">
+                                <img src="img/shop/pantalones.jpg" alt="Pantalón Corto Deportivo Pro" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Pantalón Corto Deportivo Pro</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Pantalón Corto Deportivo Pro</h3>
                                 <div class="precio">24.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -321,10 +321,10 @@
                         <!-- Tirantes -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/tirantes.jpg" alt="Camiseta de Tirantes 'Stringer'" class="imagen-tarjeta">
+                                <img src="img/shop/tirantes.jpg" alt="Camiseta de Tirantes 'Stringer'" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Camiseta de Tirantes "Stringer"</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Camiseta de Tirantes "Stringer"</h3>
                                 <div class="precio">17.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -333,15 +333,15 @@
                 </div>
 
                 <div id="content-4" class="tab-content">
-                    <ul class="contenido-seccion grid-4-cols">
+                    <ul class="contenido-seccion grid-4-cols seccion__contenido">
                         <!-- Cinturon -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
                                 <span class="etiqueta">Top Ventas</span>
-                                <img src="img/shop/cinturon.jfif" alt="Cinturón de Powerlifting de Cuero" class="imagen-tarjeta">
+                                <img src="img/shop/cinturon.jfif" alt="Cinturón de Powerlifting de Cuero" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Cinturón Powerlifting de Cuero</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Cinturón Powerlifting de Cuero</h3>
                                 <div class="precio">44.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -349,10 +349,10 @@
                         <!-- Straps -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/straps.jpg" alt="Straps de Agarre Acolchados" class="imagen-tarjeta">
+                                <img src="img/shop/straps.jpg" alt="Straps de Agarre Acolchados" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Straps de Agarre Acolchados</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Straps de Agarre Acolchados</h3>
                                 <div class="precio">9.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -360,10 +360,10 @@
                         <!-- Botella -->
                         <li class="tarjeta">
                             <div class="caja-imagen">
-                                <img src="img/shop/botella.jpg" alt="Botella Mezcladora Platinum" class="imagen-tarjeta">
+                                <img src="img/shop/botella.jpg" alt="Botella Mezcladora Platinum" class="imagen-tarjeta tarjeta__imagen">
                             </div>
-                            <div class="cuerpo-tarjeta">
-                                <h3 class="nombre-tarjeta">Botella Mezcladora Platinum</h3>
+                            <div class="cuerpo-tarjeta tarjeta__cuerpo">
+                                <h3 class="nombre-tarjeta tarjeta__titulo">Botella Mezcladora Platinum</h3>
                                 <div class="precio">12.99€</div>
                                 <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
                             </div>
@@ -381,7 +381,7 @@
                 <div class="pie-pagina__logo-brand"></div>
             </div>
             <h4>Platinum Gym</h4>
-            <p>Expertos en ponerte mamadismo</p>
+            <p>Entrenamiento, salud y rendimiento para todos los niveles.</p>
         </li>
         <li class="pie-pagina__columna">
             <h4>Enlaces Rápidos</h4>

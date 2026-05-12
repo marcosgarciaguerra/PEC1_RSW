@@ -3,6 +3,27 @@
     margin: 60px auto;
     padding: 0 20px;
 
+    &__cabecera {
+        margin-bottom: 3.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid $color-gris-oscuro;
+
+        h1,
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: $color-texto-gris;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+    }
+
     &__titulo {
         text-align: center;
         color: $color-texto-blanco;
@@ -16,5 +37,52 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 30px;
+    }
+}
+
+.listado-con-aside {
+    display: grid;
+    grid-template-columns: minmax(220px, 280px) 1fr;
+    gap: 2rem;
+    align-items: start;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.barra-lateral {
+    background-color: $color-fondo-caja;
+    border: 1px solid $color-gris-oscuro;
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 100px;
+
+    @media (max-width: 900px) {
+        position: static;
+    }
+
+    &__titulo {
+        color: $color-texto-blanco;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+    }
+
+    &__lista {
+        display: grid;
+        gap: 0.75rem;
+        list-style: none;
+
+        a {
+            color: $color-texto-gris;
+            text-decoration: none;
+
+            &:hover {
+                color: $color-plata;
+            }
+        }
     }
 }

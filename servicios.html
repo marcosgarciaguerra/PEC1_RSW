@@ -16,36 +16,36 @@
     <input type="checkbox" id="menu-toggle" class="menu-toggle">
     <div class="aplicacion">
                 <header class="barra-navegacion unified-header">
-            <div class="header-logo">
-                <a href="index.html" class="logo-enlace" aria-label="Volver al inicio">
+            <div class="header-logo barra-navegacion__logo">
+                <a href="index.html" class="logo-enlace barra-navegacion__enlace" aria-label="Volver al inicio">
                     <div class="logo-brand"></div>
                 </a>
             </div>
 
-            <nav class="header-nav">
-                <ul class="lista-enlaces">
-                    <li class="elemento-lista"><a href="index.html" class="enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+            <nav class="header-nav barra-navegacion__nav">
+                <ul class="lista-enlaces barra-navegacion__lista">
+                    <li class="elemento-lista barra-navegacion__item"><a href="index.html" class="enlace barra-navegacion__enlace"><i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span></a></li>
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-dumbbell" aria-hidden="true"></i>
                             <span>El Gimnasio</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="maquinaria.html"><i class="fas fa-cogs"></i> Maquinaria</a></li>
                             <li><a href="servicios.html"><i class="fas fa-crown"></i> Servicios</a></li>
                             <li><a href="equipo.html"><i class="fas fa-users"></i> Nuestro Equipo</a></li>
                             <li><a href="reglas.html"><i class="fas fa-scroll"></i> Reglas del Centro</a></li>
                         </ul>
                     </li>
-                    <li class="elemento-lista"><a href="tienda.html" class="enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
-                    <li class="elemento-lista dropdown">
-                        <a href="#" class="enlace">
+                    <li class="elemento-lista barra-navegacion__item"><a href="tienda.html" class="enlace barra-navegacion__enlace"><i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Tienda</span></a></li>
+                    <li class="elemento-lista dropdown barra-navegacion__item">
+                        <a href="#" class="enlace barra-navegacion__enlace">
                             <i class="fas fa-user-circle" aria-hidden="true"></i>
                             <span>Socios</span>
-                            <i class="fas fa-chevron-down dropdown-chevron"></i>
+                            <i class="fas fa-chevron-down barra-navegacion__desplegable-icono" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu barra-navegacion__submenu">
                             <li><a href="reservas.html"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
                             <li><a href="calculadora.html"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
                             <li><a href="apuntate.html"><i class="fas fa-user-plus"></i> ¡Apúntate!</a></li>
@@ -54,7 +54,7 @@
                 </ul>
             </nav>
 
-            <div class="header-actions">
+            <div class="header-actions barra-navegacion__acciones">
                 <div class="barra-navegacion__buscador">
                     <form action="buscar.html" method="GET" class="search-form">
                         <button type="submit" class="search-icon-btn" aria-label="Buscar"><i class="fas fa-search"></i></button>
@@ -81,61 +81,72 @@
     </nav>
 
     <section id="servicios-list" class="seccion">
-        <div class="cabecera-seccion">
-            <h2>SERVICIOS <span class="texto-destacado">PLATINUM</span></h2>
+        <div class="cabecera-seccion seccion__cabecera">
+            <h1>SERVICIOS <span class="texto-destacado">PLATINUM</span></h1>
             <p>Más que un gimnasio, un centro de alto rendimiento integral.</p>
         </div>
 
-        <ul class="contenido-seccion">
+        <div class="listado-con-aside">
+            <aside class="barra-lateral" aria-labelledby="servicios-relacionados">
+                <h2 id="servicios-relacionados" class="barra-lateral__titulo">Servicios relacionados</h2>
+                <ul class="barra-lateral__lista">
+                    <li><a href="maquinaria.html">Equipamiento de sala</a></li>
+                    <li><a href="apuntate.html">Alta de socios</a></li>
+                    <li><a href="reservas.html">Reservas y clases</a></li>
+                </ul>
+            </aside>
+
+        <ul class="contenido-seccion seccion__contenido">
             <li class="tarjeta">
-                <div class="cuerpo-tarjeta">
+                <div class="cuerpo-tarjeta tarjeta__cuerpo">
                     <div class="regla-icon"><i class="fas fa-dumbbell"></i></div>
-                    <h3 class="nombre-tarjeta">Sala de Máquinas</h3>
-                    <p class="descripcion-tarjeta">Bio-mechanics focus. Equipamiento seleccionado científicamente para aislar cada grupo muscular de forma estricta.</p>
+                    <h3 class="nombre-tarjeta tarjeta__titulo">Sala de Máquinas</h3>
+                    <p class="descripcion-tarjeta tarjeta__descripcion">Bio-mechanics focus. Equipamiento seleccionado científicamente para aislar cada grupo muscular de forma estricta.</p>
                     <a href="servicio-detalle-1.html" class="boton-principal boton-bloque">Saber Más</a>
                 </div>
             </li>
             <li class="tarjeta">
-                <div class="cuerpo-tarjeta">
+                <div class="cuerpo-tarjeta tarjeta__cuerpo">
                     <div class="regla-icon"><i class="fas fa-user-md"></i></div>
-                    <h3 class="nombre-tarjeta">Fisioterapia Premium</h3>
-                    <p class="descripcion-tarjeta">Recuperación profunda, punción seca, liberación miofascial y osteopatía al servicio de tu rendimiento.</p>
+                    <h3 class="nombre-tarjeta tarjeta__titulo">Fisioterapia Premium</h3>
+                    <p class="descripcion-tarjeta tarjeta__descripcion">Recuperación profunda, punción seca, liberación miofascial y osteopatía al servicio de tu rendimiento.</p>
                     <a href="servicio-detalle-2.html" class="boton-principal boton-bloque">Saber Más</a>
                 </div>
             </li>
             <li class="tarjeta">
-                <div class="cuerpo-tarjeta">
+                <div class="cuerpo-tarjeta tarjeta__cuerpo">
                     <div class="regla-icon"><i class="fas fa-apple-alt"></i></div>
-                    <h3 class="nombre-tarjeta">Nutricionista</h3>
-                    <p class="descripcion-tarjeta">Planes dietéticos personalizados, periodización nutricional y análisis corporal por pliegues y DEXA.</p>
+                    <h3 class="nombre-tarjeta tarjeta__titulo">Nutricionista</h3>
+                    <p class="descripcion-tarjeta tarjeta__descripcion">Planes dietéticos personalizados, periodización nutricional y análisis corporal por pliegues y DEXA.</p>
                     <a href="servicio-detalle-3.html" class="boton-principal boton-bloque">Saber Más</a>
                 </div>
             </li>
             <li class="tarjeta">
-                <div class="cuerpo-tarjeta">
+                <div class="cuerpo-tarjeta tarjeta__cuerpo">
                     <div class="regla-icon"><i class="fas fa-hot-tub"></i></div>
-                    <h3 class="nombre-tarjeta">Sauna Finlandesa</h3>
-                    <p class="descripcion-tarjeta">Relajación térmica para eliminación de toxinas, mejora cardiovascular y recuperación del sistema nervioso.</p>
+                    <h3 class="nombre-tarjeta tarjeta__titulo">Sauna Finlandesa</h3>
+                    <p class="descripcion-tarjeta tarjeta__descripcion">Relajación térmica para eliminación de toxinas, mejora cardiovascular y recuperación del sistema nervioso.</p>
                     <a href="servicio-detalle-4.html" class="boton-principal boton-bloque">Saber Más</a>
                 </div>
             </li>
             <li class="tarjeta">
-                <div class="cuerpo-tarjeta">
+                <div class="cuerpo-tarjeta tarjeta__cuerpo">
                     <div class="regla-icon"><i class="fas fa-swimmer"></i></div>
-                    <h3 class="nombre-tarjeta">Piscina Olímpica</h3>
-                    <p class="descripcion-tarjeta">50 metros de longitud, temperatura controlada y uso reservado por carriles para entreno de impacto cero.</p>
+                    <h3 class="nombre-tarjeta tarjeta__titulo">Piscina Olímpica</h3>
+                    <p class="descripcion-tarjeta tarjeta__descripcion">50 metros de longitud, temperatura controlada y uso reservado por carriles para entreno de impacto cero.</p>
                     <a href="servicio-detalle-5.html" class="boton-principal boton-bloque">Saber Más</a>
                 </div>
             </li>
             <li class="tarjeta">
-                <div class="cuerpo-tarjeta">
+                <div class="cuerpo-tarjeta tarjeta__cuerpo">
                     <div class="regla-icon"><i class="fas fa-snowflake"></i></div>
-                    <h3 class="nombre-tarjeta">Crioterapia</h3>
-                    <p class="descripcion-tarjeta">Terapias bajo cero (-110°C) para acelerar recuperación muscular y reducir niveles de inflamación.</p>
+                    <h3 class="nombre-tarjeta tarjeta__titulo">Crioterapia</h3>
+                    <p class="descripcion-tarjeta tarjeta__descripcion">Terapias bajo cero (-110°C) para acelerar recuperación muscular y reducir niveles de inflamación.</p>
                     <a href="servicio-detalle-6.html" class="boton-principal boton-bloque">Saber Más</a>
                 </div>
             </li>
         </ul>
+        </div>
     </section>
 
         </main>
@@ -146,7 +157,7 @@
                 <div class="pie-pagina__logo-brand"></div>
             </div>
             <h4>Platinum Gym</h4>
-            <p>Expertos en ponerte mamadismo</p>
+            <p>Entrenamiento, salud y rendimiento para todos los niveles.</p>
         </li>
         <li class="pie-pagina__columna">
             <h4>Enlaces Rápidos</h4>
