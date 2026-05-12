@@ -1,46 +1,73 @@
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
 .boton-principal {
-    background: $degradado-plata;
-    color: $color-fondo-oscuro;
-    border: none;
-    padding: 14px 28px;
-    font-size: 1rem;
-    font-weight: 800;
-    border-radius: 4px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: transform $velocidad-animacion, box-shadow $velocidad-animacion;
-    text-decoration: none;
-    display: inline-block;
+  background: white;
+  color: #121212;
+  border: 1px solid #ddd;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 800;
+  border-radius: 30px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
 
-    &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(229, 228, 226, 0.25);
-    }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    animation: shine 6s infinite;
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 15px rgba(255, 255, 255, 0.1);
+    background: #f8f8f8;
+    color: #000;
+  }
 }
 
-.boton-secundario {
-    background: transparent;
-    color: $color-plata;
-    border: 1px solid $color-gris-oscuro;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 4px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all $velocidad-animacion;
-    text-decoration: none;
-
-    &:hover {
-        border-color: $color-plata;
-        background-color: rgba(229, 228, 226, 0.05);
-    }
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 200%;
+  }
+  100% {
+    left: 200%;
+  }
 }
 
 .boton-bloque {
-    display: block;
-    width: 100%;
-    text-align: center;
+  display: block;
+  width: 100%;
+}
+
+.boton-secundario {
+  background: transparent;
+  color: var(--color-plata);
+  border: 1px solid var(--color-borde);
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+  transition: all var(--transition-normal);
+
+  &:hover {
+    border-color: var(--color-plata);
+    background-color: rgba(229, 228, 226, 0.05);
+  }
 }

@@ -1,78 +1,94 @@
-.contenido-seccion {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-    margin-bottom: 4rem;
+/* ==========================================================================
+   TARJETAS Y LISTAS SECCIÓN
+   ========================================================================== */
+.tarjeta {
+  background-color: var(--color-secundario);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform var(--transition-normal), border-color var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: #C0C0C0;
+  }
 }
 
-.tarjeta {
-    background-color: $color-fondo-caja;
-    border: 1px solid $color-gris-oscuro;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-    display: flex;
-    flex-direction: column;
+.caja-imagen {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--color-borde);
+}
 
-    &:hover {
-        transform: translateY(-8px);
-        border-color: $color-plata-oscuro;
-    }
+.imagen-tarjeta {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  padding: 1rem;
+}
 
-    .imagen-tarjeta {
-        width: 100%;
-        height: 250px;
-        object-fit: contain; /* Para que los productos no se corten */
-        background-color: rgba(0,0,0,0.2);
-        padding: 1rem;
-        border-bottom: 1px solid $color-gris-oscuro;
-    }
+.etiqueta {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--color-primario);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+  z-index: 10;
+}
 
-    .cuerpo-tarjeta {
-        padding: 1.5rem;
-        flex-grow: 1;
+.cuerpo-tarjeta {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-        .nombre-tarjeta {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            display: block;
-        }
+.nombre-tarjeta {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+}
 
-        .detalles-tarjeta {
-            color: $color-texto-gris;
-            font-size: 1rem;
+.precio {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-plata);
+  margin-bottom: 1.5rem;
+  margin-top: auto;
+}
 
-            .ver-mas {
-                cursor: pointer;
-                color: $color-plata;
-                font-weight: 700;
-                margin-top: 1rem;
-                display: block;
-            }
+.contenido-seccion {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  list-style: none !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 
-            .descripcion-tarjeta {
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.05);
-            }
-        }
+  li {
+    list-style: none !important;
+  }
+}
 
-        .precio {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: $color-plata;
-            margin-bottom: 1.5rem;
-        }
+/* Tablet view (min-width: 768px) */
+@media (min-width: 768px) {
+  .contenido-seccion {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
-        .icono-bonito {
-            font-size: 2.2rem;
-            background: $degradado-plata;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-    }
+/* Desktop view (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .contenido-seccion {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

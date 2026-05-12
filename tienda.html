@@ -29,7 +29,7 @@
                         <a href="#" class="enlace">
                             <i class="fas fa-dumbbell" aria-hidden="true"></i>
                             <span>El Gimnasio</span>
-                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+                            <i class="fas fa-chevron-down dropdown-chevron"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="maquinaria.html"><i class="fas fa-cogs"></i> Maquinaria</a></li>
@@ -43,7 +43,7 @@
                         <a href="#" class="enlace">
                             <i class="fas fa-user-circle" aria-hidden="true"></i>
                             <span>Socios</span>
-                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+                            <i class="fas fa-chevron-down dropdown-chevron"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="reservas.html"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="barra-navegacion__iconos">
                     <div class="user-dropdown-container">
-                        <a href="login.html" class="user-dropdown-trigger" style="text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:0.35rem;">
+                        <a href="login.html" class="user-dropdown-trigger login-trigger-link">
                             <span>Login</span>
                             <i class="fas fa-user-circle"></i>
                         </a>
@@ -85,55 +85,305 @@
                 <h2>TIENDA <span class="texto-destacado">OFICIAL</span></h2>
                 <p>Nutrición de grado farmacéutico, ropa técnica y accesorios profesionales.</p>
             </div>
-            <p class="filtro-actual" style="text-align:center;margin-bottom:1rem;">Versión estática: filtros y carrito requerían JavaScript; enlaces directos a tramitar de demostración.</p>
 
-            <ul class="contenido-seccion">
-                <li class="tarjeta sup">
-                    <div class="caja-imagen">
-                        <span class="etiqueta">Top Ventas</span>
-                        <img src="img/shop/protein.jpg" alt="100% Platinum Whey Isolate" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">100% Platinum Whey Isolate</h3>
-                        <div class="precio">59.99€</div>
-                        <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-cart-plus"></i> Ir a tramitar (demo)</a>
-                    </div>
-                </li>
-                <li class="tarjeta sup">
-                    <div class="caja-imagen">
-                        <span class="etiqueta">Nuevo</span>
-                        <img src="img/shop/prenetreno.avif" alt="Pre-Entreno" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Pre-Entreno Extremo</h3>
-                        <div class="precio">34.99€</div>
-                        <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-cart-plus"></i> Ir a tramitar (demo)</a>
-                    </div>
-                </li>
-                <li class="tarjeta sup">
-                    <div class="caja-imagen">
-                        <img src="img/shop/creatina.avif" alt="Creatina" class="imagen-tarjeta">
-                    </div>
-                    <div class="cuerpo-tarjeta">
-                        <h3 class="nombre-tarjeta">Creatina Monohidrato Creapure</h3>
-                        <div class="precio">24.99€</div>
-                        <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-cart-plus"></i> Ir a tramitar (demo)</a>
-                    </div>
-                </li>
-            </ul>
+            <div class="tabs-container">
+                <input type="radio" id="tab-1" name="store-tabs" class="tab-input" checked>
+                <input type="radio" id="tab-2" name="store-tabs" class="tab-input">
+                <input type="radio" id="tab-3" name="store-tabs" class="tab-input">
+                <input type="radio" id="tab-4" name="store-tabs" class="tab-input">
+
+                <div class="tab-labels">
+                    <label for="tab-1" class="tab-label"><i class="fas fa-th-large"></i> Todos</label>
+                    <label for="tab-2" class="tab-label"><i class="fas fa-seedling"></i> Nutrición</label>
+                    <label for="tab-3" class="tab-label"><i class="fas fa-tshirt"></i> Ropa Técnica</label>
+                    <label for="tab-4" class="tab-label"><i class="fas fa-dumbbell"></i> Accesorios</label>
+                </div>
+
+                <div id="content-1" class="tab-content">
+                    <ul class="contenido-seccion grid-4-cols">
+                        <!-- Whey -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Top Ventas</span>
+                                <img src="img/shop/protein.jpg" alt="100% Platinum Whey Isolate" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">100% Platinum Whey Isolate</h3>
+                                <div class="precio">59.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Pre-Entreno -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Nuevo</span>
+                                <img src="img/shop/prenetreno.avif" alt="Pre-Entreno Extremo" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Pre-Entreno Extremo</h3>
+                                <div class="precio">34.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Creatina -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/creatina.avif" alt="Creatina Monohidrato Creapure" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Creatina Monohidrato Creapure</h3>
+                                <div class="precio">24.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Chaqueta -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Nuevo</span>
+                                <img src="img/shop/chaqueta.webp" alt="Sudadera Técnica con Capucha" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Sudadera Técnica con Capucha</h3>
+                                <div class="precio">49.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Fuck Idols -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Top Ventas</span>
+                                <img src="img/shop/fuckidols.jfif" alt="Camiseta 'Fuck Idols' Oversize" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Camiseta "Fuck Idols" Oversize</h3>
+                                <div class="precio">19.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Heavy Duty -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/heavyduty.png" alt="Camiseta 'Heavy Duty' Vintage" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Camiseta "Heavy Duty" Vintage</h3>
+                                <div class="precio">22.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Pantalones -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/pantalones.jpg" alt="Pantalón Corto Deportivo Pro" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Pantalón Corto Deportivo Pro</h3>
+                                <div class="precio">24.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Tirantes -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/tirantes.jpg" alt="Camiseta de Tirantes 'Stringer'" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Camiseta de Tirantes "Stringer"</h3>
+                                <div class="precio">17.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Cinturon -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Top Ventas</span>
+                                <img src="img/shop/cinturon.jfif" alt="Cinturón de Powerlifting de Cuero" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Cinturón Powerlifting de Cuero</h3>
+                                <div class="precio">44.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Straps -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/straps.jpg" alt="Straps de Agarre Acolchados" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Straps de Agarre Acolchados</h3>
+                                <div class="precio">9.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Botella -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/botella.jpg" alt="Botella Mezcladora Platinum" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Botella Mezcladora Platinum</h3>
+                                <div class="precio">12.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="content-2" class="tab-content">
+                    <ul class="contenido-seccion grid-4-cols">
+                        <!-- Whey -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Top Ventas</span>
+                                <img src="img/shop/protein.jpg" alt="100% Platinum Whey Isolate" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">100% Platinum Whey Isolate</h3>
+                                <div class="precio">59.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Pre-Entreno -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Nuevo</span>
+                                <img src="img/shop/prenetreno.avif" alt="Pre-Entreno Extremo" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Pre-Entreno Extremo</h3>
+                                <div class="precio">34.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Creatina -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/creatina.avif" alt="Creatina Monohidrato Creapure" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Creatina Monohidrato Creapure</h3>
+                                <div class="precio">24.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="content-3" class="tab-content">
+                    <ul class="contenido-seccion grid-4-cols">
+                        <!-- Chaqueta -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Nuevo</span>
+                                <img src="img/shop/chaqueta.webp" alt="Sudadera Técnica con Capucha" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Sudadera Técnica con Capucha</h3>
+                                <div class="precio">49.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Fuck Idols -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Top Ventas</span>
+                                <img src="img/shop/fuckidols.jfif" alt="Camiseta 'Fuck Idols' Oversize" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Camiseta "Fuck Idols" Oversize</h3>
+                                <div class="precio">19.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Heavy Duty -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/heavyduty.png" alt="Camiseta 'Heavy Duty' Vintage" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Camiseta "Heavy Duty" Vintage</h3>
+                                <div class="precio">22.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Pantalones -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/pantalones.jpg" alt="Pantalón Corto Deportivo Pro" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Pantalón Corto Deportivo Pro</h3>
+                                <div class="precio">24.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Tirantes -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/tirantes.jpg" alt="Camiseta de Tirantes 'Stringer'" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Camiseta de Tirantes "Stringer"</h3>
+                                <div class="precio">17.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="content-4" class="tab-content">
+                    <ul class="contenido-seccion grid-4-cols">
+                        <!-- Cinturon -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <span class="etiqueta">Top Ventas</span>
+                                <img src="img/shop/cinturon.jfif" alt="Cinturón de Powerlifting de Cuero" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Cinturón Powerlifting de Cuero</h3>
+                                <div class="precio">44.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Straps -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/straps.jpg" alt="Straps de Agarre Acolchados" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Straps de Agarre Acolchados</h3>
+                                <div class="precio">9.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                        <!-- Botella -->
+                        <li class="tarjeta">
+                            <div class="caja-imagen">
+                                <img src="img/shop/botella.jpg" alt="Botella Mezcladora Platinum" class="imagen-tarjeta">
+                            </div>
+                            <div class="cuerpo-tarjeta">
+                                <h3 class="nombre-tarjeta">Botella Mezcladora Platinum</h3>
+                                <div class="precio">12.99€</div>
+                                <a href="tramitar-pedido.html" class="boton-principal boton-bloque"><i class="fas fa-shopping-cart"></i> Comprar ahora</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         </main>
         <footer class="pie-pagina">
-    <div class="pie-pagina__contenedor">
-        <section class="pie-pagina__columna">
+    <ul class="pie-pagina__contenedor">
+        <li class="pie-pagina__columna">
             <div class="pie-pagina__logo">
                 <div class="pie-pagina__logo-brand"></div>
             </div>
             <h4>Platinum Gym</h4>
             <p>Expertos en ponerte mamadismo</p>
-        </section>
-        <section class="pie-pagina__columna">
+        </li>
+        <li class="pie-pagina__columna">
             <h4>Enlaces Rápidos</h4>
             <nav>
                 <ul class="pie-pagina__lista">
@@ -145,26 +395,26 @@
                     <li><a href="apuntate.html">¡Apúntate!</a></li>
                 </ul>
             </nav>
-        </section>
-        <section class="pie-pagina__columna">
+        </li>
+        <li class="pie-pagina__columna">
             <h4>Contacto</h4>
             <ul class="pie-pagina__lista">
                 <li><i class="fas fa-phone" aria-hidden="true"></i> +34 912 345 678</li>
                 <li><i class="fas fa-envelope" aria-hidden="true"></i> info@platinumgym.com</li>
             </ul>
-        </section>
-        <section class="pie-pagina__columna">
+        </li>
+        <li class="pie-pagina__columna">
             <h4>Gimnasios</h4>
             <ul class="pie-pagina__lista">
                 <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Seattle</li>
                 <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Tel-Aviv</li>
-                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Isla de Epstein</li>
+                <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Miami</li>
                 <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Vallecas</li>
                 <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Meco</li>
                 <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Berlín</li>
             </ul>
-        </section>
-    </div>
+        </li>
+    </ul>
     <div class="pie-pagina__copyright">
         <p>&copy; 2026 Platinum Gym. Todos los derechos reservados.</p>
     </div>

@@ -1,3 +1,22 @@
+/* ==========================================================================
+   VARIABLES Y TOKENS (SASS & CSS CUSTOM PROPERTIES)
+   ========================================================================== */
+:root {
+  --color-primario: #8a0303;
+  --color-secundario: #121212;
+  --color-terciario: #1a1a1a;
+  --color-fondo: #0a0a0a;
+  --color-texto: #f5f5f5;
+  --color-texto-muted: #a0a0a0;
+  --color-borde: #2b2b2c;
+  --color-plata: #E5E4E2;
+  --color-oro: #ffd700;
+  --fuente-principal: "Montserrat", sans-serif;
+  --transition-normal: 0.3s ease;
+  --shadow-dark: 0 8px 15px rgba(0, 0, 0, 0.5);
+}
+
+// SASS Variables for compatibility and legacy imports
 $color-fondo-oscuro: #0a0a0a;
 $color-fondo-caja: #121212;
 $color-fondo-tarjeta: #1a1a1c;
@@ -29,7 +48,9 @@ $degradado-carbono: repeating-linear-gradient(45deg, #111 0, #111 2px, #181818 2
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(229, 228, 226, 0.1);
-}$color-negro: #000;
+}
+
+$color-negro: #000;
 $color-blanco: #fff;
 $color-gris: #ccc;
 $fuente: $fuente-principal;
