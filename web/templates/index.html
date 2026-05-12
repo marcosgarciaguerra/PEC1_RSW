@@ -135,7 +135,7 @@
                 {{range .Data.Resenas}}
                 <li class="resena-card">
                     <h3 class="resena-autor">{{.Autor}}</h3>
-                    <div class="resena-stars" aria-label="Puntuación: {{.Puntuacion}}">
+                    <div class="resena-stars" role="img" aria-label="Puntuación: {{.Puntuacion}}">
                         {{if eq .Puntuacion 5}}★★★★★{{else if eq .Puntuacion 4}}★★★★☆{{else if eq .Puntuacion
                         3}}★★★☆☆{{else if eq .Puntuacion 2}}★★☆☆☆{{else}}★☆☆☆☆{{end}}
                     </div>

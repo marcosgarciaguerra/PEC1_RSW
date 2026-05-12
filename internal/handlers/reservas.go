@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"pec2/internal/auth"
 	"pec2/internal/db"
 	"pec2/internal/models"
 	"strconv"
@@ -15,11 +14,7 @@ func obtenerSocioLogueado(r *http.Request) *models.Socio {
 	if err != nil {
 		return nil
 	}
-	email, ok := auth.Get(cookie.Value)
-	if !ok {
-		return nil
-	}
-	return db.ObtenerSocioPorCorreo(email)
+	return db.ObtenerSocioPorCorreo(cookie.Value)
 }
 
 func ReservasHandler(w http.ResponseWriter, r *http.Request) {
@@ -127,5 +122,3 @@ func ProcesarCancelacionHandler(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/reservas", http.StatusSeeOther)
 }
-
-

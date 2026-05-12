@@ -62,18 +62,6 @@ func createTables() {
 		log.Fatal("Error creando tabla resenas: ", err)
 	}
 
-	sessionTableInfo := `
-	CREATE TABLE IF NOT EXISTS sesiones (
-		token TEXT PRIMARY KEY,
-		email TEXT NOT NULL,
-		creado_en DATETIME DEFAULT CURRENT_TIMESTAMP
-	);`
-
-	_, err = DB.Exec(sessionTableInfo)
-	if err != nil {
-		log.Fatal("Error creando tabla sesiones: ", err)
-	}
-
 	clasesTableInfo := `
 	CREATE TABLE IF NOT EXISTS clases (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,

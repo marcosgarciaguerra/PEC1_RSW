@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
-	"pec2/internal/auth"
 	"pec2/internal/db"
 	"pec2/internal/models"
 	"strconv"
@@ -39,9 +38,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	var usuario *models.Socio
 	cookie, err := r.Cookie("session_id")
 	if err == nil {
-		if email, ok := auth.Get(cookie.Value); ok {
-			usuario = db.ObtenerSocioPorCorreo(email)
-		}
+		usuario = db.ObtenerSocioPorCorreo(cookie.Value)
 	}
 
 	RenderTemplate(w, "index", map[string]interface{}{

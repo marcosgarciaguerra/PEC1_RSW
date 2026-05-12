@@ -2,12 +2,8 @@ package handlers
 
 import (
 	"net/http"
-	"pec2/internal/auth"
 	"pec2/internal/db"
 	"time"
-
-	"github.com/google/uuid"
-	"golang.org/x/crypto/bcrypt"
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -25,18 +21,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		returnPath = r.FormValue("return") // Leer desde el input hidden
 
 		socio := db.ObtenerSocioPorCorreo(correo)
-		if socio != nil && bcrypt.CompareHashAndPassword([]byte(socio.Contrasena), []byte(contrasena)) == nil {
-			// Login exitoso - generate secure session token
-			token := uuid.NewString()
-			auth.Set(token, correo)
+		if socio != nil && socio.Contrasena == contrasena {
+			// Login exitoso — se guarda el correo directamente en la cookie
 			http.SetCookie(w, &http.Cookie{
-				Name:     "session_id",
-				Value:    token,
-				Expires:  time.Now().Add(24 * time.Hour),
-				Path:     "/",
-				HttpOnly: true,
-				Secure:   true,
-				SameSite: http.SameSiteLaxMode,
+				Name:    "session_id",
+				Value:   correo,
+				Expires: time.Now().Add(24 * time.Hour),
+				Path:    "/",
 			})
 			http.SetCookie(w, &http.Cookie{
 				Name:    "session_nombre",
@@ -63,15 +54,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
-		if cookie, err := r.Cookie("session_id"); err == nil {
-			auth.Delete(cookie.Value)
-			http.SetCookie(w, &http.Cookie{
-				Name:    "session_id",
-				Value:   "",
-				Expires: time.Unix(0, 0),
-				Path:    "/",
-			})
-		}
+	http.SetCookie(w, &http.Cookie{
+		Name:    "session_id",
+		Value:   "",
+		Expires: time.Unix(0, 0),
+		Path:    "/",
+	})
 	http.SetCookie(w, &http.Cookie{
 		Name:    "session_nombre",
 		Value:   "",
@@ -80,4 +68,3 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	})
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
-
