@@ -112,6 +112,30 @@ func TiendaHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// AdminHandler gestiona el panel de administración principal
+func AdminHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Usuario accedió a la página: admin")
+	RenderTemplate(w, "admin", nil)
+}
+
+// AdminClasesHandler gestiona la página de administración de clases
+func AdminClasesHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Usuario accedió a la página: admin-clases")
+	RenderTemplate(w, "admin-clases", nil)
+}
+
+// AdminArticulosHandler gestiona la página de administración de la tienda
+func AdminArticulosHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Usuario accedió a la página: admin-articulos")
+	RenderTemplate(w, "admin-articulos", nil)
+}
+
+// AdminMaquinariasHandler gestiona la página de administración de maquinarias
+func AdminMaquinariasHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Usuario accedió a la página: admin-maquinarias")
+	RenderTemplate(w, "admin-maquinarias", nil)
+}
+
 // PageHandler es un handler comodín que cubre páginas simples sin lógica de datos.
 // Redirige a NotFound si la URL contiene una extensión de fichero desconocida.
 // Se mantiene únicamente como fallback para páginas no registradas explícitamente.

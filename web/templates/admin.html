@@ -1,0 +1,262 @@
+{{define "title"}}Panel de Administración{{end}}
+
+{{define "styles"}}
+<style>
+    .admin-hero {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        padding: 4rem 2rem 3rem;
+        text-align: center;
+        border-bottom: 2px solid var(--color-primario);
+        position: relative;
+        overflow: hidden;
+    }
+    .admin-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, rgba(192,160,98,0.08) 0%, transparent 60%);
+        animation: pulse-bg 4s ease-in-out infinite;
+    }
+    @keyframes pulse-bg {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+    }
+    .admin-hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(192,160,98,0.15);
+        border: 1px solid rgba(192,160,98,0.4);
+        color: var(--color-primario);
+        padding: 0.4rem 1.2rem;
+        border-radius: 2rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1.5rem;
+    }
+    .admin-hero h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 900;
+        color: #fff;
+        margin: 0 0 1rem;
+        letter-spacing: -0.02em;
+        position: relative;
+    }
+    .admin-hero h1 span {
+        background: linear-gradient(135deg, var(--color-primario), #e8c97a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .admin-hero p {
+        color: rgba(229,228,226,0.6);
+        font-size: 1.05rem;
+        max-width: 500px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .admin-container {
+        max-width: 1000px;
+        margin: 4rem auto;
+        padding: 0 2rem;
+    }
+
+    .admin-section-label {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .admin-section-label span {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: rgba(229,228,226,0.4);
+    }
+    .admin-section-label::before, .admin-section-label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(229,228,226,0.1);
+    }
+
+    .admin-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .admin-card {
+        background: linear-gradient(145deg, #141414, #1c1c1c);
+        border: 1px solid rgba(229,228,226,0.08);
+        border-radius: 1rem;
+        padding: 2.5rem;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+    .admin-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--color-primario), #e8c97a);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .admin-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(192,160,98,0.3);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(192,160,98,0.1);
+    }
+    .admin-card:hover::before {
+        opacity: 1;
+    }
+
+    .admin-card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        flex-shrink: 0;
+    }
+    .admin-card-icon.clases {
+        background: linear-gradient(135deg, rgba(88,130,248,0.2), rgba(88,130,248,0.05));
+        color: #5882f8;
+        border: 1px solid rgba(88,130,248,0.25);
+    }
+    .admin-card-icon.tienda {
+        background: linear-gradient(135deg, rgba(192,160,98,0.2), rgba(192,160,98,0.05));
+        color: var(--color-primario);
+        border: 1px solid rgba(192,160,98,0.25);
+    }
+
+    .admin-card-body h2 {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #fff;
+        margin: 0 0 0.5rem;
+    }
+    .admin-card-body p {
+        color: rgba(229,228,226,0.5);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .admin-card-ops {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    .op-badge {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 0.25rem 0.7rem;
+        border-radius: 0.3rem;
+        border: 1px solid;
+    }
+    .op-badge.get  { color: #4ade80; border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.08); }
+    .op-badge.post { color: #60a5fa; border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.08); }
+    .op-badge.put  { color: #facc15; border-color: rgba(250,204,21,0.3);  background: rgba(250,204,21,0.08); }
+    .op-badge.del  { color: #f87171; border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.08); }
+
+    .admin-card-arrow {
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(229,228,226,0.05);
+        border: 1px solid rgba(229,228,226,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(229,228,226,0.4);
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+    }
+    .admin-card:hover .admin-card-arrow {
+        background: var(--color-primario);
+        border-color: var(--color-primario);
+        color: #000;
+        transform: translateX(4px);
+    }
+</style>
+{{end}}
+
+{{define "content"}}
+<div class="admin-hero">
+    <div class="admin-hero-badge">
+        <i class="fas fa-shield-alt"></i>
+        Panel de Control
+    </div>
+    <h1>Zona de <span>Administración</span></h1>
+    <p>Gestiona el contenido de Platinum Gym.</p>
+</div>
+
+<div class="admin-container">
+    <div class="admin-section-label">
+        <span>Módulos disponibles</span>
+    </div>
+
+    <div class="admin-cards">
+
+        <!-- Card Clases -->
+        <a href="/admin/clases" class="admin-card">
+            <div class="admin-card-icon clases">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="admin-card-body">
+                <h2>Clases Dirigidas</h2>
+                <p>Administra el calendario de clases del gimnasio. Añade, modifica horarios, aforo y entrenadores.</p>
+            </div>
+            <div class="admin-card-arrow"><i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <!-- Card Tienda -->
+        <a href="/admin/articulos" class="admin-card">
+            <div class="admin-card-icon tienda">
+                <i class="fas fa-boxes"></i>
+            </div>
+            <div class="admin-card-body">
+                <h2>Catálogo de Tienda</h2>
+                <p>Gestiona los artículos a la venta. Añade productos, actualiza precios, categorías y etiquetas.</p>
+            </div>
+            <div class="admin-card-arrow"><i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <!-- Card Maquinaria -->
+        <a href="/admin/maquinarias" class="admin-card">
+            <div class="admin-card-icon maquinaria" style="background: linear-gradient(135deg, rgba(250,204,21,0.2), rgba(250,204,21,0.05)); color: #facc15; border: 1px solid rgba(250,204,21,0.25);">
+                <i class="fas fa-dumbbell"></i>
+            </div>
+            <div class="admin-card-body">
+                <h2>Equipamiento</h2>
+                <p>Gestiona la maquinaria del gimnasio. Modifica nombres, marcas, y zonas musculares de impacto.</p>
+            </div>
+            <div class="admin-card-arrow"><i class="fas fa-arrow-right"></i></div>
+        </a>
+
+    </div>
+</div>
+{{end}}

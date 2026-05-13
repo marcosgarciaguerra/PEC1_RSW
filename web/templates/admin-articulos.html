@@ -1,0 +1,339 @@
+{{define "title"}}Admin — Tienda{{end}}
+
+{{define "styles"}}
+<style>
+    .admin-header {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1507 100%);
+        padding: 3rem 2rem 2.5rem;
+        border-bottom: 2px solid rgba(192,160,98,0.4);
+        position: relative;
+        overflow: hidden;
+    }
+    .admin-header::before {
+        content: '';
+        position: absolute;
+        top: -50%; right: -10%;
+        width: 500px; height: 500px;
+        background: radial-gradient(circle, rgba(192,160,98,0.07) 0%, transparent 70%);
+    }
+    .admin-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: rgba(229,228,226,0.4);
+        margin-bottom: 1.5rem;
+        position: relative;
+        max-width: 1100px;
+        margin-left: auto; margin-right: auto;
+    }
+    .admin-breadcrumb a { color: rgba(229,228,226,0.4); text-decoration: none; transition: color 0.2s; }
+    .admin-breadcrumb a:hover { color: var(--color-primario); }
+    .admin-breadcrumb .sep { color: rgba(229,228,226,0.2); }
+    .admin-breadcrumb .current { color: var(--color-primario); }
+
+    .admin-header-content {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        position: relative;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    .admin-header-icon {
+        width: 56px; height: 56px;
+        border-radius: 0.75rem;
+        background: linear-gradient(135deg, rgba(192,160,98,0.25), rgba(192,160,98,0.05));
+        border: 1px solid rgba(192,160,98,0.3);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.5rem; color: var(--color-primario);
+        flex-shrink: 0;
+    }
+    .admin-header h1 {
+        font-size: 2rem; font-weight: 900; color: #fff;
+        margin: 0 0 0.25rem; letter-spacing: -0.02em;
+    }
+    .admin-header p { color: rgba(229,228,226,0.5); font-size: 0.9rem; margin: 0; }
+
+    .admin-layout {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 2rem;
+        max-width: 1100px;
+        margin: 2.5rem auto;
+        padding: 0 2rem;
+        align-items: start;
+    }
+    @media (max-width: 900px) { .admin-layout { grid-template-columns: 1fr; } }
+
+    .admin-form-panel {
+        background: #111;
+        border: 1px solid rgba(229,228,226,0.08);
+        border-radius: 1rem;
+        overflow: hidden;
+        position: sticky;
+        top: 1.5rem;
+    }
+    .admin-form-header {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid rgba(229,228,226,0.08);
+        display: flex; align-items: center; justify-content: space-between;
+    }
+    .admin-form-header h3 {
+        font-size: 0.9rem; font-weight: 700; color: #fff; margin: 0;
+        display: flex; align-items: center; gap: 0.6rem;
+    }
+    .admin-form-header h3 i { color: var(--color-primario); }
+    #btnCancelar {
+        background: transparent;
+        border: 1px solid rgba(229,228,226,0.15);
+        color: rgba(229,228,226,0.5);
+        padding: 0.3rem 0.8rem;
+        border-radius: 0.4rem;
+        font-size: 0.78rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    #btnCancelar:hover { border-color: #f87171; color: #f87171; }
+
+    .admin-form-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+        font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.06em; color: rgba(229,228,226,0.5);
+    }
+    .form-group input, .form-group textarea, .form-group select {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(229,228,226,0.1);
+        border-radius: 0.5rem;
+        padding: 0.65rem 0.9rem;
+        color: #fff; font-size: 0.9rem; font-family: inherit;
+        transition: border-color 0.2s, background 0.2s;
+        width: 100%; box-sizing: border-box;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    .form-group select option { background: #1a1a1a; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+        outline: none;
+        border-color: var(--color-primario);
+        background: rgba(192,160,98,0.05);
+    }
+
+    #btnGuardar {
+        width: 100%; padding: 0.85rem;
+        background: linear-gradient(135deg, var(--color-primario), #e8c97a);
+        border: none; border-radius: 0.5rem;
+        color: #000; font-weight: 800; font-size: 0.9rem;
+        font-family: inherit; cursor: pointer; letter-spacing: 0.03em;
+        transition: filter 0.2s, transform 0.2s;
+        margin-top: 0.5rem;
+    }
+    #btnGuardar:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    #formMessage { border-radius: 0.5rem; overflow: hidden; font-size: 0.85rem; }
+    .msg-success {
+        background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3);
+        color: #4ade80; padding: 0.75rem 1rem;
+    }
+    .msg-danger {
+        background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3);
+        color: #f87171; padding: 0.75rem 1rem;
+    }
+
+    /* Lista de artículos en grid */
+    .admin-list-panel { display: flex; flex-direction: column; gap: 1rem; }
+    .admin-list-header {
+        display: flex; align-items: center; justify-content: space-between;
+    }
+    .admin-list-header h3 {
+        font-size: 0.85rem; font-weight: 700;
+        color: rgba(229,228,226,0.5); text-transform: uppercase;
+        letter-spacing: 0.1em; margin: 0;
+    }
+    .count-badge {
+        font-size: 0.75rem;
+        background: rgba(192,160,98,0.15);
+        color: var(--color-primario);
+        border: 1px solid rgba(192,160,98,0.25);
+        padding: 0.2rem 0.6rem; border-radius: 1rem; font-weight: 700;
+    }
+
+    .articulos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .articulo-card {
+        background: #111;
+        border: 1px solid rgba(229,228,226,0.07);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        transition: border-color 0.2s, transform 0.2s;
+        display: flex;
+        flex-direction: column;
+    }
+    .articulo-card:hover {
+        border-color: rgba(192,160,98,0.25);
+        transform: translateY(-2px);
+    }
+    .articulo-card-img {
+        width: 100%; height: 150px;
+        object-fit: contain;
+        padding: 1rem;
+        background: rgba(255,255,255,0.02);
+        box-sizing: border-box;
+    }
+    .articulo-card-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+    .articulo-card-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .tag-cat {
+        font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+        padding: 0.15rem 0.5rem; border-radius: 0.25rem;
+        background: rgba(229,228,226,0.07); color: rgba(229,228,226,0.5);
+        border: 1px solid rgba(229,228,226,0.1);
+    }
+    .tag-etiqueta {
+        font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+        padding: 0.15rem 0.5rem; border-radius: 0.25rem;
+        background: rgba(192,160,98,0.12); color: var(--color-primario);
+        border: 1px solid rgba(192,160,98,0.25);
+    }
+    .articulo-card-name {
+        font-size: 0.9rem; font-weight: 700; color: #fff;
+        line-height: 1.3; margin: 0;
+    }
+    .articulo-card-price {
+        font-size: 1.1rem; font-weight: 900;
+        color: var(--color-primario); margin: 0;
+    }
+    .articulo-card-actions {
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 0.5rem; padding: 0.75rem 1rem;
+        border-top: 1px solid rgba(229,228,226,0.06);
+    }
+    .btn-edit, .btn-delete {
+        padding: 0.45rem;
+        border-radius: 0.4rem;
+        border: 1px solid;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; font-size: 0.78rem;
+        transition: all 0.2s; background: transparent; font-family: inherit;
+        gap: 0.35rem; font-weight: 600;
+    }
+    .btn-edit { border-color: rgba(192,160,98,0.3); color: var(--color-primario); }
+    .btn-edit:hover { background: rgba(192,160,98,0.12); border-color: var(--color-primario); }
+    .btn-delete { border-color: rgba(248,113,113,0.3); color: #f87171; }
+    .btn-delete:hover { background: rgba(248,113,113,0.12); border-color: #f87171; }
+
+    .empty-state {
+        text-align: center; padding: 4rem 2rem;
+        color: rgba(229,228,226,0.3); grid-column: 1 / -1;
+    }
+    .empty-state i { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .empty-state p { font-size: 0.9rem; margin: 0; }
+
+    .loading-state {
+        text-align: center; padding: 3rem; color: rgba(229,228,226,0.3); font-size: 0.9rem;
+    }
+    .loading-state i { margin-right: 0.5rem; animation: spin 1s linear infinite; display: inline-block; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+</style>
+{{end}}
+
+{{define "content"}}
+<div class="admin-header">
+    <div class="admin-breadcrumb">
+        <a href="/admin"><i class="fas fa-shield-alt"></i> Admin</a>
+        <span class="sep">/</span>
+        <span class="current">Tienda</span>
+    </div>
+    <div class="admin-header-content">
+        <div class="admin-header-icon">
+            <i class="fas fa-boxes"></i>
+        </div>
+        <div>
+            <h1>Catálogo de Tienda</h1>
+            <p>API REST · Endpoints: <code style="color:var(--color-primario);font-size:0.8rem;">/api/articulos</code></p>
+        </div>
+    </div>
+</div>
+
+<div class="admin-layout">
+    <!-- Panel Formulario -->
+    <div class="admin-form-panel">
+        <div class="admin-form-header">
+            <h3><i class="fas fa-plus-circle"></i> <span id="formTitle">Nuevo Artículo</span></h3>
+            <button type="button" id="btnCancelar" style="display:none;">✕ Cancelar</button>
+        </div>
+        <div class="admin-form-body">
+            <form id="articuloForm">
+                <input type="hidden" id="articuloId">
+                <div class="form-group">
+                    <label for="nombre">Nombre del artículo</label>
+                    <input type="text" id="nombre" placeholder="Ej: Whey Isolate 1kg" required>
+                </div>
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select id="categoria" required>
+                        <option value="sup">Suplemento</option>
+                        <option value="rop">Ropa</option>
+                        <option value="acc">Accesorio</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio (€)</label>
+                    <input type="number" step="0.01" id="precio" placeholder="29.99" required>
+                </div>
+                <div class="form-group">
+                    <label for="imagen">Ruta de imagen</label>
+                    <input type="text" id="imagen" placeholder="/img/shop/producto.jpg" required>
+                </div>
+                <div class="form-group">
+                    <label for="etiqueta">Etiqueta <span style="color:rgba(229,228,226,0.3)">(opcional)</span></label>
+                    <input type="text" id="etiqueta" placeholder="Ej: Top Ventas, Nuevo...">
+                </div>
+                <div id="formMessage"></div>
+                <button type="submit" id="btnGuardar">
+                    <i class="fas fa-save"></i> Guardar Artículo
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel Lista -->
+    <div class="admin-list-panel">
+        <div class="admin-list-header">
+            <h3>Artículos en catálogo</h3>
+            <span class="count-badge" id="countBadge">—</span>
+        </div>
+        <div class="articulos-grid" id="articulosList">
+            <div class="loading-state" style="grid-column:1/-1">
+                <i class="fas fa-circle-notch"></i> Cargando artículos...
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template de artículo -->
+<template id="articuloTemplate">
+    <div class="articulo-card">
+        <img class="articulo-card-img articulo-imagen" src="" alt="">
+        <div class="articulo-card-body">
+            <div class="articulo-card-tags">
+                <span class="tag-cat articulo-categoria"></span>
+                <span class="tag-etiqueta articulo-etiqueta" style="display:none;"></span>
+            </div>
+            <p class="articulo-card-name articulo-nombre"></p>
+            <p class="articulo-card-price"><span class="articulo-precio"></span> €</p>
+        </div>
+        <div class="articulo-card-actions">
+            <button class="btn-edit btn-editar"><i class="fas fa-pen"></i> Editar</button>
+            <button class="btn-delete btn-eliminar"><i class="fas fa-trash"></i> Borrar</button>
+        </div>
+    </div>
+</template>
+
+<script src="/js/api_articulos.js"></script>
+{{end}}

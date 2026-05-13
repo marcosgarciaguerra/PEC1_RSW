@@ -136,6 +136,37 @@ func createTables() {
 		log.Fatal("Error creando tabla pedido_items: ", err)
 	}
 
+	articulosTableInfo := `
+	CREATE TABLE IF NOT EXISTS articulos (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		nombre TEXT NOT NULL,
+		categoria TEXT NOT NULL,
+		precio REAL NOT NULL,
+		imagen TEXT NOT NULL,
+		etiqueta TEXT
+	);`
+
+	_, err = DB.Exec(articulosTableInfo)
+	if err != nil {
+		log.Fatal("Error creando tabla articulos: ", err)
+	}
+
+	maquinariasTableInfo := `
+	CREATE TABLE IF NOT EXISTS maquinarias (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		nombre TEXT NOT NULL,
+		marca TEXT NOT NULL,
+		zona TEXT NOT NULL,
+		descripcion TEXT NOT NULL,
+		beneficios TEXT NOT NULL,
+		imagen TEXT NOT NULL
+	);`
+
+	_, err = DB.Exec(maquinariasTableInfo)
+	if err != nil {
+		log.Fatal("Error creando tabla maquinarias: ", err)
+	}
+
 	sessionsTableInfo := `
 	CREATE TABLE IF NOT EXISTS sessions (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -177,6 +208,30 @@ func createTables() {
 		('Pilates Mat', 'Javier Ruiz', 15, 'Sábado, 18 de abril de 2026 a las 10:00h', 'Ejercicios para fortalecer core y postura.', 'Sala Zen (Planta Alta)'),
 		('Fitboxing', 'David Castro', 12, 'Domingo, 19 de abril de 2026 a las 11:00h', 'Mix de boxeo al saco sin contacto con cardio.', 'Zona de Combate'),
 		('AquaGym', 'Ana Morales', 20, 'Lunes, 20 de abril de 2026 a las 08:30h', 'Gimnasia aeróbica de bajo impacto en el agua.', 'Piscina Climatizada')`)
+	}
+
+	var countAdmin int
+	DB.QueryRow("SELECT COUNT(*) FROM usuarios WHERE correo = ?", "admin@platiniumgym.com").Scan(&countAdmin)
+	if countAdmin == 0 {
+		hash, err := bcrypt.GenerateFromPassword([]byte("eaeagetafeesunaaldea7"), bcrypt.DefaultCost)
+		if err == nil {
+			_, _ = DB.Exec("INSERT INTO usuarios (nombre, apellidos, correo, documento, password, plan, suscripcion_activa) VALUES (?, ?, ?, ?, ?, ?, ?)",
+				"Admin", "Platinium", "admin@platiniumgym.com", "ADMIN-DOC", string(hash), "admin", 1)
+		}
+	}
+
+	var countMaquinarias int
+	DB.QueryRow("SELECT COUNT(*) FROM maquinarias").Scan(&countMaquinarias)
+	if countMaquinarias == 0 {
+		_, _ = DB.Exec(`INSERT INTO maquinarias (nombre, marca, zona, descripcion, beneficios, imagen) VALUES 
+		('Chest Press Biomecánico', 'Panatta Sport', 'Tren Superior', 'Máquina diseñada para trabajar el pectoral de forma segura.', 'Desarrollo máximo del pectoral mayor.', '/img/maquinaria/ChestPress.webp'),
+		('Iso-Lateral Row', 'Hammer Strength', 'Tren Superior', 'Permite trabajar la espalda de forma unilateral.', 'Mejora la densidad de la espalda.', '/img/maquinaria/IsoLateralRow.webp'),
+		('Leg Press 45°', 'Cybex', 'Tren Inferior', 'Prensa de piernas a 45 grados con rieles ultrasuaves.', 'Desarrollo masivo de cuádriceps.', '/img/maquinaria/LegPress.webp'),
+		('Hack Squat Lineal', 'Nautilus', 'Tren Inferior', 'Simula el movimiento de una sentadilla pero proporcionando un apoyo total.', 'Hipertrofia extrema en las piernas.', '/img/maquinaria/HackSquat.jpg'),
+		('Abdominal Crunch', 'Technogym', 'Core (Abdomen)', 'Máquina de aislamiento para la pared abdominal.', 'Fortalecimiento del core.', '/img/maquinaria/AbdominalCrunch.jpg'),
+		('Cable Crossover', 'Panatta Sport', 'Tren Superior', 'Estación de poleas cruzadas de alta precisión.', 'Trabajo constante durante todo el rango de movimiento.', '/img/maquinaria/CableCrossover.png'),
+		('Lat Pulldown Convergente', 'Hammer Strength', 'Tren Superior', 'Máquina para jalón al pecho con movimiento convergente.', 'Ensanchamiento de la espalda.', '/img/maquinaria/LatPulldown.avif'),
+		('Glute Drive', 'Nautilus', 'Tren Inferior', 'Máquina diseñada específicamente para el Hip Thrust.', 'Desarrollo óptimo de los glúteos.', '/img/maquinaria/GluteDrive.webp')`)
 	}
 }
 

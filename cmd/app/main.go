@@ -29,6 +29,10 @@ func main() {
 		"reservas",
 		"calculadora",
 		"tramitar-pedido",
+		"admin",
+		"admin-clases",
+		"admin-articulos",
+		"admin-maquinarias",
 	})
 
 	// Servir ficheros estáticos (CSS, imágenes, SCSS).
@@ -41,6 +45,7 @@ func main() {
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir(filepath.Join(staticDir, "css")))))
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir(filepath.Join(staticDir, "img")))))
 	http.Handle("/scss/", http.StripPrefix("/scss/", http.FileServer(http.Dir(filepath.Join(staticDir, "scss")))))
+	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir(filepath.Join(staticDir, "js")))))
 
 	// Handlers de vistas — cada ruta tiene su propio controlador dedicado.
 	http.HandleFunc("/", handlers.IndexHandler)
@@ -65,6 +70,24 @@ func main() {
 	http.HandleFunc("/reservas/cancelar", handlers.RequireSocioAuth(handlers.ProcesarCancelacionHandler))
 	http.HandleFunc("/tienda/tramitar", handlers.RequireUsuarioAuth(handlers.TramitarPedidoHandler))
 	http.HandleFunc("/tienda/confirmar", handlers.RequireUsuarioAuth(handlers.ConfirmarPedidoHandler))
+
+	// API REST Clases
+	http.HandleFunc("/api/clases/", handlers.HandleAPIClases)
+	http.HandleFunc("/api/clases", handlers.HandleAPIClases)
+	
+	// Admin panel principal — única barrera de autenticación
+	http.HandleFunc("/admin", handlers.RequireSocioAuth(handlers.AdminHandler))
+	http.HandleFunc("/admin/clases", handlers.AdminClasesHandler)
+	http.HandleFunc("/admin/articulos", handlers.AdminArticulosHandler)
+	http.HandleFunc("/admin/maquinarias", handlers.AdminMaquinariasHandler)
+
+	// API REST Articulos
+	http.HandleFunc("/api/articulos/", handlers.HandleAPIArticulos)
+	http.HandleFunc("/api/articulos", handlers.HandleAPIArticulos)
+
+	// API REST Maquinarias
+	http.HandleFunc("/api/maquinarias/", handlers.HandleAPIMaquinarias)
+	http.HandleFunc("/api/maquinarias", handlers.HandleAPIMaquinarias)
 
 	log.Println("Servidor iniciado en http://localhost:8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {

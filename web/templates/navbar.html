@@ -72,18 +72,19 @@
         var userIconText = document.getElementById('user-icon-btn');
 
         function getCookie(name) {
-            const v = document.cookie.match('(^|;) ?'+name+'=([^;]*)(;|$)');
+             const v = document.cookie.match('(^|;) ?'+name+'=([^;]*)(;|$)');
             return v ? decodeURIComponent(v[2]) : null;
         }
 
         var loggedIn = getCookie('gym_logged_in') === 'true';
+        var userName = getCookie('gym_user_name');
 
         if (loggedIn) {
             if (userIconText) {
-                userIconText.textContent = "Logout";
+                userIconText.textContent = userName ? userName : "Socio";
             }
             trigger.onclick = function() {
-                window.location.href = '/logout';
+                window.location.href = '/reservas';
             };
             document.querySelectorAll('.logout-nav-item').forEach(function(el) {
                 el.style.display = 'block';

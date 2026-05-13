@@ -24,7 +24,7 @@ type itemCarrito struct {
 }
 
 func CatalogoTienda() []models.Articulo {
-	return db.ArticulosTienda
+	return db.ObtenerArticulosTienda()
 }
 
 func CrearPedido(usuario models.Usuario, direccionEnvio string, carritoJSON string) (*models.Pedido, error) {

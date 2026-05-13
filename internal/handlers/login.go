@@ -75,6 +75,16 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			Secure:   r.TLS != nil,
 		})
 
+		http.SetCookie(w, &http.Cookie{
+			Name:     "gym_user_name",
+			Value:    socio.Nombre,
+			Expires:  time.Now().Add(24 * time.Hour),
+			Path:     "/",
+			HttpOnly: false,
+			SameSite: http.SameSiteLaxMode,
+			Secure:   r.TLS != nil,
+		})
+
 		if returnPath != "" {
 			http.Redirect(w, r, returnPath, http.StatusSeeOther)
 		} else {
@@ -100,6 +110,15 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	})
 	http.SetCookie(w, &http.Cookie{
 		Name:     "gym_logged_in",
+		Value:    "",
+		Expires:  time.Unix(0, 0),
+		Path:     "/",
+		HttpOnly: false,
+		SameSite: http.SameSiteLaxMode,
+		Secure:   r.TLS != nil,
+	})
+	http.SetCookie(w, &http.Cookie{
+		Name:     "gym_user_name",
 		Value:    "",
 		Expires:  time.Unix(0, 0),
 		Path:     "/",
