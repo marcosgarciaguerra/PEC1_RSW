@@ -7,6 +7,7 @@ import (
 
 	"pec2/internal/models"
 	"pec2/internal/services"
+	"pec2/internal/validation"
 )
 
 func RegistroHandler(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +44,17 @@ func RegistroHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if errors.Is(err, services.ErrDatosRegistroInvalidos) {
 		http.Error(w, "Faltan datos obligatorios del formulario", http.StatusBadRequest)
+		return
+	}
+	if errors.Is(err, validation.ErrEmailInvalido) ||
+		errors.Is(err, validation.ErrDocumentoInvalido) ||
+		errors.Is(err, validation.ErrTelefonoInvalido) ||
+		errors.Is(err, validation.ErrPasswordDebil) ||
+		errors.Is(err, validation.ErrPlanInvalido) ||
+		errors.Is(err, validation.ErrMetodoPagoInvalido) ||
+		errors.Is(err, validation.ErrNumeroPagoInvalido) ||
+		errors.Is(err, validation.ErrDireccionInvalida) {
+		http.Error(w, "Datos de formulario inválidos", http.StatusBadRequest)
 		return
 	}
 	if err != nil {

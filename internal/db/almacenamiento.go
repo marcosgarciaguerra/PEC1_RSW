@@ -6,6 +6,10 @@ import (
 	"os"
 	"path/filepath"
 	"pec2/internal/models"
+	"strings"
+	"time"
+
+	"golang.org/x/crypto/bcrypt"
 	_ "modernc.org/sqlite"
 )
 
@@ -22,6 +26,7 @@ func InitDB() {
 	}
 
 	createTables()
+	migrarDatosSensiblesLegacy()
 }
 
 func createTables() {
@@ -130,6 +135,26 @@ func createTables() {
 		log.Fatal("Error creando tabla pedido_items: ", err)
 	}
 
+	sessionsTableInfo := `
+	CREATE TABLE IF NOT EXISTS sessions (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		usuario_id INTEGER NOT NULL,
+		token_hash TEXT UNIQUE NOT NULL,
+		expires_at DATETIME NOT NULL,
+		revoked_at DATETIME,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
+	);`
+	_, err = DB.Exec(sessionsTableInfo)
+	if err != nil {
+		log.Fatal("Error creando tabla sessions: ", err)
+	}
+
+	_, err = DB.Exec("CREATE INDEX IF NOT EXISTS idx_sessions_token_hash ON sessions(token_hash);")
+	if err != nil {
+		log.Fatal("Error creando indice de sessions: ", err)
+	}
+
 	var count int
 	DB.QueryRow("SELECT COUNT(*) FROM resenas").Scan(&count)
 	if count == 0 {
@@ -151,6 +176,49 @@ func createTables() {
 		('Pilates Mat', 'Javier Ruiz', 15, 'Sábado, 18 de abril de 2026 a las 10:00h', 'Ejercicios para fortalecer core y postura.', 'Sala Zen (Planta Alta)'),
 		('Fitboxing', 'David Castro', 12, 'Domingo, 19 de abril de 2026 a las 11:00h', 'Mix de boxeo al saco sin contacto con cardio.', 'Zona de Combate'),
 		('AquaGym', 'Ana Morales', 20, 'Lunes, 20 de abril de 2026 a las 08:30h', 'Gimnasia aeróbica de bajo impacto en el agua.', 'Piscina Climatizada')`)
+	}
+}
+
+func migrarDatosSensiblesLegacy() {
+	rows, err := DB.Query("SELECT id, password, metodo_pago, numero_pago FROM usuarios")
+	if err != nil {
+		log.Println("No se pudo revisar migración de datos sensibles:", err)
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var id int
+		var password, metodoPago, numeroPago string
+		if err := rows.Scan(&id, &password, &metodoPago, &numeroPago); err != nil {
+			continue
+		}
+
+		if !strings.HasPrefix(password, "$2") && strings.TrimSpace(password) != "" {
+			hash, hashErr := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+			if hashErr == nil {
+				_, _ = DB.Exec("UPDATE usuarios SET password = ? WHERE id = ?", string(hash), id)
+			}
+		}
+
+		if strings.TrimSpace(numeroPago) == "" {
+			continue
+		}
+		if strings.HasPrefix(numeroPago, "****") || strings.HasPrefix(numeroPago, "IBAN-****") {
+			continue
+		}
+
+		clean := strings.ReplaceAll(strings.TrimSpace(numeroPago), " ", "")
+		if len(clean) >= 4 {
+			last4 := clean[len(clean)-4:]
+			masked := "****" + last4
+			if metodoPago == "domiciliacion" {
+				masked = "IBAN-****" + strings.ToUpper(last4)
+			}
+			_, _ = DB.Exec("UPDATE usuarios SET numero_pago = ? WHERE id = ?", masked, id)
+		} else {
+			_, _ = DB.Exec("UPDATE usuarios SET numero_pago = ? WHERE id = ?", "REDACTED", id)
+		}
 	}
 }
 
@@ -197,7 +265,7 @@ func GuardarResena(r models.Resena) error {
 func ObtenerSocioPorCorreo(correo string) *models.Socio {
 	var s models.Socio
 	err := DB.QueryRow("SELECT id, nombre, password, suscripcion_activa FROM usuarios WHERE correo = ?", correo).
-		Scan(&s.ID, &s.Nombre, &s.Contrasena, &s.SuscripcionActiva)
+		Scan(&s.ID, &s.Nombre, &s.ContrasenaHash, &s.SuscripcionActiva)
 	if err != nil {
 		return nil
 	}
@@ -207,7 +275,7 @@ func ObtenerSocioPorCorreo(correo string) *models.Socio {
 func ObtenerSocioPorNombre(nombre string) *models.Socio {
 	var s models.Socio
 	err := DB.QueryRow("SELECT id, nombre, password, suscripcion_activa FROM usuarios WHERE nombre = ?", nombre).
-		Scan(&s.ID, &s.Nombre, &s.Contrasena, &s.SuscripcionActiva)
+		Scan(&s.ID, &s.Nombre, &s.ContrasenaHash, &s.SuscripcionActiva)
 	if err != nil {
 		return nil
 	}
@@ -216,12 +284,86 @@ func ObtenerSocioPorNombre(nombre string) *models.Socio {
 
 func ObtenerUsuarioPorCorreo(correo string) *models.Usuario {
 	var u models.Usuario
-	err := DB.QueryRow("SELECT id, nombre, apellidos, correo, direccion, telefono, plan, metodo_pago FROM usuarios WHERE correo = ?", correo).
-		Scan(&u.ID, &u.Nombre, &u.Apellidos, &u.Correo, &u.Direccion, &u.Telefono, &u.Plan, &u.MetodoPago)
+	err := DB.QueryRow("SELECT id, nombre, apellidos, correo, direccion, telefono, plan, metodo_pago, numero_pago FROM usuarios WHERE correo = ?", correo).
+		Scan(&u.ID, &u.Nombre, &u.Apellidos, &u.Correo, &u.Direccion, &u.Telefono, &u.Plan, &u.MetodoPago, &u.NumeroPago)
 	if err != nil {
 		return nil
 	}
 	return &u
+}
+
+func ObtenerUsuarioPorID(id int) *models.Usuario {
+	var u models.Usuario
+	err := DB.QueryRow("SELECT id, nombre, apellidos, correo, direccion, telefono, plan, metodo_pago, numero_pago FROM usuarios WHERE id = ?", id).
+		Scan(&u.ID, &u.Nombre, &u.Apellidos, &u.Correo, &u.Direccion, &u.Telefono, &u.Plan, &u.MetodoPago, &u.NumeroPago)
+	if err != nil {
+		return nil
+	}
+	return &u
+}
+
+func ObtenerSocioPorID(id int) *models.Socio {
+	var s models.Socio
+	err := DB.QueryRow("SELECT id, nombre, password, suscripcion_activa FROM usuarios WHERE id = ?", id).
+		Scan(&s.ID, &s.Nombre, &s.ContrasenaHash, &s.SuscripcionActiva)
+	if err != nil {
+		return nil
+	}
+	return &s
+}
+
+func ActualizarPasswordHash(usuarioID int, passwordHash string) error {
+	_, err := DB.Exec("UPDATE usuarios SET password = ? WHERE id = ?", passwordHash, usuarioID)
+	return err
+}
+
+func CrearSesion(usuarioID int, tokenHash string, expiresAt time.Time) error {
+	_, err := DB.Exec(
+		"INSERT INTO sessions (usuario_id, token_hash, expires_at) VALUES (?, ?, ?)",
+		usuarioID, tokenHash, expiresAt.UTC().Format(time.RFC3339),
+	)
+	return err
+}
+
+func RevocarSesion(tokenHash string) error {
+	_, err := DB.Exec("UPDATE sessions SET revoked_at = ? WHERE token_hash = ? AND revoked_at IS NULL", time.Now().UTC().Format(time.RFC3339), tokenHash)
+	return err
+}
+
+func ObtenerUsuarioPorTokenSesion(tokenHash string) *models.Usuario {
+	var usuarioID int
+	var expiresAtStr string
+	var revokedAt sql.NullString
+	err := DB.QueryRow(
+		"SELECT usuario_id, expires_at, revoked_at FROM sessions WHERE token_hash = ? ORDER BY id DESC LIMIT 1",
+		tokenHash,
+	).Scan(&usuarioID, &expiresAtStr, &revokedAt)
+	if err != nil || revokedAt.Valid {
+		return nil
+	}
+	expiresAt, err := time.Parse(time.RFC3339, expiresAtStr)
+	if err != nil || time.Now().UTC().After(expiresAt) {
+		return nil
+	}
+	return ObtenerUsuarioPorID(usuarioID)
+}
+
+func ObtenerSocioPorTokenSesion(tokenHash string) *models.Socio {
+	var usuarioID int
+	var expiresAtStr string
+	var revokedAt sql.NullString
+	err := DB.QueryRow(
+		"SELECT usuario_id, expires_at, revoked_at FROM sessions WHERE token_hash = ? ORDER BY id DESC LIMIT 1",
+		tokenHash,
+	).Scan(&usuarioID, &expiresAtStr, &revokedAt)
+	if err != nil || revokedAt.Valid {
+		return nil
+	}
+	expiresAt, err := time.Parse(time.RFC3339, expiresAtStr)
+	if err != nil || time.Now().UTC().After(expiresAt) {
+		return nil
+	}
+	return ObtenerSocioPorID(usuarioID)
 }
 
 func GuardarPedido(p *models.Pedido) error {

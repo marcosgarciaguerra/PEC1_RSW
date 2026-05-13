@@ -3,7 +3,7 @@ package models
 type Socio struct {
 	ID                int    `json:"id"`
 	Nombre            string `json:"nombre"`
-	Contrasena        string `json:"contrasena"`
+	ContrasenaHash    string `json:"contrasena_hash"`
 	SuscripcionActiva bool   `json:"suscripcion_activa"`
 }
 

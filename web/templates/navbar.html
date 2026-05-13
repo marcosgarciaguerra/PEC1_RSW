@@ -67,22 +67,11 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var nombreCookie = document.cookie.split('; ').find(row => row.startsWith('session_nombre='));
         var trigger = document.querySelector('.user-dropdown-trigger');
-        
-        if (nombreCookie) {
-            var val = nombreCookie.split('=')[1];
-            if (val) {
-                document.getElementById('user-icon-btn').innerText = decodeURIComponent(val);
-                trigger.onclick = function() {
-                    window.location.href = '/reservas';
-                };
-            }
-        } else {
-            trigger.onclick = function() {
-                window.location.href = '/login';
-            };
-        }
+
+        trigger.onclick = function() {
+            window.location.href = '/login';
+        };
     });
 </script>
 {{end}}

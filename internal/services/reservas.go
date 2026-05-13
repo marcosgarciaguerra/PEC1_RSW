@@ -1,6 +1,7 @@
 package services
 
 import (
+	"errors"
 	"time"
 
 	"pec2/internal/db"
@@ -11,6 +12,12 @@ type ReservaDetalle struct {
 	models.Reserva
 	NombreClase string
 }
+
+var (
+	ErrClaseInvalida   = errors.New("clase invalida")
+	ErrReservaFallida  = errors.New("reserva fallida")
+	ErrReservaInvalida = errors.New("reserva invalida")
+)
 
 func ObtenerReservasDetalleSocio(socioID int) ([]models.Clases, []ReservaDetalle) {
 	misReservas := db.ObtenerReservasDeSocio(socioID)
@@ -32,11 +39,35 @@ func ObtenerReservasDetalleSocio(socioID int) ([]models.Clases, []ReservaDetalle
 	return clasesLista, reservasDetalle
 }
 
-func CrearReservaSocio(socioID int, claseID int) bool {
+func CrearReservaSocio(socioID int, claseID int) error {
+	if claseID <= 0 {
+		return ErrClaseInvalida
+	}
+
+	claseExiste := false
+	for _, clase := range db.ObtenerClases() {
+		if clase.ID == claseID {
+			claseExiste = true
+			break
+		}
+	}
+	if !claseExiste {
+		return ErrClaseInvalida
+	}
+
 	fecha := time.Now().Add(24 * time.Hour).Format("2006-01-02")
-	return db.CrearReserva(socioID, claseID, fecha)
+	if ok := db.CrearReserva(socioID, claseID, fecha); !ok {
+		return ErrReservaFallida
+	}
+	return nil
 }
 
-func CancelarReservaSocio(reservaID int, socioID int) bool {
-	return db.EliminarReserva(reservaID, socioID)
+func CancelarReservaSocio(reservaID int, socioID int) error {
+	if reservaID <= 0 {
+		return ErrReservaInvalida
+	}
+	if ok := db.EliminarReserva(reservaID, socioID); !ok {
+		return ErrReservaInvalida
+	}
+	return nil
 }

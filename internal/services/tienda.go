@@ -8,12 +8,14 @@ import (
 
 	"pec2/internal/db"
 	"pec2/internal/models"
+	"pec2/internal/validation"
 )
 
 var (
 	ErrCarritoVacio       = errors.New("el carrito esta vacio")
 	ErrArticuloInvalido   = errors.New("el carrito contiene un articulo invalido")
 	ErrDireccionInvalida  = errors.New("la direccion de envio no es valida")
+	ErrCantidadInvalida   = errors.New("cantidad de articulo invalida")
 )
 
 type itemCarrito struct {
@@ -27,7 +29,7 @@ func CatalogoTienda() []models.Articulo {
 
 func CrearPedido(usuario models.Usuario, direccionEnvio string, carritoJSON string) (*models.Pedido, error) {
 	direccionEnvio = strings.TrimSpace(direccionEnvio)
-	if direccionEnvio == "" {
+	if err := validation.ValidarDireccion(direccionEnvio); err != nil {
 		return nil, ErrDireccionInvalida
 	}
 
@@ -49,8 +51,8 @@ func CrearPedido(usuario models.Usuario, direccionEnvio string, carritoJSON stri
 	}
 
 	for _, item := range itemsCarrito {
-		if item.Quantity <= 0 {
-			return nil, ErrArticuloInvalido
+		if item.Quantity <= 0 || item.Quantity > 20 {
+			return nil, ErrCantidadInvalida
 		}
 
 		articulo, ok := db.ObtenerArticuloPorID(item.ID)

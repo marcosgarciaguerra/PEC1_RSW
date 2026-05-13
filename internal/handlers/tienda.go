@@ -5,18 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"pec2/internal/db"
-	"pec2/internal/models"
 	"pec2/internal/services"
 )
-
-func obtenerUsuarioLogueado(r *http.Request) *models.Usuario {
-	cookie, err := r.Cookie("session_id")
-	if err != nil {
-		return nil
-	}
-	return db.ObtenerUsuarioPorCorreo(cookie.Value)
-}
 
 func TramitarPedidoHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
@@ -53,7 +43,10 @@ func ConfirmarPedidoHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pedido, err := services.CrearPedido(*usuario, r.FormValue("direccion_envio"), r.FormValue("carrito"))
-	if errors.Is(err, services.ErrCarritoVacio) || errors.Is(err, services.ErrArticuloInvalido) || errors.Is(err, services.ErrDireccionInvalida) {
+	if errors.Is(err, services.ErrCarritoVacio) ||
+		errors.Is(err, services.ErrArticuloInvalido) ||
+		errors.Is(err, services.ErrDireccionInvalida) ||
+		errors.Is(err, services.ErrCantidadInvalida) {
 		RenderTemplate(w, "tramitar-pedido", map[string]interface{}{
 			"Usuario":  usuario,
 			"ErrorMsg": "No se pudo confirmar el pedido. Revisa el carrito y la dirección de envío.",

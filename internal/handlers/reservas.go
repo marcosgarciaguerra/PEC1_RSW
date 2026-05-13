@@ -1,21 +1,11 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
-	"pec2/internal/db"
-	"pec2/internal/models"
 	"pec2/internal/services"
 	"strconv"
 )
-
-// Devuelve el socio logueado o nil si no hay cookie/socio
-func obtenerSocioLogueado(r *http.Request) *models.Socio {
-	cookie, err := r.Cookie("session_id")
-	if err != nil {
-		return nil
-	}
-	return db.ObtenerSocioPorCorreo(cookie.Value)
-}
 
 func ReservasHandler(w http.ResponseWriter, r *http.Request) {
 	socio := obtenerSocioLogueado(r)
@@ -57,15 +47,20 @@ func ProcesarReservaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	r.ParseForm()
+	if err := r.ParseForm(); err != nil {
+		http.Redirect(w, r, "/reservas?error=clase_invalida", http.StatusSeeOther)
+		return
+	}
 	claseIDStr := r.FormValue("clase_id")
 	claseID, err := strconv.Atoi(claseIDStr)
 	if err != nil || claseID <= 0 {
 		http.Redirect(w, r, "/reservas?error=clase_invalida", http.StatusSeeOther)
 		return
 	}
-	exito := services.CrearReservaSocio(socio.ID, claseID)
-	if !exito {
+	if err := services.CrearReservaSocio(socio.ID, claseID); errors.Is(err, services.ErrClaseInvalida) {
+		http.Redirect(w, r, "/reservas?error=clase_invalida", http.StatusSeeOther)
+		return
+	} else if err != nil {
 		http.Redirect(w, r, "/reservas?error=reserva_fallida", http.StatusSeeOther)
 		return
 	}
@@ -85,7 +80,10 @@ func ProcesarCancelacionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	r.ParseForm()
+	if err := r.ParseForm(); err != nil {
+		http.Redirect(w, r, "/reservas?error=reserva_invalida", http.StatusSeeOther)
+		return
+	}
 	reservaIDStr := r.FormValue("reserva_id")
 	reservaID, err := strconv.Atoi(reservaIDStr)
 	if err != nil || reservaID <= 0 {
@@ -93,7 +91,10 @@ func ProcesarCancelacionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	services.CancelarReservaSocio(reservaID, socio.ID)
+	if err := services.CancelarReservaSocio(reservaID, socio.ID); err != nil {
+		http.Redirect(w, r, "/reservas?error=reserva_invalida", http.StatusSeeOther)
+		return
+	}
 
 	http.Redirect(w, r, "/reservas", http.StatusSeeOther)
 }

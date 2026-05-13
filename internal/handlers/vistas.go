@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"path/filepath"
 	"pec2/internal/db"
-	"pec2/internal/models"
 	"pec2/internal/services"
 	"strconv"
 	"strings"
@@ -36,11 +35,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: index")
 
 	resenas := db.ObtenerResenas()
-	var usuario *models.Socio
-	cookie, err := r.Cookie("session_id")
-	if err == nil {
-		usuario = db.ObtenerSocioPorCorreo(cookie.Value)
-	}
+	usuario := obtenerSocioLogueado(r)
 
 	RenderTemplate(w, "index", map[string]interface{}{
 		"Resenas": resenas,
