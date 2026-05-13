@@ -19,33 +19,23 @@ func ObtenerResenasInicio() []models.Resena {
 }
 
 func ObtenerMaquinas() []models.Maquina {
-	return db.Maquinas
+	return db.ListarMaquinas()
 }
 
 func ObtenerServicios() []models.Servicio {
-	return db.Servicios
+	return db.ListarServicios()
 }
 
 func ObtenerEquipoCompleto() []models.MiembroEquipo {
-	return db.EquipoCompleto
+	return db.ListarEquipo()
 }
 
 func ObtenerMaquinaPorID(id int) (models.Maquina, bool) {
-	for _, m := range db.Maquinas {
-		if m.ID == id {
-			return m, true
-		}
-	}
-	return models.Maquina{}, false
+	return db.BuscarMaquinaPorID(id)
 }
 
 func ObtenerServicioPorID(id int) (models.Servicio, bool) {
-	for _, s := range db.Servicios {
-		if s.ID == id {
-			return s, true
-		}
-	}
-	return models.Servicio{}, false
+	return db.BuscarServicioPorID(id)
 }
 
 func BuscarContenido(query string) []ResultadoBusqueda {
@@ -56,7 +46,7 @@ func BuscarContenido(query string) []ResultadoBusqueda {
 
 	resultados := make([]ResultadoBusqueda, 0)
 
-	for _, m := range db.Maquinas {
+	for _, m := range db.ListarMaquinas() {
 		if strings.Contains(strings.ToLower(m.Nombre), query) ||
 			strings.Contains(strings.ToLower(m.Descripcion), query) ||
 			strings.Contains(strings.ToLower(m.Marca), query) {
@@ -68,7 +58,7 @@ func BuscarContenido(query string) []ResultadoBusqueda {
 		}
 	}
 
-	for _, s := range db.Servicios {
+	for _, s := range db.ListarServicios() {
 		if strings.Contains(strings.ToLower(s.Nombre), query) ||
 			strings.Contains(strings.ToLower(s.DescripcionBreve), query) ||
 			strings.Contains(strings.ToLower(s.DescripcionLarga), query) {

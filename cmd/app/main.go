@@ -55,16 +55,16 @@ func main() {
 
 	// Handlers de acciones / formularios
 	http.HandleFunc("/registro", handlers.RegistroHandler)
-	http.HandleFunc("/resenas", handlers.GuardarResenaHandler)
+	http.HandleFunc("/resenas", handlers.RequireSocioAuth(handlers.GuardarResenaHandler))
 	http.HandleFunc("/buscar", handlers.BuscadorHandler)
 	http.HandleFunc("/calculadora", handlers.CalculadoraHandler)
 	http.HandleFunc("/login", handlers.LoginHandler)
 	http.HandleFunc("/logout", handlers.LogoutHandler)
-	http.HandleFunc("/reservas", handlers.ReservasHandler)
-	http.HandleFunc("/reservas/reservar", handlers.ProcesarReservaHandler)
-	http.HandleFunc("/reservas/cancelar", handlers.ProcesarCancelacionHandler)
-	http.HandleFunc("/tienda/tramitar", handlers.TramitarPedidoHandler)
-	http.HandleFunc("/tienda/confirmar", handlers.ConfirmarPedidoHandler)
+	http.HandleFunc("/reservas", handlers.RequireSocioAuth(handlers.ReservasHandler))
+	http.HandleFunc("/reservas/reservar", handlers.RequireSocioAuth(handlers.ProcesarReservaHandler))
+	http.HandleFunc("/reservas/cancelar", handlers.RequireSocioAuth(handlers.ProcesarCancelacionHandler))
+	http.HandleFunc("/tienda/tramitar", handlers.RequireUsuarioAuth(handlers.TramitarPedidoHandler))
+	http.HandleFunc("/tienda/confirmar", handlers.RequireUsuarioAuth(handlers.ConfirmarPedidoHandler))
 
 	log.Println("Servidor iniciado en http://localhost:8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
