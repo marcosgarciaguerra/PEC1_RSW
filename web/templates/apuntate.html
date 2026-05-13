@@ -6,6 +6,14 @@
             <p>Tu transformación comienza aquí. Rellena el formulario para convertirte en socio Platinum.</p>
         </div>
 
+        {{if .Data}}
+            {{if .Data.ErrorMsg}}
+            <div class="alerta alerta--error" style="margin-bottom: 20px;">
+                {{.Data.ErrorMsg}}
+            </div>
+            {{end}}
+        {{end}}
+
         <form action="/registro" method="POST" class="formulario">
             <div class="grupo-formulario">
                 <label for="nombre" class="etiqueta-formulario">Nombre:</label>

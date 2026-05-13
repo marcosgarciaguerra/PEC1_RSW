@@ -1,4 +1,4 @@
-package services
+package handlers
 
 import (
 	"crypto/rand"
@@ -49,7 +49,6 @@ func Authenticate(correo string, contrasena string) (*models.Socio, error) {
 		return nil, ErrCuentaInactiva
 	}
 
-	// Compatibilidad con datos antiguos en texto plano.
 	if strings.HasPrefix(socio.ContrasenaHash, "$2") {
 		if err := bcrypt.CompareHashAndPassword([]byte(socio.ContrasenaHash), []byte(contrasena)); err != nil {
 			return nil, ErrCredencialesInvalidas

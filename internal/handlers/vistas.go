@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
-	"pec2/internal/services"
 	"strconv"
 	"strings"
 )
@@ -33,7 +32,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("Usuario accedió a la página: index")
 
-	resenas := services.ObtenerResenasInicio()
+	resenas := ObtenerResenasInicio()
 	usuario := obtenerSocioLogueado(r)
 
 	RenderTemplate(w, "index", map[string]interface{}{
@@ -45,7 +44,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 // MaquinariaHandler gestiona el listado de maquinaria (/maquinaria).
 func MaquinariaHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: maquinaria")
-	RenderTemplate(w, "maquinaria", services.ObtenerMaquinas())
+	RenderTemplate(w, "maquinaria", ObtenerMaquinas())
 }
 
 // MaquinariaDetalleHandler gestiona el detalle de una máquina (/maquinaria-detalle?id=N).
@@ -54,7 +53,7 @@ func MaquinariaDetalleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: maquinaria-detalle")
 	idStr := r.URL.Query().Get("id")
 	id, _ := strconv.Atoi(idStr)
-	data, ok := services.ObtenerMaquinaPorID(id)
+	data, ok := ObtenerMaquinaPorID(id)
 	if !ok {
 		http.NotFound(w, r)
 		return
@@ -65,7 +64,7 @@ func MaquinariaDetalleHandler(w http.ResponseWriter, r *http.Request) {
 // ServiciosHandler gestiona el listado de servicios (/servicios).
 func ServiciosHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: servicios")
-	RenderTemplate(w, "servicios", services.ObtenerServicios())
+	RenderTemplate(w, "servicios", ObtenerServicios())
 }
 
 // ServicioDetalleHandler gestiona el detalle de un servicio (/servicio-detalle?id=N).
@@ -74,7 +73,7 @@ func ServicioDetalleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: servicio-detalle")
 	idStr := r.URL.Query().Get("id")
 	id, _ := strconv.Atoi(idStr)
-	data, ok := services.ObtenerServicioPorID(id)
+	data, ok := ObtenerServicioPorID(id)
 	if !ok {
 		http.NotFound(w, r)
 		return
@@ -85,7 +84,7 @@ func ServicioDetalleHandler(w http.ResponseWriter, r *http.Request) {
 // EquipoHandler gestiona la página del equipo (/equipo).
 func EquipoHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: equipo")
-	RenderTemplate(w, "equipo", services.ObtenerEquipoCompleto())
+	RenderTemplate(w, "equipo", ObtenerEquipoCompleto())
 }
 
 // ReglasHandler gestiona la página de reglas del centro (/reglas).
@@ -109,7 +108,7 @@ func TiendaHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("Usuario accedió a la página: tienda")
 	RenderTemplate(w, "tienda", map[string]interface{}{
-		"Articulos": services.CatalogoTienda(),
+		"Articulos": CatalogoTienda(),
 	})
 }
 

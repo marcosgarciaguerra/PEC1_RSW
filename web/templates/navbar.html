@@ -40,6 +40,7 @@
                             <li><a href="/reservas"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
                             <li><a href="/calculadora"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
                             <li><a href="/apuntate"><i class="fas fa-user-plus"></i> ¡Apúntate!</a></li>
+                            <li class="logout-nav-item" style="display: none;"><a href="/logout" style="color: #ff4d4d;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -68,10 +69,36 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var trigger = document.querySelector('.user-dropdown-trigger');
+        var userIconText = document.getElementById('user-icon-btn');
 
-        trigger.onclick = function() {
-            window.location.href = '/login';
-        };
+        function getCookie(name) {
+            const v = document.cookie.match('(^|;) ?'+name+'=([^;]*)(;|$)');
+            return v ? decodeURIComponent(v[2]) : null;
+        }
+
+        var loggedIn = getCookie('gym_logged_in') === 'true';
+
+        if (loggedIn) {
+            if (userIconText) {
+                userIconText.textContent = "Logout";
+            }
+            trigger.onclick = function() {
+                window.location.href = '/logout';
+            };
+            document.querySelectorAll('.logout-nav-item').forEach(function(el) {
+                el.style.display = 'block';
+            });
+        } else {
+            if (userIconText) {
+                userIconText.textContent = "Login";
+            }
+            trigger.onclick = function() {
+                window.location.href = '/login';
+            };
+            document.querySelectorAll('.logout-nav-item').forEach(function(el) {
+                el.style.display = 'none';
+            });
+        }
     });
 </script>
 {{end}}

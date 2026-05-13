@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"pec2/internal/models"
+	"pec2/internal/security"
 	"strings"
 	"time"
 
@@ -223,6 +224,12 @@ func migrarDatosSensiblesLegacy() {
 }
 
 func GuardarUsuario(u models.Usuario) error {
+	encryptedDNI, err := security.EncryptDeterministic(u.Documento)
+	if err != nil {
+		return err
+	}
+	u.Documento = encryptedDNI
+
 	stmt, err := DB.Prepare(`INSERT INTO usuarios (nombre, apellidos, fecha_nacimiento, direccion, telefono, correo, documento, plan, metodo_pago, numero_pago, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
 	if err != nil {
 		return err

@@ -3,7 +3,6 @@ package handlers
 import (
 	"errors"
 	"net/http"
-	"pec2/internal/services"
 	"strconv"
 )
 
@@ -14,7 +13,7 @@ func ReservasHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	clasesLista, misReservasDetalle := services.ObtenerReservasDetalleSocio(socio.ID)
+	clasesLista, misReservasDetalle := ObtenerReservasDetalleSocio(socio.ID)
 
 	errorParam := r.URL.Query().Get("error")
 	var errorMsg string
@@ -57,7 +56,7 @@ func ProcesarReservaHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/reservas?error=clase_invalida", http.StatusSeeOther)
 		return
 	}
-	if err := services.CrearReservaSocio(socio.ID, claseID); errors.Is(err, services.ErrClaseInvalida) {
+	if err := CrearReservaSocio(socio.ID, claseID); errors.Is(err, ErrClaseInvalida) {
 		http.Redirect(w, r, "/reservas?error=clase_invalida", http.StatusSeeOther)
 		return
 	} else if err != nil {
@@ -91,7 +90,7 @@ func ProcesarCancelacionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := services.CancelarReservaSocio(reservaID, socio.ID); err != nil {
+	if err := CancelarReservaSocio(reservaID, socio.ID); err != nil {
 		http.Redirect(w, r, "/reservas?error=reserva_invalida", http.StatusSeeOther)
 		return
 	}

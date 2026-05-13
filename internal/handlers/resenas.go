@@ -3,7 +3,6 @@ package handlers
 import (
 	"errors"
 	"net/http"
-	"pec2/internal/services"
 	"strconv"
 )
 
@@ -15,7 +14,7 @@ func GuardarResenaHandler(w http.ResponseWriter, r *http.Request) {
 
 	socio := obtenerSocioLogueado(r)
 	if socio == nil {
-		http.Redirect(w, r, "/login?return=/index", http.StatusSeeOther)
+		http.Redirect(w, r, "/login?return=/", http.StatusSeeOther)
 		return
 	}
 
@@ -33,8 +32,8 @@ func GuardarResenaHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	texto := r.FormValue("texto")
 
-	if err := services.GuardarResena(autor, puntuacion, texto); err != nil {
-		if errors.Is(err, services.ErrResenaInvalida) {
+	if err := GuardarResena(autor, puntuacion, texto); err != nil {
+		if errors.Is(err, ErrResenaInvalida) {
 			http.Error(w, "Reseña inválida", http.StatusBadRequest)
 			return
 		}

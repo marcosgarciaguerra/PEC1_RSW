@@ -5,13 +5,11 @@ import (
 	"net/http"
 	"strings"
 	"time"
-
-	"pec2/internal/services"
 	"pec2/internal/validation"
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	returnPath := services.SanitizarReturnPath(r.URL.Query().Get("return"))
+	returnPath := SanitizarReturnPath(r.URL.Query().Get("return"))
 
 	switch r.Method {
 	case http.MethodGet:
@@ -25,7 +23,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		correo := strings.TrimSpace(r.FormValue("correo"))
 		contrasena := strings.TrimSpace(r.FormValue("contrasena"))
-		returnPath = services.SanitizarReturnPath(r.FormValue("return"))
+		returnPath = SanitizarReturnPath(r.FormValue("return"))
 
 		if err := validation.ValidarEmail(correo); err != nil || contrasena == "" {
 			RenderTemplate(w, "login", map[string]interface{}{
@@ -35,8 +33,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		socio, err := services.Authenticate(correo, contrasena)
-		if errors.Is(err, services.ErrCuentaInactiva) {
+		socio, err := Authenticate(correo, contrasena)
+		if errors.Is(err, ErrCuentaInactiva) {
 			RenderTemplate(w, "login", map[string]interface{}{
 				"ErrorMsg":   "Tu cuenta está inactiva. Contacta con el gimnasio.",
 				"ReturnPath": returnPath,
@@ -51,7 +49,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		sessionToken, err := services.CreateUserSession(socio.ID, 24*time.Hour)
+		sessionToken, err := CreateUserSession(socio.ID, 24*time.Hour)
 		if err != nil {
 			http.Error(w, "No se pudo iniciar sesión", http.StatusInternalServerError)
 			return
@@ -63,6 +61,16 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			Expires:  time.Now().Add(24 * time.Hour),
 			Path:     "/",
 			HttpOnly: true,
+			SameSite: http.SameSiteLaxMode,
+			Secure:   r.TLS != nil,
+		})
+
+		http.SetCookie(w, &http.Cookie{
+			Name:     "gym_logged_in",
+			Value:    "true",
+			Expires:  time.Now().Add(24 * time.Hour),
+			Path:     "/",
+			HttpOnly: false,
 			SameSite: http.SameSiteLaxMode,
 			Secure:   r.TLS != nil,
 		})
@@ -79,7 +87,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	if cookie, err := r.Cookie(sessionCookieName); err == nil {
-		services.RevokeSession(cookie.Value)
+		RevokeSession(cookie.Value)
 	}
 	http.SetCookie(w, &http.Cookie{
 		Name:     sessionCookieName,
@@ -87,6 +95,15 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		Expires:  time.Unix(0, 0),
 		Path:     "/",
 		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+		Secure:   r.TLS != nil,
+	})
+	http.SetCookie(w, &http.Cookie{
+		Name:     "gym_logged_in",
+		Value:    "",
+		Expires:  time.Unix(0, 0),
+		Path:     "/",
+		HttpOnly: false,
 		SameSite: http.SameSiteLaxMode,
 		Secure:   r.TLS != nil,
 	})

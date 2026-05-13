@@ -4,8 +4,6 @@ import (
 	"errors"
 	"log"
 	"net/http"
-
-	"pec2/internal/services"
 )
 
 func TramitarPedidoHandler(w http.ResponseWriter, r *http.Request) {
@@ -42,11 +40,11 @@ func ConfirmarPedidoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	pedido, err := services.CrearPedido(*usuario, r.FormValue("direccion_envio"), r.FormValue("carrito"))
-	if errors.Is(err, services.ErrCarritoVacio) ||
-		errors.Is(err, services.ErrArticuloInvalido) ||
-		errors.Is(err, services.ErrDireccionInvalida) ||
-		errors.Is(err, services.ErrCantidadInvalida) {
+	pedido, err := CrearPedido(*usuario, r.FormValue("direccion_envio"), r.FormValue("carrito"))
+	if errors.Is(err, ErrCarritoVacio) ||
+		errors.Is(err, ErrArticuloInvalido) ||
+		errors.Is(err, ErrDireccionInvalida) ||
+		errors.Is(err, ErrCantidadInvalida) {
 		RenderTemplate(w, "tramitar-pedido", map[string]interface{}{
 			"Usuario":  usuario,
 			"ErrorMsg": "No se pudo confirmar el pedido. Revisa el carrito y la dirección de envío.",
