@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
-	"pec2/internal/db"
 	"pec2/internal/services"
 	"strconv"
 	"strings"
@@ -34,7 +33,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("Usuario accedió a la página: index")
 
-	resenas := db.ObtenerResenas()
+	resenas := services.ObtenerResenasInicio()
 	usuario := obtenerSocioLogueado(r)
 
 	RenderTemplate(w, "index", map[string]interface{}{
@@ -46,7 +45,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 // MaquinariaHandler gestiona el listado de maquinaria (/maquinaria).
 func MaquinariaHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: maquinaria")
-	RenderTemplate(w, "maquinaria", db.Maquinas)
+	RenderTemplate(w, "maquinaria", services.ObtenerMaquinas())
 }
 
 // MaquinariaDetalleHandler gestiona el detalle de una máquina (/maquinaria-detalle?id=N).
@@ -55,12 +54,10 @@ func MaquinariaDetalleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: maquinaria-detalle")
 	idStr := r.URL.Query().Get("id")
 	id, _ := strconv.Atoi(idStr)
-	var data interface{}
-	for _, m := range db.Maquinas {
-		if m.ID == id {
-			data = m
-			break
-		}
+	data, ok := services.ObtenerMaquinaPorID(id)
+	if !ok {
+		http.NotFound(w, r)
+		return
 	}
 	RenderTemplate(w, "maquinaria-detalle", data)
 }
@@ -68,7 +65,7 @@ func MaquinariaDetalleHandler(w http.ResponseWriter, r *http.Request) {
 // ServiciosHandler gestiona el listado de servicios (/servicios).
 func ServiciosHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: servicios")
-	RenderTemplate(w, "servicios", db.Servicios)
+	RenderTemplate(w, "servicios", services.ObtenerServicios())
 }
 
 // ServicioDetalleHandler gestiona el detalle de un servicio (/servicio-detalle?id=N).
@@ -77,12 +74,10 @@ func ServicioDetalleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: servicio-detalle")
 	idStr := r.URL.Query().Get("id")
 	id, _ := strconv.Atoi(idStr)
-	var data interface{}
-	for _, s := range db.Servicios {
-		if s.ID == id {
-			data = s
-			break
-		}
+	data, ok := services.ObtenerServicioPorID(id)
+	if !ok {
+		http.NotFound(w, r)
+		return
 	}
 	RenderTemplate(w, "servicio-detalle", data)
 }
@@ -90,7 +85,7 @@ func ServicioDetalleHandler(w http.ResponseWriter, r *http.Request) {
 // EquipoHandler gestiona la página del equipo (/equipo).
 func EquipoHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Usuario accedió a la página: equipo")
-	RenderTemplate(w, "equipo", db.EquipoCompleto)
+	RenderTemplate(w, "equipo", services.ObtenerEquipoCompleto())
 }
 
 // ReglasHandler gestiona la página de reglas del centro (/reglas).
