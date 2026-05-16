@@ -5,13 +5,13 @@ import (
 	"net/http"
 	"pec2/internal/db"
 	"pec2/internal/models"
+	"pec2/internal/validation"
 	"strconv"
 	"strings"
 )
 
-// HandleAPIClases maneja el CRUD de clases para la API REST.
+// HandleAPIClases maneja el CRUD REST de clases del gimnasio.
 func HandleAPIClases(w http.ResponseWriter, r *http.Request) {
-	// CORS si es necesario, o simplemente Content-Type
 	w.Header().Set("Content-Type", "application/json")
 
 	path := strings.TrimPrefix(r.URL.Path, "/api/clases")
@@ -20,34 +20,34 @@ func HandleAPIClases(w http.ResponseWriter, r *http.Request) {
 	if path == "" {
 		switch r.Method {
 		case http.MethodGet:
-			// Obtener todas las clases
 			clases := db.ObtenerClases()
 			json.NewEncoder(w).Encode(clases)
 		case http.MethodPost:
-			// Crear una nueva clase
 			var nuevaClase models.Clases
-			if err := json.NewDecoder(r.Body).Decode(&nuevaClase); err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+			if err := decodeJSONBody(w, r, &nuevaClase); err != nil {
+				return
+			}
+			if err := validation.ValidarClase(nuevaClase); err != nil {
+				writeJSONError(w, http.StatusUnprocessableEntity, err.Error())
 				return
 			}
 			id, err := db.CrearClase(nuevaClase)
 			if err != nil {
-				http.Error(w, "Error creando clase", http.StatusInternalServerError)
+				writeJSONError(w, http.StatusInternalServerError, "Error creando clase")
 				return
 			}
 			nuevaClase.ID = id
 			w.WriteHeader(http.StatusCreated)
 			json.NewEncoder(w).Encode(nuevaClase)
 		default:
-			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+			writeJSONError(w, http.StatusMethodNotAllowed, "Método no permitido")
 		}
 		return
 	}
 
-	// Manejar /api/clases/{id}
 	id, err := strconv.Atoi(path)
 	if err != nil {
-		http.Error(w, "ID inválido", http.StatusBadRequest)
+		writeJSONError(w, http.StatusBadRequest, "ID inválido")
 		return
 	}
 
@@ -55,29 +55,42 @@ func HandleAPIClases(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		clase, err := db.ObtenerClasePorID(id)
 		if err != nil {
-			http.Error(w, "Clase no encontrada", http.StatusNotFound)
+			writeJSONError(w, http.StatusNotFound, "Clase no encontrada")
 			return
 		}
 		json.NewEncoder(w).Encode(clase)
 	case http.MethodPut:
 		var claseActualizada models.Clases
-		if err := json.NewDecoder(r.Body).Decode(&claseActualizada); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+		if err := decodeJSONBody(w, r, &claseActualizada); err != nil {
 			return
 		}
 		claseActualizada.ID = id
-		if err := db.ActualizarClase(claseActualizada); err != nil {
-			http.Error(w, "Error actualizando clase", http.StatusInternalServerError)
+		if err := validation.ValidarClase(claseActualizada); err != nil {
+			writeJSONError(w, http.StatusUnprocessableEntity, err.Error())
+			return
+		}
+		ok, err := db.ActualizarClase(claseActualizada)
+		if err != nil {
+			writeJSONError(w, http.StatusInternalServerError, "Error actualizando clase")
+			return
+		}
+		if !ok {
+			writeJSONError(w, http.StatusNotFound, "Clase no encontrada")
 			return
 		}
 		json.NewEncoder(w).Encode(claseActualizada)
 	case http.MethodDelete:
-		if err := db.EliminarClase(id); err != nil {
-			http.Error(w, "Error eliminando clase", http.StatusInternalServerError)
+		ok, err := db.EliminarClase(id)
+		if err != nil {
+			writeJSONError(w, http.StatusInternalServerError, "Error eliminando clase")
+			return
+		}
+		if !ok {
+			writeJSONError(w, http.StatusNotFound, "Clase no encontrada")
 			return
 		}
 		w.WriteHeader(http.StatusNoContent)
 	default:
-		http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+		writeJSONError(w, http.StatusMethodNotAllowed, "Método no permitido")
 	}
 }

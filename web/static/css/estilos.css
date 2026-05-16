@@ -1407,4 +1407,49 @@ ul {
 }
 
 .inline-block { display: inline-block; }
-.no-underline { text-decoration: none; }
+.no-underline { text-decoration: none; }
+
+/* Utilidades PEC 3 — estado UI sin manipular style inline */
+.hidden { display: none !important; }
+.visible-inline { display: inline-block !important; }
+.visible-flex { display: flex !important; }
+.grid-full { grid-column: 1 / -1; }
+.cookie-consent--visible { display: flex !important; }
+.logout-nav-visible { display: list-item !important; }
+.tarjeta.filtered-out { display: none !important; }
+.cart-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+}
+.cart-item-info { flex: 1; }
+.cart-item-name { font-weight: bold; font-size: 0.9rem; }
+.cart-item-price { color: var(--color-principal); }
+.cart-btn-delete {
+  background: none;
+  border: none;
+  color: #ff4444;
+  cursor: pointer;
+  padding: 5px;
+}
+.cart-item-js {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-item-js__name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.checkout-item-icon {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.9rem;
+}
+.form-cambio-dir--active {
+  display: flex !important;
+  flex-direction: column;
+  gap: 10px;
+}

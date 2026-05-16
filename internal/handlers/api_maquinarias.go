@@ -5,10 +5,12 @@ import (
 	"net/http"
 	"pec2/internal/db"
 	"pec2/internal/models"
+	"pec2/internal/validation"
 	"strconv"
 	"strings"
 )
 
+// HandleAPIMaquinarias maneja el CRUD REST de maquinaria del gimnasio.
 func HandleAPIMaquinarias(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -22,27 +24,30 @@ func HandleAPIMaquinarias(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(maquinarias)
 		case http.MethodPost:
 			var nuevo models.Maquina
-			if err := json.NewDecoder(r.Body).Decode(&nuevo); err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+			if err := decodeJSONBody(w, r, &nuevo); err != nil {
+				return
+			}
+			if err := validation.ValidarMaquina(nuevo); err != nil {
+				writeJSONError(w, http.StatusUnprocessableEntity, err.Error())
 				return
 			}
 			id, err := db.CrearMaquina(nuevo)
 			if err != nil {
-				http.Error(w, "Error creando maquinaria", http.StatusInternalServerError)
+				writeJSONError(w, http.StatusInternalServerError, "Error creando maquinaria")
 				return
 			}
 			nuevo.ID = int(id)
 			w.WriteHeader(http.StatusCreated)
 			json.NewEncoder(w).Encode(nuevo)
 		default:
-			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+			writeJSONError(w, http.StatusMethodNotAllowed, "Método no permitido")
 		}
 		return
 	}
 
 	id, err := strconv.Atoi(path)
 	if err != nil {
-		http.Error(w, "ID inválido", http.StatusBadRequest)
+		writeJSONError(w, http.StatusBadRequest, "ID inválido")
 		return
 	}
 
@@ -50,29 +55,42 @@ func HandleAPIMaquinarias(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		maquina, ok := db.BuscarMaquinaPorID(id)
 		if !ok {
-			http.Error(w, "Maquinaria no encontrada", http.StatusNotFound)
+			writeJSONError(w, http.StatusNotFound, "Maquinaria no encontrada")
 			return
 		}
 		json.NewEncoder(w).Encode(maquina)
 	case http.MethodPut:
 		var actualizado models.Maquina
-		if err := json.NewDecoder(r.Body).Decode(&actualizado); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+		if err := decodeJSONBody(w, r, &actualizado); err != nil {
 			return
 		}
 		actualizado.ID = id
-		if err := db.ActualizarMaquina(actualizado); err != nil {
-			http.Error(w, "Error actualizando maquinaria", http.StatusInternalServerError)
+		if err := validation.ValidarMaquina(actualizado); err != nil {
+			writeJSONError(w, http.StatusUnprocessableEntity, err.Error())
+			return
+		}
+		ok, err := db.ActualizarMaquina(actualizado)
+		if err != nil {
+			writeJSONError(w, http.StatusInternalServerError, "Error actualizando maquinaria")
+			return
+		}
+		if !ok {
+			writeJSONError(w, http.StatusNotFound, "Maquinaria no encontrada")
 			return
 		}
 		json.NewEncoder(w).Encode(actualizado)
 	case http.MethodDelete:
-		if err := db.EliminarMaquina(id); err != nil {
-			http.Error(w, "Error eliminando maquinaria", http.StatusInternalServerError)
+		ok, err := db.EliminarMaquina(id)
+		if err != nil {
+			writeJSONError(w, http.StatusInternalServerError, "Error eliminando maquinaria")
+			return
+		}
+		if !ok {
+			writeJSONError(w, http.StatusNotFound, "Maquinaria no encontrada")
 			return
 		}
 		w.WriteHeader(http.StatusNoContent)
 	default:
-		http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+		writeJSONError(w, http.StatusMethodNotAllowed, "Método no permitido")
 	}
 }

@@ -40,7 +40,7 @@
                             <li><a href="/reservas"><i class="fas fa-calendar-check"></i> Área Socios / Reservas</a></li>
                             <li><a href="/calculadora"><i class="fas fa-calculator"></i> Calculadora FFMI</a></li>
                             <li><a href="/apuntate"><i class="fas fa-user-plus"></i> ¡Apúntate!</a></li>
-                            <li class="logout-nav-item" style="display: none;"><a href="/logout" style="color: #ff4d4d;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+                            <li class="logout-nav-item hidden"><a href="/logout" style="color: #ff4d4d;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -87,7 +87,8 @@
                 window.location.href = '/reservas';
             };
             document.querySelectorAll('.logout-nav-item').forEach(function(el) {
-                el.style.display = 'block';
+                el.classList.remove('hidden');
+                el.classList.add('logout-nav-visible');
             });
         } else {
             if (userIconText) {
@@ -97,7 +98,8 @@
                 window.location.href = '/login';
             };
             document.querySelectorAll('.logout-nav-item').forEach(function(el) {
-                el.style.display = 'none';
+                el.classList.add('hidden');
+                el.classList.remove('logout-nav-visible');
             });
         }
     });

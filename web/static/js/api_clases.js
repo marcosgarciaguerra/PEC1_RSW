@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const claseData = {
             nombre_clase: document.getElementById('nombre').value,
             entrenador: document.getElementById('entrenador').value,
-            aforo: parseInt(document.getElementById('aforo').value),
+            aforo: parseInt(document.getElementById('aforo').value, 10),
             horario: document.getElementById('horario').value,
             descripcion: document.getElementById('descripcion').value,
             lugar: document.getElementById('lugar').value
@@ -31,86 +31,169 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnCancelar.addEventListener('click', limpiarFormulario);
 
-    function cargarClases() {
-        clasesList.innerHTML = '<div class="loading-state"><i class="fas fa-circle-notch"></i> Cargando clases...</div>';
-
-        fetch(API_URL)
-            .then(response => {
-                if (!response.ok) throw new Error('Error al cargar las clases');
-                return response.json();
-            })
-            .then(data => {
-                clasesList.innerHTML = '';
-
-                if (!data || data.length === 0) {
-                    clasesList.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>No hay clases registradas aún.</p></div>';
-                    countBadge.textContent = '0';
-                    return;
-                }
-
-                countBadge.textContent = data.length;
-                data.forEach(clase => {
-                    const clone = claseTemplate.content.cloneNode(true);
-                    clone.querySelector('.clase-nombre').textContent = clase.nombre_clase;
-                    clone.querySelector('.clase-entrenador').textContent = clase.entrenador;
-                    clone.querySelector('.clase-horario').textContent = clase.horario;
-                    clone.querySelector('.clase-aforo').textContent = clase.aforo;
-                    clone.querySelector('.clase-lugar').textContent = clase.lugar;
-                    clone.querySelector('.btn-editar').addEventListener('click', () => llenarFormulario(clase));
-                    clone.querySelector('.btn-eliminar').addEventListener('click', () => eliminarClase(clase.id));
-                    clasesList.appendChild(clone);
-                });
-            })
-            .catch(error => {
-                clasesList.innerHTML = `<div class="msg-danger">${error.message}</div>`;
-            });
+    function clearElement(el) {
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
     }
 
-    function crearClase(claseData) {
-        fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(claseData)
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('Error al crear la clase');
-            return response.json();
-        })
-        .then(() => {
+    function setGuardarLabel(texto) {
+        const icon = btnGuardar.querySelector('i');
+        clearElement(btnGuardar);
+        if (icon) {
+            btnGuardar.appendChild(icon);
+        }
+        btnGuardar.appendChild(document.createTextNode(' ' + texto));
+    }
+
+    function mostrarMensaje(mensaje, tipo) {
+        clearElement(formMessage);
+        const div = document.createElement('motion');
+        div.className = 'msg-' + tipo;
+        div.textContent = (tipo === 'success' ? '✓ ' : '✗ ') + mensaje;
+        formMessage.appendChild(div);
+        setTimeout(() => clearElement(formMessage), 3000);
+    }
+
+    function mostrarErrorLista(mensaje) {
+        clearElement(clasesList);
+        const div = document.createElement('motion');
+        div.className = 'msg-danger';
+        div.textContent = mensaje;
+        clasesList.appendChild(div);
+    }
+
+    function mostrarEstadoCarga() {
+        clearElement(clasesList);
+        const div = document.createElement('motion');
+        div.className = 'loading-state';
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-circle-notch';
+        div.appendChild(icon);
+        div.appendChild(document.createTextNode(' Cargando clases...'));
+        clasesList.appendChild(div);
+    }
+
+    function mostrarEstadoVacio() {
+        clearElement(clasesList);
+        const div = document.createElement('motion');
+        div.className = 'empty-state';
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-calendar-times';
+        const p = document.createElement('p');
+        p.textContent = 'No hay clases registradas aún.';
+        div.appendChild(icon);
+        div.appendChild(p);
+        clasesList.appendChild(div);
+    }
+
+    async function mensajeErrorRespuesta(response, fallback) {
+        try {
+            const data = await response.json();
+            if (data && data.error) {
+                return data.error;
+            }
+        } catch (_) {
+            /* cuerpo no JSON */
+        }
+        return fallback;
+    }
+
+    async function cargarClases() {
+        mostrarEstadoCarga();
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) {
+                const msg = await mensajeErrorRespuesta(response, 'Error al cargar las clases');
+                throw new Error(msg);
+            }
+            const data = await response.json();
+            clearElement(clasesList);
+
+            if (!data || data.length === 0) {
+                mostrarEstadoVacio();
+                countBadge.textContent = '0';
+                return;
+            }
+
+            countBadge.textContent = data.length;
+            data.forEach(clase => {
+                const clone = claseTemplate.content.cloneNode(true);
+                clone.querySelector('.clase-nombre').textContent = clase.nombre_clase;
+                clone.querySelector('.clase-entrenador').textContent = clase.entrenador;
+                clone.querySelector('.clase-horario').textContent = clase.horario;
+                clone.querySelector('.clase-aforo').textContent = clase.aforo;
+                clone.querySelector('.clase-lugar').textContent = clase.lugar;
+                clone.querySelector('.btn-editar').addEventListener('click', () => llenarFormulario(clase));
+                clone.querySelector('.btn-eliminar').addEventListener('click', () => eliminarClase(clase.id));
+                clasesList.appendChild(clone);
+            });
+        } catch (error) {
+            mostrarErrorLista(error.message);
+        }
+    }
+
+    async function crearClase(claseData) {
+        btnGuardar.disabled = true;
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(claseData)
+            });
+            if (!response.ok) {
+                const msg = await mensajeErrorRespuesta(response, 'Error al crear la clase');
+                throw new Error(msg);
+            }
+            await response.json();
             mostrarMensaje('Clase creada con éxito', 'success');
             limpiarFormulario();
-            cargarClases();
-        })
-        .catch(error => mostrarMensaje(error.message, 'danger'));
+            await cargarClases();
+        } catch (error) {
+            mostrarMensaje(error.message, 'danger');
+        } finally {
+            btnGuardar.disabled = false;
+        }
     }
 
-    function actualizarClase(id, claseData) {
-        fetch(`${API_URL}/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(claseData)
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('Error al actualizar la clase');
-            return response.json();
-        })
-        .then(() => {
+    async function actualizarClase(id, claseData) {
+        btnGuardar.disabled = true;
+        try {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(claseData)
+            });
+            if (!response.ok) {
+                const msg = await mensajeErrorRespuesta(response, 'Error al actualizar la clase');
+                throw new Error(msg);
+            }
+            await response.json();
             mostrarMensaje('Clase actualizada con éxito', 'success');
             limpiarFormulario();
-            cargarClases();
-        })
-        .catch(error => mostrarMensaje(error.message, 'danger'));
+            await cargarClases();
+        } catch (error) {
+            mostrarMensaje(error.message, 'danger');
+        } finally {
+            btnGuardar.disabled = false;
+        }
     }
 
-    function eliminarClase(id) {
-        if (!confirm('¿Eliminar esta clase? Esta acción no se puede deshacer.')) return;
-        fetch(`${API_URL}/${id}`, { method: 'DELETE' })
-            .then(response => {
-                if (!response.ok) throw new Error('Error al eliminar la clase');
-                mostrarMensaje('Clase eliminada', 'success');
-                cargarClases();
-            })
-            .catch(error => mostrarMensaje(error.message, 'danger'));
+    async function eliminarClase(id) {
+        if (!confirm('¿Eliminar esta clase? Esta acción no se puede deshacer.')) {
+            return;
+        }
+        try {
+            const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            if (!response.ok) {
+                const msg = await mensajeErrorRespuesta(response, 'Error al eliminar la clase');
+                throw new Error(msg);
+            }
+            mostrarMensaje('Clase eliminada', 'success');
+            await cargarClases();
+        } catch (error) {
+            mostrarMensaje(error.message, 'danger');
+        }
     }
 
     function llenarFormulario(clase) {
@@ -122,8 +205,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('descripcion').value = clase.descripcion;
         document.getElementById('lugar').value = clase.lugar;
         formTitle.textContent = 'Editar Clase';
-        btnGuardar.innerHTML = '<i class="fas fa-save"></i> Actualizar Clase';
-        btnCancelar.style.display = 'inline-block';
+        setGuardarLabel('Actualizar Clase');
+        btnCancelar.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -131,13 +214,8 @@ document.addEventListener('DOMContentLoaded', () => {
         claseForm.reset();
         document.getElementById('claseId').value = '';
         formTitle.textContent = 'Nueva Clase';
-        btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar Clase';
-        btnCancelar.style.display = 'none';
-        formMessage.innerHTML = '';
-    }
-
-    function mostrarMensaje(mensaje, tipo) {
-        formMessage.innerHTML = `<div class="msg-${tipo}">${tipo === 'success' ? '✓' : '✗'} ${mensaje}</div>`;
-        setTimeout(() => { formMessage.innerHTML = ''; }, 3000);
+        setGuardarLabel('Guardar Clase');
+        btnCancelar.classList.add('hidden');
+        clearElement(formMessage);
     }
 });

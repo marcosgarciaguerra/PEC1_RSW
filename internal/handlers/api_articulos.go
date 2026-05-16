@@ -5,10 +5,12 @@ import (
 	"net/http"
 	"pec2/internal/db"
 	"pec2/internal/models"
+	"pec2/internal/validation"
 	"strconv"
 	"strings"
 )
 
+// HandleAPIArticulos maneja el CRUD REST de artículos de la tienda.
 func HandleAPIArticulos(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -22,27 +24,30 @@ func HandleAPIArticulos(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(articulos)
 		case http.MethodPost:
 			var nuevo models.Articulo
-			if err := json.NewDecoder(r.Body).Decode(&nuevo); err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+			if err := decodeJSONBody(w, r, &nuevo); err != nil {
+				return
+			}
+			if err := validation.ValidarArticulo(nuevo); err != nil {
+				writeJSONError(w, http.StatusUnprocessableEntity, err.Error())
 				return
 			}
 			id, err := db.CrearArticulo(nuevo)
 			if err != nil {
-				http.Error(w, "Error creando artículo", http.StatusInternalServerError)
+				writeJSONError(w, http.StatusInternalServerError, "Error creando artículo")
 				return
 			}
 			nuevo.ID = id
 			w.WriteHeader(http.StatusCreated)
 			json.NewEncoder(w).Encode(nuevo)
 		default:
-			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+			writeJSONError(w, http.StatusMethodNotAllowed, "Método no permitido")
 		}
 		return
 	}
 
 	id, err := strconv.Atoi(path)
 	if err != nil {
-		http.Error(w, "ID inválido", http.StatusBadRequest)
+		writeJSONError(w, http.StatusBadRequest, "ID inválido")
 		return
 	}
 
@@ -50,29 +55,42 @@ func HandleAPIArticulos(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		articulo, ok := db.ObtenerArticuloPorID(id)
 		if !ok {
-			http.Error(w, "Artículo no encontrado", http.StatusNotFound)
+			writeJSONError(w, http.StatusNotFound, "Artículo no encontrado")
 			return
 		}
 		json.NewEncoder(w).Encode(articulo)
 	case http.MethodPut:
 		var actualizado models.Articulo
-		if err := json.NewDecoder(r.Body).Decode(&actualizado); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+		if err := decodeJSONBody(w, r, &actualizado); err != nil {
 			return
 		}
 		actualizado.ID = id
-		if err := db.ActualizarArticulo(actualizado); err != nil {
-			http.Error(w, "Error actualizando artículo", http.StatusInternalServerError)
+		if err := validation.ValidarArticulo(actualizado); err != nil {
+			writeJSONError(w, http.StatusUnprocessableEntity, err.Error())
+			return
+		}
+		ok, err := db.ActualizarArticulo(actualizado)
+		if err != nil {
+			writeJSONError(w, http.StatusInternalServerError, "Error actualizando artículo")
+			return
+		}
+		if !ok {
+			writeJSONError(w, http.StatusNotFound, "Artículo no encontrado")
 			return
 		}
 		json.NewEncoder(w).Encode(actualizado)
 	case http.MethodDelete:
-		if err := db.EliminarArticulo(id); err != nil {
-			http.Error(w, "Error eliminando artículo", http.StatusInternalServerError)
+		ok, err := db.EliminarArticulo(id)
+		if err != nil {
+			writeJSONError(w, http.StatusInternalServerError, "Error eliminando artículo")
+			return
+		}
+		if !ok {
+			writeJSONError(w, http.StatusNotFound, "Artículo no encontrado")
 			return
 		}
 		w.WriteHeader(http.StatusNoContent)
 	default:
-		http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+		writeJSONError(w, http.StatusMethodNotAllowed, "Método no permitido")
 	}
 }

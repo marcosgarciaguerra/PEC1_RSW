@@ -65,7 +65,7 @@
     <input type="checkbox" id="menu-toggle" class="menu-toggle">
     
         <div class="aplicacion">
-        <div id="cookie-consent" style="display:none;">
+        <div id="cookie-consent" class="hidden">
             <span>Este sitio usa cookies para mejorar tu experiencia. ¿Aceptas?</span>
             <div class="cookie-buttons">
                 <button id="accept-cookies">Aceptar</button>
@@ -98,25 +98,29 @@
         
         const consent = getCookie('cookie_consent');
         if (consent) {
-            consentDiv.style.display = 'none';
+            consentDiv.classList.add('hidden');
+            consentDiv.classList.remove('cookie-consent--visible');
             if (consent === 'no') {
                 document.cookie = "tracking_cookie=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
             }
             return;
         }
-        
-        consentDiv.style.display = 'flex';
-        
+
+        consentDiv.classList.remove('hidden');
+        consentDiv.classList.add('cookie-consent--visible');
+
         document.getElementById('accept-cookies').addEventListener('click', function(){
             setCookie('cookie_consent', 'yes', 365);
             setCookie('tracking_cookie', 'active', 365);
-            consentDiv.style.display = 'none';
+            consentDiv.classList.add('hidden');
+            consentDiv.classList.remove('cookie-consent--visible');
         });
-        
+
         document.getElementById('reject-cookies').addEventListener('click', function(){
             setCookie('cookie_consent', 'no', 365);
             document.cookie = "tracking_cookie=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-            consentDiv.style.display = 'none';
+            consentDiv.classList.add('hidden');
+            consentDiv.classList.remove('cookie-consent--visible');
         });
     })();
     </script>

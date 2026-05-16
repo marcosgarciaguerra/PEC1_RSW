@@ -66,13 +66,27 @@ func CrearArticulo(a models.Articulo) (int, error) {
 	return int(id), nil
 }
 
-func ActualizarArticulo(a models.Articulo) error {
-	_, err := DB.Exec("UPDATE articulos SET nombre=?, categoria=?, precio=?, imagen=?, etiqueta=? WHERE id=?",
+func ActualizarArticulo(a models.Articulo) (bool, error) {
+	res, err := DB.Exec("UPDATE articulos SET nombre=?, categoria=?, precio=?, imagen=?, etiqueta=? WHERE id=?",
 		a.Nombre, a.Categoria, a.Precio, a.Imagen, a.Etiqueta, a.ID)
-	return err
+	if err != nil {
+		return false, err
+	}
+	n, err := res.RowsAffected()
+	if err != nil {
+		return false, err
+	}
+	return n > 0, nil
 }
 
-func EliminarArticulo(id int) error {
-	_, err := DB.Exec("DELETE FROM articulos WHERE id = ?", id)
-	return err
+func EliminarArticulo(id int) (bool, error) {
+	res, err := DB.Exec("DELETE FROM articulos WHERE id = ?", id)
+	if err != nil {
+		return false, err
+	}
+	n, err := res.RowsAffected()
+	if err != nil {
+		return false, err
+	}
+	return n > 0, nil
 }

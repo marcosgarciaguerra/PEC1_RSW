@@ -29,21 +29,29 @@ func CrearClase(c models.Clases) (int, error) {
 	return int(id), nil
 }
 
-func ActualizarClase(c models.Clases) error {
-	_, err := DB.Exec("UPDATE clases SET nombre=?, entrenador=?, aforo=?, horario=?, descripcion=?, lugar=? WHERE id=?",
+func ActualizarClase(c models.Clases) (bool, error) {
+	res, err := DB.Exec("UPDATE clases SET nombre=?, entrenador=?, aforo=?, horario=?, descripcion=?, lugar=? WHERE id=?",
 		c.NombreClase, c.Entrenador, c.Aforo, c.Horario, c.Descripcion, c.Lugar, c.ID)
 	if err != nil {
 		log.Println("Error actualizando clase:", err)
-		return err
+		return false, err
 	}
-	return nil
+	n, err := res.RowsAffected()
+	if err != nil {
+		return false, err
+	}
+	return n > 0, nil
 }
 
-func EliminarClase(id int) error {
-	_, err := DB.Exec("DELETE FROM clases WHERE id = ?", id)
+func EliminarClase(id int) (bool, error) {
+	res, err := DB.Exec("DELETE FROM clases WHERE id = ?", id)
 	if err != nil {
 		log.Println("Error eliminando clase:", err)
-		return err
+		return false, err
 	}
-	return nil
+	n, err := res.RowsAffected()
+	if err != nil {
+		return false, err
+	}
+	return n > 0, nil
 }

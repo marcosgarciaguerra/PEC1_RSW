@@ -395,13 +395,22 @@
                 total += item.price * quantity;
                 const row = document.createElement('div');
                 row.className = 'cart-item-js';
-                row.innerHTML = `
-                    <div class="cart-item-js__name">
-                        <i class="fas fa-box" style="color: rgba(255,255,255,0.3); font-size: 0.9rem;"></i>
-                        <span>${item.name} x${quantity}</span>
-                    </div>
-                    <span class="cart-item-js__price">${(item.price * quantity).toFixed(2)}€</span>
-                `;
+
+                const nameWrap = document.createElement('div');
+                nameWrap.className = 'cart-item-js__name';
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-box checkout-item-icon';
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = item.name + ' x' + quantity;
+                nameWrap.appendChild(icon);
+                nameWrap.appendChild(nameSpan);
+
+                const priceSpan = document.createElement('span');
+                priceSpan.className = 'cart-item-js__price';
+                priceSpan.textContent = (item.price * quantity).toFixed(2) + '€';
+
+                row.appendChild(nameWrap);
+                row.appendChild(priceSpan);
                 container.appendChild(row);
             });
             totalSpan.innerText = total.toFixed(2);
@@ -421,14 +430,14 @@
             const modalDireccion = document.getElementById('modal-direccion-confirmada');
 
             btnEditar.addEventListener('click', function() {
-                wrapperEditar.style.display = 'flex';
+                wrapperEditar.classList.add('form-cambio-dir--active');
                 inputDireccion.focus();
-                btnEditar.style.display = 'none';
+                btnEditar.classList.add('hidden');
             });
 
             btnCancelar.addEventListener('click', function() {
-                wrapperEditar.style.display = 'none';
-                btnEditar.style.display = 'inline-block';
+                wrapperEditar.classList.remove('form-cambio-dir--active');
+                btnEditar.classList.remove('hidden');
                 inputDireccion.value = txtDireccion.textContent;
             });
 
@@ -441,14 +450,22 @@
                 txtDireccion.textContent = nuevaDir;
                 direccionInput.value = nuevaDir;
                 modalDireccion.textContent = nuevaDir;
-                wrapperEditar.style.display = 'none';
-                btnEditar.style.display = 'inline-block';
+                wrapperEditar.classList.remove('form-cambio-dir--active');
+                btnEditar.classList.remove('hidden');
             });
 
             // Confirmación final de la compra
             document.getElementById('checkout-form').addEventListener('submit', function() {
                 const submitBtn = document.getElementById('btn-confirmar-pedido');
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESANDO COMPRA...';
+                const icon = submitBtn.querySelector('i');
+                submitBtn.textContent = '';
+                const spin = document.createElement('i');
+                spin.className = 'fas fa-spinner fa-spin';
+                submitBtn.appendChild(spin);
+                submitBtn.appendChild(document.createTextNode(' PROCESANDO COMPRA...'));
+                if (icon) {
+                    icon.remove();
+                }
                 submitBtn.disabled = true;
             });
         });

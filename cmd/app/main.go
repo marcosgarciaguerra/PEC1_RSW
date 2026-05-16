@@ -71,9 +71,9 @@ func main() {
 	http.HandleFunc("/tienda/tramitar", handlers.RequireUsuarioAuth(handlers.TramitarPedidoHandler))
 	http.HandleFunc("/tienda/confirmar", handlers.RequireUsuarioAuth(handlers.ConfirmarPedidoHandler))
 
-	// API REST Clases
-	http.HandleFunc("/api/clases/", handlers.HandleAPIClases)
-	http.HandleFunc("/api/clases", handlers.HandleAPIClases)
+	// API REST Clases (requiere sesión de socio/admin)
+	http.HandleFunc("/api/clases/", handlers.RequireSocioAuth(handlers.HandleAPIClases))
+	http.HandleFunc("/api/clases", handlers.RequireSocioAuth(handlers.HandleAPIClases))
 	
 	// Admin panel principal — única barrera de autenticación
 	http.HandleFunc("/admin", handlers.RequireSocioAuth(handlers.AdminHandler))
@@ -82,12 +82,12 @@ func main() {
 	http.HandleFunc("/admin/maquinarias", handlers.AdminMaquinariasHandler)
 
 	// API REST Articulos
-	http.HandleFunc("/api/articulos/", handlers.HandleAPIArticulos)
-	http.HandleFunc("/api/articulos", handlers.HandleAPIArticulos)
+	http.HandleFunc("/api/articulos/", handlers.RequireSocioAuth(handlers.HandleAPIArticulos))
+	http.HandleFunc("/api/articulos", handlers.RequireSocioAuth(handlers.HandleAPIArticulos))
 
 	// API REST Maquinarias
-	http.HandleFunc("/api/maquinarias/", handlers.HandleAPIMaquinarias)
-	http.HandleFunc("/api/maquinarias", handlers.HandleAPIMaquinarias)
+	http.HandleFunc("/api/maquinarias/", handlers.RequireSocioAuth(handlers.HandleAPIMaquinarias))
+	http.HandleFunc("/api/maquinarias", handlers.RequireSocioAuth(handlers.HandleAPIMaquinarias))
 
 	log.Println("Servidor iniciado en http://localhost:8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {

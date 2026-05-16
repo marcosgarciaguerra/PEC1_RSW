@@ -44,13 +44,27 @@ func CrearMaquina(m models.Maquina) (int64, error) {
 	return res.LastInsertId()
 }
 
-func ActualizarMaquina(m models.Maquina) error {
-	_, err := DB.Exec("UPDATE maquinarias SET nombre=?, marca=?, zona=?, descripcion=?, beneficios=?, imagen=? WHERE id=?",
+func ActualizarMaquina(m models.Maquina) (bool, error) {
+	res, err := DB.Exec("UPDATE maquinarias SET nombre=?, marca=?, zona=?, descripcion=?, beneficios=?, imagen=? WHERE id=?",
 		m.Nombre, m.Marca, m.Zona, m.Descripcion, m.Beneficios, m.Imagen, m.ID)
-	return err
+	if err != nil {
+		return false, err
+	}
+	n, err := res.RowsAffected()
+	if err != nil {
+		return false, err
+	}
+	return n > 0, nil
 }
 
-func EliminarMaquina(id int) error {
-	_, err := DB.Exec("DELETE FROM maquinarias WHERE id=?", id)
-	return err
+func EliminarMaquina(id int) (bool, error) {
+	res, err := DB.Exec("DELETE FROM maquinarias WHERE id=?", id)
+	if err != nil {
+		return false, err
+	}
+	n, err := res.RowsAffected()
+	if err != nil {
+		return false, err
+	}
+	return n > 0, nil
 }
