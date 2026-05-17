@@ -11,17 +11,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cargarClases();
 
+    function obtenerDatosFormulario() {
+        const nombre_clase = document.getElementById('nombre').value.trim();
+        const entrenador = document.getElementById('entrenador').value.trim();
+        const aforoRaw = document.getElementById('aforo').value.trim();
+        const horario = document.getElementById('horario').value.trim();
+        const descripcion = document.getElementById('descripcion').value.trim();
+        const lugar = document.getElementById('lugar').value.trim();
+
+        if (!nombre_clase || !entrenador || !horario || !lugar) {
+            mostrarMensaje('Datos inválidos o incompletos', 'danger');
+            return null;
+        }
+        if (aforoRaw === '') {
+            mostrarMensaje('Datos inválidos o incompletos', 'danger');
+            return null;
+        }
+        const aforo = Number.parseInt(aforoRaw, 10);
+        if (!Number.isInteger(aforo) || aforo <= 0) {
+            mostrarMensaje('Datos inválidos o incompletos', 'danger');
+            return null;
+        }
+
+        return { nombre_clase, entrenador, aforo, horario, descripcion, lugar };
+    }
+
     claseForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        const claseData = obtenerDatosFormulario();
+        if (!claseData) {
+            return;
+        }
         const id = document.getElementById('claseId').value;
-        const claseData = {
-            nombre_clase: document.getElementById('nombre').value,
-            entrenador: document.getElementById('entrenador').value,
-            aforo: parseInt(document.getElementById('aforo').value, 10),
-            horario: document.getElementById('horario').value,
-            descripcion: document.getElementById('descripcion').value,
-            lugar: document.getElementById('lugar').value
-        };
         if (id) {
             actualizarClase(id, claseData);
         } else {

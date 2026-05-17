@@ -13,16 +13,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cargarArticulos();
 
+    function obtenerDatosFormulario() {
+        const nombre = document.getElementById('nombre').value.trim();
+        const categoria = document.getElementById('categoria').value;
+        const precioRaw = document.getElementById('precio').value.trim();
+        const imagen = document.getElementById('imagen').value.trim();
+        const etiqueta = document.getElementById('etiqueta').value.trim();
+
+        if (!nombre || !imagen) {
+            mostrarMensaje('Datos inválidos o incompletos', 'danger');
+            return null;
+        }
+        if (precioRaw === '') {
+            mostrarMensaje('Datos inválidos o incompletos', 'danger');
+            return null;
+        }
+        const precio = Number(precioRaw);
+        if (!Number.isFinite(precio) || precio < 0) {
+            mostrarMensaje('Datos inválidos o incompletos', 'danger');
+            return null;
+        }
+
+        return { nombre, categoria, precio, imagen, etiqueta };
+    }
+
     articuloForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        const articuloData = obtenerDatosFormulario();
+        if (!articuloData) {
+            return;
+        }
         const id = document.getElementById('articuloId').value;
-        const articuloData = {
-            nombre: document.getElementById('nombre').value,
-            categoria: document.getElementById('categoria').value,
-            precio: parseFloat(document.getElementById('precio').value),
-            imagen: document.getElementById('imagen').value,
-            etiqueta: document.getElementById('etiqueta').value
-        };
         if (id) {
             actualizarArticulo(id, articuloData);
         } else {

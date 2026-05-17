@@ -11,17 +11,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cargarMaquinarias();
 
+    function obtenerDatosFormulario() {
+        const nombre = document.getElementById('nombre').value.trim();
+        const marca = document.getElementById('marca').value.trim();
+        const zona = document.getElementById('zona').value.trim();
+        const descripcion = document.getElementById('descripcion').value.trim();
+        const beneficios = document.getElementById('beneficios').value.trim();
+        const imagen = document.getElementById('imagen').value.trim();
+
+        if (!nombre || !marca || !zona) {
+            mostrarMensaje('Datos inválidos o incompletos', 'danger');
+            return null;
+        }
+
+        return { nombre, marca, zona, descripcion, beneficios, imagen };
+    }
+
     maquinariaForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        const data = obtenerDatosFormulario();
+        if (!data) {
+            return;
+        }
         const id = document.getElementById('maquinariaId').value;
-        const data = {
-            nombre: document.getElementById('nombre').value,
-            marca: document.getElementById('marca').value,
-            zona: document.getElementById('zona').value,
-            descripcion: document.getElementById('descripcion').value,
-            beneficios: document.getElementById('beneficios').value,
-            imagen: document.getElementById('imagen').value
-        };
         if (id) {
             actualizarMaquinaria(id, data);
         } else {
