@@ -99,6 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return fallback;
     }
 
+    async function validarRespuestaFormulario(response, fallback) {
+        if (response.status === 422) {
+            throw new Error('Datos inválidos o incompletos');
+        }
+        if (!response.ok) {
+            const msg = await mensajeErrorRespuesta(response, fallback);
+            throw new Error(msg);
+        }
+    }
+
     async function cargarMaquinarias() {
         mostrarEstadoCarga();
         try {
@@ -144,10 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            if (!response.ok) {
-                const msg = await mensajeErrorRespuesta(response, 'Error al crear la maquinaria');
-                throw new Error(msg);
-            }
+            await validarRespuestaFormulario(response, 'Error al crear la maquinaria');
             await response.json();
             mostrarMensaje('Maquinaria creada con éxito', 'success');
             limpiarFormulario();
@@ -167,10 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            if (!response.ok) {
-                const msg = await mensajeErrorRespuesta(response, 'Error al actualizar la maquinaria');
-                throw new Error(msg);
-            }
+            await validarRespuestaFormulario(response, 'Error al actualizar la maquinaria');
             await response.json();
             mostrarMensaje('Maquinaria actualizada con éxito', 'success');
             limpiarFormulario();

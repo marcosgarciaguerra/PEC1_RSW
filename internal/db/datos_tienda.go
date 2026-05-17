@@ -24,10 +24,21 @@ func seedArticulos() {
 }
 
 func ObtenerArticulosTienda() []models.Articulo {
-	// Llamamos a seed aquí por seguridad si aún no ha insertado
 	seedArticulos()
+	return scanArticulosRows("SELECT id, nombre, categoria, precio, imagen, etiqueta FROM articulos ORDER BY id")
+}
+
+// ObtenerArticulosPaginados devuelve un subconjunto usando LIMIT/OFFSET (pagina >= 1, tamano >= 1).
+func ObtenerArticulosPaginados(pagina, tamano int) []models.Articulo {
+	seedArticulos()
+	offset := (pagina - 1) * tamano
+	query := "SELECT id, nombre, categoria, precio, imagen, etiqueta FROM articulos ORDER BY id LIMIT ? OFFSET ?"
+	return scanArticulosRows(query, tamano, offset)
+}
+
+func scanArticulosRows(query string, args ...interface{}) []models.Articulo {
 	var articulos []models.Articulo
-	rows, err := DB.Query("SELECT id, nombre, categoria, precio, imagen, etiqueta FROM articulos")
+	rows, err := DB.Query(query, args...)
 	if err != nil {
 		log.Println("Error obteniendo artículos:", err)
 		return articulos

@@ -100,6 +100,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return fallback;
     }
 
+    /** Valida respuestas POST/PUT: 422 → mensaje de validación para el usuario. */
+    async function validarRespuestaFormulario(response, fallback) {
+        if (response.status === 422) {
+            throw new Error('Datos inválidos o incompletos');
+        }
+        if (!response.ok) {
+            const msg = await mensajeErrorRespuesta(response, fallback);
+            throw new Error(msg);
+        }
+    }
+
     async function cargarArticulos() {
         mostrarEstadoCarga();
         try {
@@ -155,10 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(articuloData)
             });
-            if (!response.ok) {
-                const msg = await mensajeErrorRespuesta(response, 'Error al crear el artículo');
-                throw new Error(msg);
-            }
+            await validarRespuestaFormulario(response, 'Error al crear el artículo');
             await response.json();
             mostrarMensaje('Artículo creado con éxito', 'success');
             limpiarFormulario();
@@ -178,10 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(articuloData)
             });
-            if (!response.ok) {
-                const msg = await mensajeErrorRespuesta(response, 'Error al actualizar el artículo');
-                throw new Error(msg);
-            }
+            await validarRespuestaFormulario(response, 'Error al actualizar el artículo');
             await response.json();
             mostrarMensaje('Artículo actualizado con éxito', 'success');
             limpiarFormulario();

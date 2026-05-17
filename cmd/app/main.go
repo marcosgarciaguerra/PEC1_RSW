@@ -71,26 +71,49 @@ func main() {
 	http.HandleFunc("/tienda/tramitar", handlers.RequireUsuarioAuth(handlers.TramitarPedidoHandler))
 	http.HandleFunc("/tienda/confirmar", handlers.RequireUsuarioAuth(handlers.ConfirmarPedidoHandler))
 
-	// API REST Clases (requiere sesión de socio/admin)
-	http.HandleFunc("/api/clases/", handlers.RequireSocioAuth(handlers.HandleAPIClases))
-	http.HandleFunc("/api/clases", handlers.RequireSocioAuth(handlers.HandleAPIClases))
-	
-	// Admin panel principal — única barrera de autenticación
+	// API REST — enrutamiento Go 1.22+ (método + patrón), CORS y auth de socio
+	registerAPIRoutes()
+
+	// Admin panel
 	http.HandleFunc("/admin", handlers.RequireSocioAuth(handlers.AdminHandler))
 	http.HandleFunc("/admin/clases", handlers.AdminClasesHandler)
 	http.HandleFunc("/admin/articulos", handlers.AdminArticulosHandler)
 	http.HandleFunc("/admin/maquinarias", handlers.AdminMaquinariasHandler)
 
-	// API REST Articulos
-	http.HandleFunc("/api/articulos/", handlers.RequireSocioAuth(handlers.HandleAPIArticulos))
-	http.HandleFunc("/api/articulos", handlers.RequireSocioAuth(handlers.HandleAPIArticulos))
-
-	// API REST Maquinarias
-	http.HandleFunc("/api/maquinarias/", handlers.RequireSocioAuth(handlers.HandleAPIMaquinarias))
-	http.HandleFunc("/api/maquinarias", handlers.RequireSocioAuth(handlers.HandleAPIMaquinarias))
-
 	log.Println("Servidor iniciado en http://localhost:8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("Error iniciando servidor: ", err)
 	}
+}
+
+// registerAPIRoutes registra rutas REST con verbos HTTP explícitos y preflight OPTIONS.
+func registerAPIRoutes() {
+	noop := func(http.ResponseWriter, *http.Request) {}
+
+	// Artículos
+	http.HandleFunc("OPTIONS /api/articulos", handlers.WithCORS(noop))
+	http.HandleFunc("OPTIONS /api/articulos/{id}", handlers.WithCORS(noop))
+	http.HandleFunc("GET /api/articulos", handlers.APIRoute(handlers.ListArticulos))
+	http.HandleFunc("POST /api/articulos", handlers.APIRoute(handlers.CreateArticulo))
+	http.HandleFunc("GET /api/articulos/{id}", handlers.APIRoute(handlers.GetArticulo))
+	http.HandleFunc("PUT /api/articulos/{id}", handlers.APIRoute(handlers.UpdateArticulo))
+	http.HandleFunc("DELETE /api/articulos/{id}", handlers.APIRoute(handlers.DeleteArticulo))
+
+	// Clases
+	http.HandleFunc("OPTIONS /api/clases", handlers.WithCORS(noop))
+	http.HandleFunc("OPTIONS /api/clases/{id}", handlers.WithCORS(noop))
+	http.HandleFunc("GET /api/clases", handlers.APIRoute(handlers.ListClases))
+	http.HandleFunc("POST /api/clases", handlers.APIRoute(handlers.CreateClase))
+	http.HandleFunc("GET /api/clases/{id}", handlers.APIRoute(handlers.GetClase))
+	http.HandleFunc("PUT /api/clases/{id}", handlers.APIRoute(handlers.UpdateClase))
+	http.HandleFunc("DELETE /api/clases/{id}", handlers.APIRoute(handlers.DeleteClase))
+
+	// Maquinarias
+	http.HandleFunc("OPTIONS /api/maquinarias", handlers.WithCORS(noop))
+	http.HandleFunc("OPTIONS /api/maquinarias/{id}", handlers.WithCORS(noop))
+	http.HandleFunc("GET /api/maquinarias", handlers.APIRoute(handlers.ListMaquinarias))
+	http.HandleFunc("POST /api/maquinarias", handlers.APIRoute(handlers.CreateMaquinaria))
+	http.HandleFunc("GET /api/maquinarias/{id}", handlers.APIRoute(handlers.GetMaquinaria))
+	http.HandleFunc("PUT /api/maquinarias/{id}", handlers.APIRoute(handlers.UpdateMaquinaria))
+	http.HandleFunc("DELETE /api/maquinarias/{id}", handlers.APIRoute(handlers.DeleteMaquinaria))
 }

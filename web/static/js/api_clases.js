@@ -99,6 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return fallback;
     }
 
+    async function validarRespuestaFormulario(response, fallback) {
+        if (response.status === 422) {
+            throw new Error('Datos inválidos o incompletos');
+        }
+        if (!response.ok) {
+            const msg = await mensajeErrorRespuesta(response, fallback);
+            throw new Error(msg);
+        }
+    }
+
     async function cargarClases() {
         mostrarEstadoCarga();
         try {
@@ -141,10 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(claseData)
             });
-            if (!response.ok) {
-                const msg = await mensajeErrorRespuesta(response, 'Error al crear la clase');
-                throw new Error(msg);
-            }
+            await validarRespuestaFormulario(response, 'Error al crear la clase');
             await response.json();
             mostrarMensaje('Clase creada con éxito', 'success');
             limpiarFormulario();
@@ -164,10 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(claseData)
             });
-            if (!response.ok) {
-                const msg = await mensajeErrorRespuesta(response, 'Error al actualizar la clase');
-                throw new Error(msg);
-            }
+            await validarRespuestaFormulario(response, 'Error al actualizar la clase');
             await response.json();
             mostrarMensaje('Clase actualizada con éxito', 'success');
             limpiarFormulario();
